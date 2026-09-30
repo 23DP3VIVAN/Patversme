@@ -10,7 +10,7 @@ Administrātoram būs iespēja pārvaldīt informāciju par dzīvniekiem, adopt�
 
 ## GALVENĀS FUNKCIJAS 
 
-<<<<<<< HEAD
+
 -Dzīvnikeu apskate.
 -Dzīvnieku filtrēšana.
 -Ziedošana dzīvniekiem.
@@ -20,18 +20,6 @@ Lietotāju reģistrēšana un autorizēšana.
 -Dzīvnieku pievienošana favorītiem. 
 -Administrātora panelis.
 -Adoptāciju pieteikumu pārvaldīšana.
-=======
--Dzīvnikeu apskate.  
--Dzīvnieku filtrēšana.  
--Ziedošana dzīvniekiem.  
-Lietotāju reģistrēšana un autorizēšana.  
--Adoptācijas pieteikumu iesniegšana.  
--Adoptācijas pieteikumu statusu apskatīšana.  
--Dzīvnieku pievienošana favorītiem.  
--Administrātora panelis.  
--Adoptāciju pieteikumu pārvaldīšana.  
->>>>>>> d8b72af3f5dae5ccd5f0d34b29d5337114a8f9c0
--Dzīvnieku informācijas pārvaldīšana.
 
 ## IZMANTOTĀS TEHNOLOĢIJAS
 
