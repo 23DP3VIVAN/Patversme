@@ -23,16 +23,16 @@ Lietotāju reģistrēšana un autorizēšana.
 
 ## IZMANTOTĀS TEHNOLOĢIJAS
 
--HTML
--CSS
--JavaScript
+-HTML  
+-CSS  
+-JavaScript  
 -PHP
 
 HTML  lapas struktūrai, CSS dizainam, JavaScript interaktivitātei un PHP datubāzei un datu apstrādei.
 
 ## PROJEKTA KOMANDA
 
--Jana J.: Front-end pamats + dokumentācija 
--Viktorija I.: Datubāzes 
--Marta Aleksa V.: Front-end 
+-Jana J.: Front-end pamats + dokumentācija   
+-Viktorija I.: Datubāzes   
+-Marta Aleksa V.: Front-end   
 -Vanesa J.: Back-end 
