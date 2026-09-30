@@ -6,7 +6,7 @@ Mūsu sistēma būs tīmekļa vietne, kurā lietotāji varēs apskatīt patversm
 
 Reģistrēti lietotāji varēs iesniegt adoptācijas pieteikumus, ziedot, saglabāt dzīvniekus favorītos un sekot savu adoptācijas statusam.
 
-Administrātoram būs iespēja pārvaldīt informāciju par dzīvniekiem, publicēt ziedotājus un adoptācijas pieteikumiem.
+Administrātoram būs iespēja pārvaldīt informāciju par dzīvniekiem, adoptācijas pieteikumiem un publicēt ziedotājus.
 
 ## GALVENĀS FUNKCIJAS 
 
