@@ -4,21 +4,21 @@
 
 Mūsu sistēma būs tīmekļa vietne, kurā lietotāji varēs apskatīt patversmē pieejamos dzīvniekus. 
 
-Reģistrēti lietotāji varēs iesniegt adoptācijas pieteikumus, saglabāt dzīvniekus favorītos un sekot savu adoptācijas statusam.
+Reģistrēti lietotāji varēs iesniegt adoptācijas pieteikumus, ziedot, saglabāt dzīvniekus favorītos un sekot savu adoptācijas statusam.
 
-Administrātoram būs iespēja pārvaldīt informāciju par dzīvniekiem un adoptācijas pieteikumiem.
+Administrātoram būs iespēja pārvaldīt informāciju par dzīvniekiem, publicēt ziedotājus un adoptācijas pieteikumiem.
 
 ## GALVENĀS FUNKCIJAS 
 
--Dzīvnikeu apskate.
--Dzīvnieku filtrēšana.
--Ziedošana dzīvniekiem.
-Lietotāju reģistrēšana un autorizēšana.
--Adoptācijas pieteikumu iesniegšana.
--Adoptācijas pieteikumu statusu apskatīšana.
--Dzīvnieku pievienošana favorītiem.
--Administrātora panelis.
--Adoptāciju pieteikumu pārvaldīšana.
+-Dzīvnikeu apskate.  
+-Dzīvnieku filtrēšana.  
+-Ziedošana dzīvniekiem.  
+Lietotāju reģistrēšana un autorizēšana.  
+-Adoptācijas pieteikumu iesniegšana.  
+-Adoptācijas pieteikumu statusu apskatīšana.  
+-Dzīvnieku pievienošana favorītiem.  
+-Administrātora panelis.  
+-Adoptāciju pieteikumu pārvaldīšana.  
 -Dzīvnieku informācijas pārvaldīšana.
 
 ## IZMANTOTĀS TEHNOLOĢIJAS
