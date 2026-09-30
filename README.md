@@ -16,7 +16,7 @@ Administrātoram būs iespēja pārvaldīt informāciju par dzīvniekiem un adop
 Lietotāju reģistrēšana un autorizēšana.
 -Adoptācijas pieteikumu iesniegšana.
 -Adoptācijas pieteikumu statusu apskatīšana.
--Dzīvnieku pievienošana favorītiem.
+-Dzīvnieku pievienošana favorītiem. 
 -Administrātora panelis.
 -Adoptāciju pieteikumu pārvaldīšana.
 -Dzīvnieku informācijas pārvaldīšana.
