@@ -20,12 +20,22 @@ CREATE TABLE animals (
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
 
-    first_name VARCHAR(30) NOT NULL UNIQUE,
+    first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(40) NOT NULL UNIQUE,
     birth_date DATE NOT NULL,
     role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
-    
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE donations (
+    donation_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    donor_name VARCHAR(60) NOT NULL,
+    donor_email VARCHAR(40) NOT NULL,
+    amount INT NOT NULL,
+    payment_method ENUM('VISA', 'Apple Pay', 'Google Pay', 'Internet Bank', 'Mastercard') NOT NULL,
+
 );
