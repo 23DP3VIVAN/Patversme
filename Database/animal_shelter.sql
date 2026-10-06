@@ -16,3 +16,16 @@ CREATE TABLE animals (
     adoption_status ENUM('Pieejams', 'Adoptets', 'Rezervets') NOT NULL DEFAULT 'Pieejams',
     owner_requirements TEXT NOT NULL,
 );
+
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    first_name VARCHAR(30) NOT NULL UNIQUE,
+    last_name VARCHAR(30) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(40) NOT NULL UNIQUE,
+    birth_date DATE NOT NULL,
+    role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
+    
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
