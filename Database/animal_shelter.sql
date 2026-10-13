@@ -39,3 +39,14 @@ CREATE TABLE donations (
     payment_method ENUM('VISA', 'Apple Pay', 'Google Pay', 'Internet Bank', 'Mastercard') NOT NULL,
 
 );
+
+CREATE TABLE adoptions (
+    adoption_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    animal_id INT NOT NULL,
+    user_id INT NOT NULL,
+    adoption_date DATE NOT NULL,
+
+    FOREIGN KEY (animal_id) REFERENCES animals(animal_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);

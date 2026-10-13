@@ -21,7 +21,6 @@ button {
 
 .page {
     width: 100%;
-    max-width: 1440px;
     margin: 0 auto;
 }
 
@@ -38,7 +37,7 @@ button {
 
     padding: 0 42px;
 
-    background-color: #fffafa;
+    background-image: linear-gradient(to right, #FBDBDE , #FCF6F6);
 }
 
 
@@ -52,34 +51,22 @@ button {
 }
 
 .logo-icon {
-    width: 55px;
-    height: 55px;
+    width: 70px;
+    height: 70px;
 
-    border: 1.5px solid #e59aac;
     border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #d65f7e;
-
-    font-size: 24px;
-
     margin-right: 12px;
 }
 
 .logo-text h2 {
     font-size: 16px;
-    font-weight: 700;
-
     color: #b95670;
 
     margin-bottom: 3px;
 }
 
 .logo-text p {
-    font-size: 10px;
+    font-size: 11px;
 
     color: #b98f98;
 }
@@ -106,8 +93,8 @@ button {
 
     color: #443a3d;
 
-    font-size: 12px;
-
+    font-size: 14px;
+    font-weight: 600;
     height: 100%;
 
     display: flex;
@@ -127,7 +114,7 @@ button {
 
     position: absolute;
 
-    bottom: 20px;
+    bottom: 30px;
     left: 0;
 
     width: 100%;
@@ -316,7 +303,7 @@ button {
 
     margin: 0 20px;
 
-    background-color: #ffdce5;
+    background-color: #FBDBDE;
 
     border-radius: 0 0 7px 7px;
 
