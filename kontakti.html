@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakti | Pēdas Mājās</title>
+    <link rel="icon" href="src/img/logo.jpg">
+    <link rel="stylesheet" href="src/kontakti.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="src/img/logo.jpg" alt="Logo">
+            <div>
+                <h2>PĒDAS MĀJĀS</h2>
+                <p>Dzīvnieku patversme</p>
+            </div>
+        </a>
+
+        <nav class="navigation">
+            <a href="index.html">Sākums</a>
+            <a href="animals.html">Dzīvnieki</a>
+            <a href="about.html">Par mums</a>
+            <a href="help.html">Kā palīdzēt?</a>
+            <a href="Kontakti.html" class="active">Kontakti</a>
+        </nav>
+
+        <div class="header-buttons">
+            <a href="help.html" class="donate">♡ Ziedot</a>
+            <button class="register" type="button">Pieteikties</button>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div>
+            <span class="eyebrow">SAZINIES AR MUMS</span>
+            <h1>Mēs vienmēr esam<br>gatavi palīdzēt ♡</h1>
+            <p>
+                Tev ir jautājumi par adopciju, dzīvniekiem
+                vai brīvprātīgo darbu? Raksti mums!
+            </p>
+        </div>
+        <div class="hero-decoration">💌</div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section class="contacts-section">
+        <div class="section-heading">
+            <h2>Mūsu kontakti</h2>
+            <p>Izvēlies sev ērtāko saziņas veidu.</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h3>Adrese</h3>
+                <p>Rīga, Latvija</p>
+                <small>Precīza adrese tiks norādīta vēlāk</small>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">📞</div>
+                <h3>Tālrunis</h3>
+                <p>+371 XX XXX XXX</p>
+                <small>Kontakttālrunis tiks pievienots</small>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">✉️</div>
+                <h3>E-pasts</h3>
+                <p>info@example.com</p>
+                <small>Demonstrācijas e-pasta adrese</small>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">🕒</div>
+                <h3>Darba laiks</h3>
+                <p>P.–Pk. 9:00–18:00</p>
+                <small>Parauga darba laiks</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section class="contact-content">
+
+        <div class="form-card">
+            <span class="eyebrow">UZRAKSTI MUMS</span>
+            <h2>Nosūti ziņu ♡</h2>
+            <p class="form-description">
+                Aizpildi formu, un mēs ar Tevi sazināsimies!
+            </p>
+
+            <form id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Vārds</label>
+                        <input type="text" id="name"
+                            placeholder="Tavs vārds" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="surname">Uzvārds</label>
+                        <input type="text" id="surname"
+                            placeholder="Tavs uzvārds" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-pasts</label>
+                    <input type="email" id="email"
+                        placeholder="Tavs e-pasts" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="topic">Ziņas tēma</label>
+                    <select id="topic" required>
+                        <option value="">Izvēlies tēmu</option>
+                        <option>Dzīvnieku adopcija</option>
+                        <option>Brīvprātīgais darbs</option>
+                        <option>Ziedojumi</option>
+                        <option>Cits jautājums</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Tava ziņa</label>
+                    <textarea id="message" rows="5"
+                        placeholder="Raksti savu ziņu..."
+                        required></textarea>
+                </div>
+
+                <label class="privacy">
+                    <input type="checkbox" required>
+                    Piekrītu savu datu apstrādei saziņas nolūkos
+                </label>
+
+                <button type="submit" class="send-button">
+                    Nosūtīt ziņu →
+                </button>
+
+                <p id="formStatus" class="form-status"
+                   role="status" aria-live="polite"></p>
+            </form>
+        </div>
+
+        <!-- LOCATION -->
+        <div class="location-column">
+            <div class="location-card">
+                <h2>Kur mūs atrast? 📍</h2>
+                <p>
+                    Mūsu patversme atrodas Latvijā.
+                    Pirms apmeklējuma iesakām sazināties ar mums.
+                </p>
+
+                <div class="map-placeholder">
+                    <span>📍</span>
+                    <h3>PĒDAS MĀJĀS</h3>
+                    <p>Šeit būs patversmes atrašanās vietas karte</p>
+                </div>
+            </div>
+
+            <div class="social-card">
+                <h2>Seko mums ♡</h2>
+                <p>
+                    Seko mūsu jaunumiem un iepazīsti
+                    dzīvniekus, kuri meklē mājas!
+                </p>
+                <div class="social-links">
+                    <span>📷 Instagram</span>
+                    <span>📘 Facebook</span>
+                    <span>🎵 TikTok</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOTTOM BANNER -->
+    <section class="bottom-banner">
+        <div>
+            <h2>Katrs labais darbs sākas ar vienu soli 🐾</h2>
+            <p>Palīdzi kādam atrast savas īstās mājas!</p>
+        </div>
+        <a href="animals.html" class="animals-link">
+            Apskatīt dzīvniekus →
+        </a>
+    </section>
+
+    <footer>
+        © 2026 PĒDAS MĀJĀS | Veidots ar mīlestību ♡
+    </footer>
+
+</div>
+
+<script>
+    const form = document.getElementById("contactForm");
+    const status = document.getElementById("formStatus");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        status.textContent =
+            "Forma ir aizpildīta! Ziņas nosūtīšana būs pieejama pēc servera pieslēgšanas.";
+        status.classList.add("visible");
+    });
+</script>
+
+</body>
+</html>
