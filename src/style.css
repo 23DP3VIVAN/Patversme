@@ -541,7 +541,7 @@ a {
 
 .footer {
     margin-top: 35px;
-    padding: 25px 10px;
+    padding: 25px 0;
     border-top: 1px solid #edc8d8;
 }
 
@@ -551,6 +551,7 @@ a {
     align-items: center;
     gap: 25px;
     padding-bottom: 25px;
+    margin: 0 10px;
 }
 
 .footer-brand h3 {
