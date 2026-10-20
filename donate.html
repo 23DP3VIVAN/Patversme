@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ziedojumi | PĒDAS MĀJĀS</title>
+    <link rel="icon" href="src/img/logo.jpg">
+    <link rel="stylesheet" href="src/donate.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="src/img/logo.jpg" alt="Pēdas Mājās logo">
+            <div>
+                <h2>PĒDAS MĀJĀS</h2>
+                <p>Dzīvnieku patversme</p>
+            </div>
+        </a>
+
+        <nav class="navigation">
+            <a href="index.html">Sākums</a>
+            <a href="animals.html">Dzīvnieki</a>
+            <a href="about.html">Par mums</a>
+            <a href="help.html">Kā palīdzēt?</a>
+            <a href="kontakti.html">Kontakti</a>
+        </nav>
+
+        <div class="header-buttons">
+            <a href="donate.html" class="donate active">
+                ♡ Ziedot
+            </a>
+            <button type="button" class="register">
+                Pieteikties
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="eyebrow">KATRS LABAIS DARBS IR SVARĪGS</span>
+
+            <h1>
+                Dāvā cerību<br>
+                <span>mazajām ķepām ♡</span>
+            </h1>
+
+            <p>
+                Katrs ziedojums palīdz dzīvniekiem
+                saņemt nepieciešamo aprūpi, barību
+                un iespēju sagaidīt savu īsto ģimeni.
+            </p>
+
+            <a href="#ziedojums" class="primary-button">
+                Ziedot tagad →
+            </a>
+        </div>
+
+        <div class="hero-image">
+            <img
+                src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&amp;fit=crop&amp;w=1000&amp;q=85"
+                alt="Suņi">
+        </div>
+    </section>
+
+    <!-- DONATION FORM -->
+    <section class="donation-layout" id="ziedojums">
+
+        <div class="donation-card">
+            <span class="eyebrow">PALĪDZI DZĪVNIEKIEM</span>
+            <h2>Veic ziedojumu ♡</h2>
+            <p class="description">
+                Izvēlies sev piemērotāko ziedojuma summu.
+                Pat neliels atbalsts var daudz ko mainīt!
+            </p>
+
+            <form id="donationForm">
+
+                <h3>Ziedojuma veids</h3>
+
+                <div class="choice-row" id="frequencyChoices">
+                    <button type="button"
+                            class="choice active"
+                            data-frequency="once">
+                        Vienreizējs
+                    </button>
+
+                    <button type="button"
+                            class="choice"
+                            data-frequency="monthly">
+                        Ikmēneša
+                    </button>
+                </div>
+
+                <h3>Izvēlies summu</h3>
+
+                <div class="amount-grid" id="amountChoices">
+                    <button type="button" class="amount" data-amount="5">
+                        5 €
+                    </button>
+                    <button type="button" class="amount active" data-amount="10">
+                        10 €
+                    </button>
+                    <button type="button" class="amount" data-amount="20">
+                        20 €
+                    </button>
+                    <button type="button" class="amount" data-amount="50">
+                        50 €
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label for="customAmount">Cita summa (€)</label>
+                    <input type="number"
+                           id="customAmount"
+                           min="1"
+                           max="100000"
+                           step="0.01"
+                           placeholder="Ievadi savu summu">
+                </div>
+
+                <h3>Tava informācija</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Vārds</label>
+                        <input type="text"
+                               id="firstName"
+                               placeholder="Tavs vārds"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Uzvārds</label>
+                        <input type="text"
+                               id="lastName"
+                               placeholder="Tavs uzvārds"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-pasts</label>
+                    <input type="email"
+                           id="email"
+                           placeholder="Tavs e-pasts"
+                           required>
+                </div>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" required>
+                    Piekrītu personas datu apstrādei
+                    ziedojuma noformēšanas nolūkos
+                </label>
+
+                <div class="total-box">
+                    <span>Tavs ziedojums</span>
+                    <strong id="total">10,00 €</strong>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    Turpināt ar ziedojumu ♡
+                </button>
+
+                <p id="result" class="result" role="status"></p>
+
+                <p class="note">
+                    Demonstrācijas forma — īsti maksājumi
+                    pagaidām nav pieejami.
+                </p>
+
+            </form>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-column">
+
+            <div class="photo-card">
+                <img
+                    src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&amp;fit=crop&amp;w=900&amp;q=85"
+                    alt="Kaķis">
+            </div>
+
+            <div class="impact-card">
+                <h2>Kam palīdz Tavs ziedojums? 🐾</h2>
+
+                <div class="impact-item">
+                    <span class="impact-icon">🥣</span>
+                    <div>
+                        <h3>Barība</h3>
+                        <p>
+                            Pilnvērtīgs uzturs mūsu
+                            četrkājainajiem draugiem.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="impact-item">
+                    <span class="impact-icon">🩺</span>
+                    <div>
+                        <h3>Veterinārā aprūpe</h3>
+                        <p>
+                            Ārstēšana, vakcinācija
+                            un veselības pārbaudes.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="impact-item">
+                    <span class="impact-icon">🏡</span>
+                    <div>
+                        <h3>Drošas mājas</h3>
+                        <p>
+                            Silta un droša vide,
+                            kamēr dzīvnieki gaida ģimeni.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="impact-item">
+                    <span class="impact-icon">🧸</span>
+                    <div>
+                        <h3>Rotaļlietas un aprūpe</h3>
+                        <p>
+                            Lietas, kas palīdz padarīt
+                            ikdienu priecīgāku.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- OTHER HELP -->
+    <section class="help-banner">
+        <div>
+            <span class="eyebrow">KOPĀ MĒS VARAM VAIRĀK</span>
+            <h2>Palīdzēt var arī bez naudas ♡</h2>
+            <p>
+                Kļūsti par brīvprātīgo, atnes nepieciešamās
+                lietas vai palīdzi dzīvniekam atrast mājas!
+            </p>
+        </div>
+
+        <a href="help.html" class="primary-button">
+            Kā palīdzēt? →
+        </a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 PĒDAS MĀJĀS | Veidots ar mīlestību ♡
+    </footer>
+
+</div>
+
+<script>
+    const amountButtons = document.querySelectorAll(".amount");
+    const frequencyButtons = document.querySelectorAll(".choice");
+
+    const customAmount = document.getElementById("customAmount");
+    const total = document.getElementById("total");
+    const form = document.getElementById("donationForm");
+    const result = document.getElementById("result");
+
+    let selectedAmount = 10;
+    let selectedFrequency = "once";
+
+    function updateTotal() {
+        const formatted = selectedAmount.toLocaleString("lv-LV", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        total.textContent = formatted + " €";
+
+        if (selectedFrequency === "monthly") {
+            total.textContent += " / mēnesī";
+        }
+    }
+
+    amountButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            amountButtons.forEach(function(item) {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+            selectedAmount = Number(button.dataset.amount);
+            customAmount.value = "";
+
+            updateTotal();
+        });
+    });
+
+    customAmount.addEventListener("input", function() {
+        amountButtons.forEach(function(button) {
+            button.classList.remove("active");
+        });
+
+        selectedAmount = Number(customAmount.value);
+        updateTotal();
+    });
+
+    frequencyButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            frequencyButtons.forEach(function(item) {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+            selectedFrequency = button.dataset.frequency;
+
+            updateTotal();
+        });
+    });
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        if (!Number.isFinite(selectedAmount) ||
+            selectedAmount < 1 ||
+            selectedAmount > 100000) {
+            result.textContent =
+                "Lūdzu, izvēlies summu no 1 līdz 100 000 €.";
+        } else {
+            result.textContent =
+                "Paldies par vēlmi palīdzēt! " +
+                "Maksājumu sistēma vēl nav pieslēgta, " +
+                "tāpēc ziedojums nav veikts.";
+        }
+
+        result.style.display = "block";
+    });
+
+    updateTotal();
+</script>
+
+</body>
+</html>

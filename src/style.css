@@ -1,6 +1,14 @@
-/* =========================
-   PAMATA IESTATĪJUMI
-========================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --pink: #c43e73;
+    --pink-dark: #a72f60;
+    --pink-light: #f9dce8;
+    --pink-soft: #fff0f5;
+    --text: #292332;
+    --muted: #77707c;
+}
 
 * {
     margin: 0;
@@ -8,10 +16,14 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #ffffff;
-    color: #282326;
+    background: #fff7fa;
+    font-family: 'Nunito', sans-serif;
+    color: var(--text);
 }
 
 button {
@@ -20,637 +32,660 @@ button {
 }
 
 .page {
-    width: 100%;
-    margin: 0 auto;
+    width: 94%;
+    max-width: 1500px;
+    margin: auto;
 }
 
+a {
+    transition: 0.2s;
+}
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 .header {
-    height: 82px;
-
+    background: #fbe3ec;
     display: flex;
     align-items: center;
-
-    padding: 0 42px;
-
-    background-image: linear-gradient(to right, #FBDBDE , #FCF6F6);
+    justify-content: space-between;
+    gap: 20px;
+    padding: 15px 25px;
+    margin: 12px 0 18px;
+    border-radius: 18px;
 }
-
-
-/* LOGO */
 
 .logo {
     display: flex;
     align-items: center;
-
-    width: 270px;
+    gap: 12px;
+    color: var(--text);
+    text-decoration: none;
+    flex-shrink: 0;
 }
 
-.logo-icon {
-    width: 70px;
-    height: 70px;
-
+.logo img {
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
-    margin-right: 12px;
+    object-fit: cover;
 }
 
-.logo-text h2 {
-    font-size: 16px;
-    color: #b95670;
-
-    margin-bottom: 3px;
+.logo h2 {
+    font-size: 19px;
+    font-weight: 800;
 }
 
-.logo-text p {
-    font-size: 11px;
-
-    color: #b98f98;
+.logo p {
+    color: var(--pink);
+    font-size: 12px;
 }
-
-
-/* NAVIGĀCIJA */
 
 .navigation {
-    flex: 1;
-
     display: flex;
     align-items: center;
-    justify-content: center;
-
-    gap: 30px;
-
-    height: 100%;
+    gap: 25px;
+    flex-wrap: wrap;
 }
 
 .navigation a {
-    position: relative;
-
+    color: var(--text);
     text-decoration: none;
-
-    color: #443a3d;
-
-    font-size: 14px;
-    font-weight: 600;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
+    font-size: 15px;
+    white-space: nowrap;
 }
 
-.navigation a:hover {
-    color: #d05b79;
+.navigation a:hover,
+.navigation a.active {
+    color: var(--pink);
 }
 
 .navigation a.active {
-    color: #d05b79;
+    border-bottom: 2px solid var(--pink);
+    padding-bottom: 4px;
 }
-
-.navigation a.active::after {
-    content: "";
-
-    position: absolute;
-
-    bottom: 30px;
-    left: 0;
-
-    width: 100%;
-    height: 1px;
-
-    background-color: #d05b79;
-}
-
-
-/* HEADER POGAS */
 
 .header-buttons {
-    width: 260px;
-
     display: flex;
-    justify-content: flex-end;
+    gap: 12px;
+}
 
-    gap: 15px;
+.donate,
+.register {
+    border-radius: 11px;
+    padding: 12px 22px;
+    white-space: nowrap;
+    font-size: 14px;
+    text-decoration: none;
 }
 
 .donate {
-    height: 37px;
-
-    padding: 0 21px;
-
-    background-color: white;
-
-    border: 1px solid #dc718d;
-    border-radius: 5px;
-
-    color: #ce5474;
-
-    font-size: 12px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 7px;
+    color: var(--pink);
+    background: transparent;
+    border: 1px solid var(--pink);
 }
 
-.donate:first-letter {
-    font-size: 22px;
+.donate:hover {
+    background: white;
 }
 
 .register {
-    height: 37px;
-
-    padding: 0 25px;
-
-    border: none;
-    border-radius: 5px;
-
-    background-color: #c94e70;
-
+    background: var(--pink);
     color: white;
-
-    font-size: 12px;
+    border: 1px solid var(--pink);
 }
 
+.register:hover {
+    background: var(--pink-dark);
+}
 
-/* =========================
-   HERO
-========================= */
+/* BUTTONS */
+
+.primary-btn,
+.secondary-btn,
+.outline-btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 22px;
+    border-radius: 11px;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.primary-btn {
+    background: var(--pink);
+    color: white;
+}
+
+.primary-btn:hover {
+    background: var(--pink-dark);
+    transform: translateY(-2px);
+}
+
+.secondary-btn,
+.outline-btn {
+    background: transparent;
+    color: var(--pink);
+    border: 1px solid var(--pink);
+}
+
+.secondary-btn:hover,
+.outline-btn:hover {
+    background: white;
+}
+
+/* HERO */
 
 .hero {
-    width: 100%;
-    height: 325px;
-
-    display: flex;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    background: var(--pink-light);
+    border-radius: 18px;
+    overflow: hidden;
+    min-height: 400px;
 }
-
-
-/* KREISĀ PUSE */
 
 .hero-left {
-    width: 47%;
-
-    background-color: #fde5eb;
-
-    padding-left: 72px;
-    padding-right: 50px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    padding: 55px 48px;
+    align-self: center;
 }
 
-.hero-small {
-    font-size: 11px;
-    font-weight: bold;
-
-    letter-spacing: 0.7px;
-
-    color: #d46b84;
-
-    margin-bottom: 15px;
+.eyebrow {
+    color: var(--pink);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
 }
 
-.hero-left h1 {
-    font-size: 38px;
-    line-height: 1.12;
+.hero h1 {
+    font-size: clamp(38px, 4.3vw, 60px);
+    line-height: 1.16;
+    margin: 18px 0;
+    font-weight: 800;
+}
 
-    font-weight: 600;
-
-    letter-spacing: 0.5px;
-
-    margin-bottom: 19px;
-
-    color: #292326;
+.hero h1 span {
+    color: var(--pink);
 }
 
 .hero-description {
-    max-width: 400px;
-
-    font-size: 11px;
-    line-height: 1.55;
-
-    color: #494043;
-
-    margin-bottom: 25px;
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 570px;
+    color: #5b4c58;
 }
-
-
-/* HERO POGAS */
 
 .hero-buttons {
     display: flex;
-
-    gap: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
 }
 
-.animals-button {
-    border: none;
-
-    background-color: #cc5273;
-
-    color: white;
-
-    font-size: 11px;
-
-    padding: 12px 20px;
-
-    border-radius: 5px;
+.hero-note {
+    margin-top: 25px;
+    font-size: 13px;
+    color: var(--pink-dark);
+    font-weight: 700;
 }
 
-.help-button {
-    border: 1px solid #dc8097;
-
-    background-color: #fff1f4;
-
-    color: #7c4856;
-
-    font-size: 11px;
-
-    padding: 11px 21px;
-
-    border-radius: 5px;
+.hero-note span {
+    font-size: 22px;
+    vertical-align: middle;
+    margin-right: 6px;
 }
-
-
-/* LABĀ PUSE */
 
 .hero-right {
-    width: 53%;
-    height: 325px;
-
-    overflow: hidden;
+    position: relative;
+    min-height: 400px;
 }
 
 .hero-right img {
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
-    object-position: center;
+    display: block;
 }
 
+.hero-sticker {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    background: #fff7fa;
+    padding: 13px 19px;
+    border-radius: 30px;
+    color: var(--pink);
+    font-size: 14px;
+    font-weight: 800;
+    transform: rotate(-5deg);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
 
-/* =========================
-   STATISTIKA
-========================= */
+/* STATISTICS */
 
 .statistics {
-    height: 95px;
-
-    margin: 0 20px;
-
-    background-color: #FBDBDE;
-
-    border-radius: 0 0 7px 7px;
-
     display: grid;
-
-    grid-template-columns:
-        1fr 1fr 1fr 1fr;
-
-    align-items: center;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--pink-light);
+    border-radius: 15px;
+    margin-top: 18px;
+    padding: 26px;
 }
 
 .stat {
-    height: 55px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    gap: 16px;
-
-    border-right: 1px solid #e99aaf;
+    gap: 13px;
+    border-right: 1px solid #e9a9c2;
 }
 
-.last-stat {
+.stat:last-child {
     border-right: none;
 }
 
 .stat-icon {
-    width: 45px;
-
-    text-align: center;
-
-    font-size: 35px;
-
-    color: #dc5e80;
+    font-size: 34px;
+    color: var(--pink);
 }
 
 .stat h3 {
-    font-size: 14px;
-
-    font-weight: 600;
-
-    margin-bottom: 4px;
+    font-size: 21px;
 }
 
 .stat p {
-    font-size: 10px;
-
-    color: #595054;
+    font-size: 12px;
 }
 
+/* SECTION HEADINGS */
 
-/* =========================
-   DZĪVNIEKU SADAĻA
-========================= */
-
-.animals {
-    width: 100%;
-
-    padding: 55px 80px 70px;
-}
-
-.animals h2 {
-    font-size: 21px;
-
-    font-weight: 600;
-
-    margin-bottom: 13px;
-}
-
-
-/* =========================
-   FILTRI
-========================= */
-
-.filters {
+.section-heading {
     display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    margin-bottom: 20px;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
 }
 
-.filter {
-    border: none;
-
-    background-color: #f5e7eb;
-
-    color: #73545c;
-
-    border-radius: 20px;
-
-    padding: 6px 12px;
-
-    font-size: 9px;
+.section-heading h2 {
+    font-size: 32px;
+    margin: 10px 0;
 }
 
-.active-filter {
-    background-color: #cf5878;
-
-    color: white;
+.section-heading p {
+    font-size: 15px;
+    color: var(--muted);
 }
 
+.centered {
+    display: block;
+    text-align: center;
+}
 
-/* =========================
-   DZĪVNIEKU KARTĪTES
-========================= */
+/* ANIMALS */
+
+.animals-section {
+    margin-top: 45px;
+}
 
 .animal-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(6, 1fr);
-
-    gap: 14px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 }
 
 .animal-card {
-    min-width: 0;
-
-    background-color: #ffffff;
-
-    border-radius: 7px;
-
+    background: white;
+    border-radius: 17px;
     overflow: hidden;
-
-    box-shadow:
-        0 2px 9px rgba(0, 0, 0, 0.06);
-}
-
-.image-container {
-    position: relative;
-
-    width: 100%;
-    height: 115px;
-
-    overflow: hidden;
-}
-
-.image-container img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-}
-
-
-/* SIRDS POGA */
-
-.heart {
-    position: absolute;
-
-    top: 6px;
-    right: 6px;
-
-    width: 23px;
-    height: 23px;
-
-    border-radius: 50%;
-
-    border: none;
-
-    background-color: white;
-
-    color: #d45677;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 16px;
-
-    box-shadow:
-        0 1px 4px rgba(0, 0, 0, 0.15);
-}
-
-
-/* KARTĪTES TEKSTS */
-
-.animal-info {
-    padding: 8px 8px 10px;
-}
-
-.animal-info h3 {
-    font-size: 12px;
-
-    margin-bottom: 3px;
-
-    font-weight: 600;
-}
-
-.animal-info p {
-    font-size: 8px;
-
-    color: #9b9395;
-}
-
-
-/* =========================
-   HOVER
-========================= */
-
-.animal-card {
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+    border: 1px solid #f2d7e2;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .animal-card:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 5px 14px rgba(0, 0, 0, 0.11);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(180,65,110,0.12);
 }
 
-.heart:hover {
-    background-color: #d45677;
-
-    color: white;
+.animal-image {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
 }
 
+.animal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+}
 
-/* =========================
-   PLANŠETE
-========================= */
+.animal-card:hover img {
+    transform: scale(1.05);
+}
 
-@media (max-width: 1000px) {
+.animal-badge {
+    position: absolute;
+    top: 13px;
+    left: 13px;
+    background: #fff7fa;
+    color: var(--pink);
+    border-radius: 20px;
+    padding: 7px 12px;
+    font-size: 11px;
+    font-weight: 800;
+}
 
-    .navigation {
-        display: none;
+.animal-info {
+    padding: 18px;
+}
+
+.animal-info h3 {
+    font-size: 21px;
+    margin-bottom: 6px;
+}
+
+.animal-info p {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.animal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 15px;
+}
+
+.animal-tags span {
+    background: var(--pink-light);
+    color: #6d3c51;
+    border-radius: 20px;
+    padding: 7px 12px;
+    font-size: 11px;
+}
+
+.animals-bottom {
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* ABOUT PREVIEW */
+
+.about-preview {
+    display: grid;
+    grid-template-columns: 43% 57%;
+    background: var(--pink-light);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-top: 45px;
+}
+
+.about-image {
+    min-height: 330px;
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.about-content {
+    padding: 48px;
+    align-self: center;
+}
+
+.about-content h2 {
+    font-size: 34px;
+    margin: 12px 0 20px;
+}
+
+.about-content p {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 14px;
+}
+
+.about-content .primary-btn {
+    margin-top: 10px;
+}
+
+/* HELP */
+
+.help-section {
+    margin-top: 45px;
+}
+
+.help-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.help-card {
+    background: white;
+    border: 1px solid #f2d7e2;
+    border-radius: 17px;
+    padding: 26px;
+    min-height: 235px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+}
+
+.help-card:hover {
+    transform: translateY(-5px);
+}
+
+.help-icon {
+    width: 55px;
+    height: 55px;
+    display: grid;
+    place-items: center;
+    background: var(--pink-light);
+    border-radius: 14px;
+    font-size: 28px;
+    margin-bottom: 18px;
+}
+
+.help-card h3 {
+    font-size: 19px;
+    margin-bottom: 12px;
+}
+
+.help-card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+.help-card a {
+    margin-top: auto;
+    color: var(--pink);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.help-card a:hover {
+    text-decoration: underline;
+}
+
+/* BOTTOM BANNER */
+
+.bottom-banner {
+    margin-top: 45px;
+    background: var(--pink-light);
+    padding: 38px 45px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+}
+
+.bottom-banner h2 {
+    font-size: 30px;
+    margin: 10px 0;
+}
+
+.bottom-banner p {
+    font-size: 14px;
+}
+
+/* FOOTER */
+
+.footer {
+    margin-top: 35px;
+    padding: 25px 0;
+    border-top: 1px solid #edc8d8;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    padding-bottom: 25px;
+    margin: 0 10px;
+}
+
+.footer-brand h3 {
+    font-size: 19px;
+    color: var(--pink);
+    margin-bottom: 6px;
+}
+
+.footer-brand p {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.footer-links a:hover {
+    color: var(--pink);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #edc8d8;
+    font-size: 12px;
+    color: #8d7280;
+}
+
+/* TABLET */
+
+@media (max-width: 1150px) {
+    .header {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .animal-grid,
+    .help-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 750px) {
+    .page {
+        width: 96%;
     }
 
     .header {
-        justify-content: space-between;
-    }
-
-    .logo {
-        width: auto;
-    }
-
-    .header-buttons {
-        width: auto;
-    }
-
-    .hero-left {
-        padding-left: 40px;
-    }
-
-    .animal-grid {
-        grid-template-columns:
-            repeat(3, 1fr);
-    }
-
-    .image-container {
-        height: 170px;
-    }
-}
-
-
-/* =========================
-   TELEFONS
-========================= */
-
-@media (max-width: 650px) {
-
-    .header {
-        height: 70px;
-
-        padding: 0 18px;
-    }
-
-    .logo-icon {
-        width: 45px;
-        height: 45px;
-    }
-
-    .logo-text h2 {
-        font-size: 13px;
-    }
-
-    .header-buttons {
-        display: none;
-    }
-
-
-    /* HERO */
-
-    .hero {
-        height: auto;
-
-        flex-direction: column;
-    }
-
-    .hero-left {
-        width: 100%;
-
-        padding: 45px 25px;
-    }
-
-    .hero-left h1 {
-        font-size: 34px;
-    }
-
-    .hero-right {
-        width: 100%;
-        height: 260px;
-    }
-
-
-    /* STATISTIKA */
-
-    .statistics {
-        height: auto;
-
-        margin: 0;
-
-        grid-template-columns:
-            1fr 1fr;
-
         padding: 15px;
     }
 
+    .navigation {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-left {
+        padding: 35px 25px;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .hero-right {
+        min-height: 270px;
+        height: 270px;
+    }
+
+    .statistics {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
     .stat {
-        min-height: 80px;
+        border: none;
     }
 
-
-    /* DZĪVNIEKI */
-
-    .animals {
-        padding: 40px 20px;
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
-    .filters {
-        flex-wrap: wrap;
+    .about-preview {
+        grid-template-columns: 1fr;
     }
 
-    .animal-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+    .about-image {
+        height: 250px;
+        min-height: 250px;
     }
 
-    .image-container {
-        height: 130px;
+    .about-content {
+        padding: 30px 25px;
+    }
+
+    .bottom-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 30px 25px;
+    }
+
+    .footer-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .animal-grid,
+    .help-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .animal-image {
+        height: 250px;
     }
 }
