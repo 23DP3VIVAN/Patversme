@@ -1,4 +1,4 @@
-CREATE DATABASE animal_shelter; 
+CREATE DATABASE animal_shelter
 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE animals (
@@ -14,7 +14,7 @@ CREATE TABLE animals (
     photo VARCHAR(255) NOT NULL,
     arrival_date DATE NOT NULL,
     adoption_status ENUM('Pieejams', 'Adoptets', 'Rezervets') NOT NULL DEFAULT 'Pieejams',
-    owner_requirements TEXT NOT NULL,
+    owner_requirements TEXT NOT NULL
 );
 
 CREATE TABLE users (
@@ -36,7 +36,7 @@ CREATE TABLE donations (
     donor_name VARCHAR(60) NOT NULL,
     donor_email VARCHAR(40) NOT NULL,
     amount INT NOT NULL,
-    payment_method ENUM('VISA', 'Apple Pay', 'Google Pay', 'Internet Bank', 'Mastercard') NOT NULL,
+    payment_method ENUM('VISA', 'Apple Pay', 'Google Pay', 'Internet Bank', 'Mastercard') NOT NULL
 
 );
 
@@ -46,6 +46,8 @@ CREATE TABLE adoptions (
     animal_id INT NOT NULL,
     user_id INT NOT NULL,
     adoption_date DATE NOT NULL,
+    status ENUM('Gaida', 'Apstiprināts', 'Noraidīts')
+    NOT NULL DEFAULT 'Gaida',
 
     FOREIGN KEY (animal_id) REFERENCES animals(animal_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)

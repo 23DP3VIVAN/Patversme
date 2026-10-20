@@ -3,7 +3,9 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../config/database.php';
+session_start();
+
+require_once __DIR__ . '/config/database.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -18,22 +20,29 @@ function readJsonBody(): array
     $data = json_decode($rawBody, true);
 
     if (!is_array($data)) {
-        throw new InvalidArgumentException('Invalid JSON.');
+        throw new InvalidArgumentException('Nederīgs JSON.');
     }
 
     return $data;
 }
 
+function respond(int $status, array $result): void
+{
+    http_response_code($status);
+    echo json_encode($result, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        http_response_code(405);
-        echo json_encode(['error' => 'Method not allowed.']);
-        exit;
+        respond(405, [
+            'success' => false,
+            'error' => 'Metode nav atļauta.'
+        ]);
     }
 
     $data = readJsonBody();
     $pdo = getDatabaseConnection();
-
     $action = $data['action'] ?? '';
 
     // REGISTRATION
@@ -51,31 +60,30 @@ try {
             $password === ''
         ) {
             throw new InvalidArgumentException(
-                'All fields are required.'
+                'Aizpildiet visus laukus.'
             );
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException(
-                'Invalid email address.'
+                'Nederīga e-pasta adrese.'
             );
         }
 
         if (strlen($password) < 8) {
             throw new InvalidArgumentException(
-                'Password must contain at least 8 characters.'
+                'Parolei jābūt vismaz 8 simbolus garai.'
             );
         }
 
         $check = $pdo->prepare(
-            'SELECT user_id FROM users WHERE email = :email'
+            'SELECT user_id FROM users WHERE email = ?'
         );
-
-        $check->execute([':email' => $email]);
+        $check->execute([$email]);
 
         if ($check->fetch()) {
             throw new InvalidArgumentException(
-                'This email is already registered.'
+                'Šis e-pasts jau ir reģistrēts.'
             );
         }
 
@@ -87,26 +95,28 @@ try {
         $statement = $pdo->prepare(
             'INSERT INTO users
             (first_name, last_name, email, password, role)
-            VALUES
-            (:first_name, :last_name, :email, :password, :role)'
+            VALUES (?, ?, ?, ?, ?)'
         );
 
         $statement->execute([
-            ':first_name' => $firstName,
-            ':last_name' => $lastName,
-            ':email' => $email,
-            ':password' => $passwordHash,
-            ':role' => 'user'
+            $firstName,
+            $lastName,
+            $email,
+            $passwordHash,
+            'user'
         ]);
 
-        http_response_code(201);
+        $userId = (int) $pdo->lastInsertId();
 
-        echo json_encode([
-            'message' => 'Registration successful.',
-            'user_id' => (int) $pdo->lastInsertId()
+        session_regenerate_id(true);
+        $_SESSION['user_id'] = $userId;
+        $_SESSION['role'] = 'user';
+
+        respond(201, [
+            'success' => true,
+            'message' => 'Reģistrācija veiksmīga.',
+            'user_id' => $userId
         ]);
-
-        exit;
     }
 
     // LOGIN
@@ -120,59 +130,58 @@ try {
             $password === ''
         ) {
             throw new InvalidArgumentException(
-                'Email and password are required.'
+                'Ievadiet e-pastu un paroli.'
             );
         }
 
         $statement = $pdo->prepare(
             'SELECT user_id, first_name, last_name, email, password, role
              FROM users
-             WHERE email = :email'
+             WHERE email = ?'
         );
 
-        $statement->execute([':email' => $email]);
+        $statement->execute([$email]);
         $user = $statement->fetch();
 
         if (
             !$user ||
             !password_verify($password, $user['password'])
         ) {
-            http_response_code(401);
-
-            echo json_encode([
-                'error' => 'Incorrect email or password.'
+            respond(401, [
+                'success' => false,
+                'error' => 'Nepareizs e-pasts vai parole.'
             ]);
-
-            exit;
         }
+
+        session_regenerate_id(true);
+
+        $_SESSION['user_id'] = (int) $user['user_id'];
+        $_SESSION['role'] = $user['role'];
 
         unset($user['password']);
 
-        echo json_encode([
-            'message' => 'Login successful.',
+        respond(200, [
+            'success' => true,
+            'message' => 'Pieslēgšanās veiksmīga.',
             'user' => $user
         ]);
-
-        exit;
     }
 
     throw new InvalidArgumentException(
-        'Unknown action. Use register or login.'
+        'Nezināma darbība.'
     );
 
 } catch (InvalidArgumentException $exception) {
-    http_response_code(400);
-
-    echo json_encode([
+    respond(400, [
+        'success' => false,
         'error' => $exception->getMessage()
     ]);
 
 } catch (PDOException $exception) {
     error_log($exception->getMessage());
 
-    http_response_code(500);
-
-    echo json_encode([
-        'error' => 'Database error.'
+    respond(500, [
+        'success' => false,
+        'error' => 'Datubāzes kļūda.'
     ]);
 }
