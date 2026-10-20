@@ -25,14 +25,14 @@ function readJsonBody(): array
 }
 
 try {
-    $pdo = getDatabaseConnection();
-    $data = readJsonBody();
-
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         http_response_code(405);
         echo json_encode(['error' => 'Method not allowed.']);
         exit;
     }
+
+    $data = readJsonBody();
+    $pdo = getDatabaseConnection();
 
     $action = $data['action'] ?? '';
 
@@ -43,8 +43,13 @@ try {
         $email = strtolower(trim($data['email'] ?? ''));
         $password = $data['password'] ?? '';
 
-        if ($firstName === '' || $lastName === '' ||
-            $email === '' || $password === '') {
+        if (
+            $firstName === '' ||
+            $lastName === '' ||
+            $email === '' ||
+            !is_string($password) ||
+            $password === ''
+        ) {
             throw new InvalidArgumentException(
                 'All fields are required.'
             );
@@ -65,6 +70,7 @@ try {
         $check = $pdo->prepare(
             'SELECT user_id FROM users WHERE email = :email'
         );
+
         $check->execute([':email' => $email]);
 
         if ($check->fetch()) {
@@ -73,47 +79,33 @@ try {
             );
         }
 
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        $passwordHash = password_hash(
+            $password,
+            PASSWORD_DEFAULT
+        );
 
         $statement = $pdo->prepare(
             'INSERT INTO users
-            (first_name, last_name, email, password, birth_date, role)
+            (first_name, last_name, email, password, role)
             VALUES
-            (:first_name, :last_name, :email, :password, :birth_date, :role)'
+            (:first_name, :last_name, :email, :password, :role)'
         );
-
-        // The current database schema requires birth_date.
-        $birthDate = $data['birth_date'] ?? '';
-
-        if (!is_string($birthDate) ||
-            !preg_match('/^\d{4}-\d{2}-\d{2}$/', $birthDate)) {
-            throw new InvalidArgumentException(
-                'A valid birth_date (YYYY-MM-DD) is required.'
-            );
-        }
-
-        $date = DateTime::createFromFormat('!Y-m-d', $birthDate);
-
-        if (!$date || $date->format('Y-m-d') !== $birthDate) {
-            throw new InvalidArgumentException(
-                'Invalid birth date.'
-            );
-        }
 
         $statement->execute([
             ':first_name' => $firstName,
             ':last_name' => $lastName,
             ':email' => $email,
             ':password' => $passwordHash,
-            ':birth_date' => $birthDate,
             ':role' => 'user'
         ]);
 
         http_response_code(201);
+
         echo json_encode([
             'message' => 'Registration successful.',
             'user_id' => (int) $pdo->lastInsertId()
         ]);
+
         exit;
     }
 
@@ -122,7 +114,11 @@ try {
         $email = strtolower(trim($data['email'] ?? ''));
         $password = $data['password'] ?? '';
 
-        if ($email === '' || $password === '') {
+        if (
+            $email === '' ||
+            !is_string($password) ||
+            $password === ''
+        ) {
             throw new InvalidArgumentException(
                 'Email and password are required.'
             );
@@ -137,11 +133,16 @@ try {
         $statement->execute([':email' => $email]);
         $user = $statement->fetch();
 
-        if (!$user || !password_verify($password, $user['password'])) {
+        if (
+            !$user ||
+            !password_verify($password, $user['password'])
+        ) {
             http_response_code(401);
+
             echo json_encode([
                 'error' => 'Incorrect email or password.'
             ]);
+
             exit;
         }
 
@@ -151,6 +152,7 @@ try {
             'message' => 'Login successful.',
             'user' => $user
         ]);
+
         exit;
     }
 
@@ -160,9 +162,17 @@ try {
 
 } catch (InvalidArgumentException $exception) {
     http_response_code(400);
-    echo json_encode(['error' => $exception->getMessage()]);
+
+    echo json_encode([
+        'error' => $exception->getMessage()
+    ]);
+
 } catch (PDOException $exception) {
     error_log($exception->getMessage());
+
     http_response_code(500);
-    echo json_encode(['error' => 'Database error.']);
+
+    echo json_encode([
+        'error' => 'Database error.'
+    ]);
 }
