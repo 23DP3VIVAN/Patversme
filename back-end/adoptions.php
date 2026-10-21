@@ -1,27 +1,14 @@
-
 <?php
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
 function readJsonBody(): array
 {
-    $rawBody = file_get_contents('php://input');
-
-    if ($rawBody === false || trim($rawBody) === '') {
-        return [];
-    }
-
-    $decoded = json_decode($rawBody, true);
-
-    if (!is_array($decoded)) {
-        throw new InvalidArgumentException('Nederīgs JSON pieprasījums.');
-    }
-
-    return $decoded;
+    return $_POST;
 }
 
 try {

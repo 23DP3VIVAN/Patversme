@@ -1,9 +1,8 @@
-
 <?php
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -14,17 +13,10 @@ try {
         exit;
     }
 
-    $rawBody = file_get_contents('php://input');
-    $data = json_decode($rawBody ?: '', true);
+    $data = $_POST;
 
-    if (!is_array($data)) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Invalid JSON.']);
-        exit;
-    }
-
-    $firstName = trim($data['first_name'] ?? '');
-    $lastName = trim($data['last_name'] ?? '');
+    $firstName = trim($data['name'] ?? '');
+    $lastName = trim($data['surname'] ?? '');
     $email = trim($data['email'] ?? '');
     $topic = trim($data['topic'] ?? '');
     $message = trim($data['message'] ?? '');

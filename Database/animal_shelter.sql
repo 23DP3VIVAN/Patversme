@@ -5,7 +5,7 @@ CREATE TABLE animals (
     animal_id INT AUTO_INCREMENT PRIMARY KEY,
 
     name VARCHAR(30) NOT NULL,
-    birth_date DATE NOT NULL,
+    birth_date DATE NULL,
     species VARCHAR(30) NOT NULL,
     breed VARCHAR(50) NOT NULL,
     health_status VARCHAR(20) NOT NULL,

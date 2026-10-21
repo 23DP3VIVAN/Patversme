@@ -1,29 +1,16 @@
-
 <?php
 
 declare(strict_types=1);
 
 session_start();
 
-require_once __DIR__ . '/config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
 function readJsonBody(): array
 {
-    $rawBody = file_get_contents('php://input');
-
-    if ($rawBody === false || trim($rawBody) === '') {
-        return [];
-    }
-
-    $data = json_decode($rawBody, true);
-
-    if (!is_array($data)) {
-        throw new InvalidArgumentException('Nederīgs JSON.');
-    }
-
-    return $data;
+    return $_POST;
 }
 
 function respond(int $status, array $result): void
@@ -45,10 +32,17 @@ try {
     $pdo = getDatabaseConnection();
     $action = $data['action'] ?? '';
 
+if ($action === '' && isset($data['registerEmail'])) {
+    $action = 'register';
+}
+
+if ($action === '' && isset($data['loginEmail'])) {
+    $action = 'login';
+}
     // REGISTRATION
     if ($action === 'register') {
-        $firstName = trim($data['first_name'] ?? '');
-        $lastName = trim($data['last_name'] ?? '');
+        $firstName = trim($data['firstName'] ?? '');
+        $lastName = trim($data['lastName'] ?? '');
         $email = strtolower(trim($data['email'] ?? ''));
         $password = $data['password'] ?? '';
 
