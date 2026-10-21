@@ -1,28 +1,26 @@
 <?php
-
 declare(strict_types=1);
-
 require_once __DIR__ . '/../config/database.php';
-
 header('Content-Type: application/json; charset=utf-8');
 
 function readJsonBody(): array
 {
-    return $_POST;
+    $input = json_decode(file_get_contents('php://input'), true);
+    return is_array($input) && !empty($input) ? $input : $_POST;
 }
 
 try {
     $pdo = getDatabaseConnection();
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $sql = 'SELECT a.adoption_id, a.animal_id, a.user_id,
+        $sql = 'SELECT a.id AS adoption_id, a.animal_id, a.user_id,
                        a.adoption_date, a.status,
-                       u.first_name, u.last_name, u.email,
+                       u.name, u.last_name, u.email,
                        an.name AS animal_name, an.species
                 FROM adoptions a
-                INNER JOIN users u ON u.user_id = a.user_id
-                INNER JOIN animals an ON an.animal_id = a.animal_id
-                ORDER BY a.adoption_id DESC';
+                INNER JOIN users u ON u.id = a.user_id
+                INNER JOIN animals an ON an.id = a.animal_id
+                ORDER BY a.id DESC';
 
         $statement = $pdo->query($sql);
 
@@ -59,7 +57,7 @@ try {
 
         $statement = $pdo->prepare(
             "SELECT adoption_status FROM animals
-             WHERE animal_id = ? FOR UPDATE"
+             WHERE id = ? FOR UPDATE"
         );
         $statement->execute([$animalId]);
         $animal = $statement->fetch();
@@ -74,7 +72,7 @@ try {
             exit;
         }
 
-        if ($animal['adoption_status'] !== 'Pieejams') {
+        if ($animal['adoption_status'] !== 'Available') {
             $pdo->rollBack();
             http_response_code(409);
             echo json_encode([
@@ -85,7 +83,7 @@ try {
         }
 
         $statement = $pdo->prepare(
-            'SELECT user_id FROM users WHERE user_id = ?'
+            'SELECT id FROM users WHERE id = ?'
         );
         $statement->execute([$userId]);
 
@@ -107,8 +105,8 @@ try {
         $statement->execute([$animalId, $userId, $adoptionDate]);
 
         $statement = $pdo->prepare(
-            "UPDATE animals SET adoption_status = 'Rezervets'
-             WHERE animal_id = ?"
+            "UPDATE animals SET adoption_status = 'Reserved'
+             WHERE id = ?"
         );
         $statement->execute([$animalId]);
 
