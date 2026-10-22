@@ -113,7 +113,6 @@ if ($action === '' && isset($data['loginEmail'])) {
         ]);
     }
 
-    // LOGIN
     if ($action === 'login') {
         $email = strtolower(trim($data['email'] ?? ''));
         $password = $data['password'] ?? '';

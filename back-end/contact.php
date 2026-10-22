@@ -19,21 +19,30 @@ try {
     $topic = trim($data['topic'] ?? '');
     $message = trim($data['message'] ?? '');
 
-    if (
-        $firstName === '' ||
-        $lastName === '' ||
-        $topic === '' ||
-        $message === '' ||
-        !filter_var($email, FILTER_VALIDATE_EMAIL)
-    ) {
+    // Проверяем каждое поле по отдельности, чтобы понять, где проблема
+    if ($firstName === '') {
         http_response_code(400);
-        echo json_encode(['error' => 'Please provide valid contact details.']);
+        echo json_encode(['error' => 'Kļūda: Nav ievadīts vārds (name)!']);
         exit;
     }
-
-    if (mb_strlen($message) > 5000) {
+    if ($lastName === '') {
         http_response_code(400);
-        echo json_encode(['error' => 'Message is too long.']);
+        echo json_encode(['error' => 'Kļūda: Nav ievadīts uzvārds (surname)!']);
+        exit;
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Kļūda: Nederīgs e-pasts (email)!']);
+        exit;
+    }
+    if ($topic === '') {
+        http_response_code(400);
+        echo json_encode(['error' => 'Kļūda: Nav izvēlēta tēma (topic)!']);
+        exit;
+    }
+    if ($message === '') {
+        http_response_code(400);
+        echo json_encode(['error' => 'Kļūda: Ziņa ir tukša (message)!']);
         exit;
     }
 
@@ -59,8 +68,8 @@ try {
         'message' => 'Your message has been received.'
     ]);
 
-} catch (PDOException $exception) {
+} catch (Exception $exception) {
     error_log($exception->getMessage());
     http_response_code(500);
-    echo json_encode(['error' => 'Unable to save your message.']);
+    echo json_encode(['error' => 'Neizdevās saglabāt ziņu: ' . $exception->getMessage()]);
 }

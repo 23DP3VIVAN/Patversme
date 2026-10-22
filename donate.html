@@ -321,26 +321,52 @@
         });
     });
 
-    form.addEventListener("submit", function(event) {
+    // Новый скрипт отправки данных в PHP-бэкенд
+    form.addEventListener("submit", async function(event) {
         event.preventDefault();
 
-        if (!Number.isFinite(selectedAmount) ||
-            selectedAmount < 1 ||
-            selectedAmount > 100000) {
-            result.textContent =
-                "Lūdzu, izvēlies summu no 1 līdz 100 000 €.";
-        } else {
-            result.textContent =
-                "Paldies par vēlmi palīdzēt! " +
-                "Maksājumu sistēma vēl nav pieslēgta, " +
-                "tāpēc ziedojums nav veikts.";
+        if (!Number.isFinite(selectedAmount) || selectedAmount < 1 || selectedAmount > 100000) {
+            result.textContent = "Lūdzu, izvēlies summu no 1 līdz 100 000 €.";
+            result.style.display = "block";
+            return;
+        }
+
+        const formData = {
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            email: document.getElementById("email").value,
+            customAmount: selectedAmount,
+            payment_method: "Mastercard" // Стандартный метод оплаты по умолчанию для этой формы
+        };
+
+        try {
+            const response = await fetch("back-end/donations.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const resData = await response.json();
+
+            if (response.ok) {
+                result.textContent = "Paldies par ziedojumu! Maksājums reģistrēts.";
+                form.reset();
+                selectedAmount = 10;
+                updateTotal();
+            } else {
+                result.textContent = resData.error || "Kļūda apstrādājot ziedojumu.";
+            }
+        } catch (error) {
+            result.textContent = "Neizdevās izveidot savienojumu ar serveri.";
         }
 
         result.style.display = "block";
     });
 
     updateTotal();
-</script> 
+</script>
 
 
 

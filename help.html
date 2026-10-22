@@ -193,63 +193,57 @@
 
             <form id="volunteerForm">
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="name">Vārds</label>
-                        <input type="text" id="name"
-                            placeholder="Tavs vārds" required>
-                    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="name">Vārds</label>
+            <input type="text" id="name" placeholder="Tavs vārds" required>
+        </div>
 
-                    <div class="form-group">
-                        <label for="surname">Uzvārds</label>
-                        <input type="text" id="surname"
-                            placeholder="Tavs uzvārds" required>
-                    </div>
-                </div>
+        <div class="form-group">
+            <label for="surname">Uzvārds</label>
+            <input type="text" id="surname" placeholder="Tavs uzvārds" required>
+        </div>
+    </div>
 
-                <div class="form-group">
-                    <label for="email">E-pasts</label>
-                    <input type="email" id="email"
-                        placeholder="Tavs e-pasts" required>
-                </div>
+    <div class="form-group">
+        <label for="email">E-pasts</label>
+        <input type="email" id="email" placeholder="Tavs e-pasts" required>
+    </div>
 
-                <div class="form-group">
-                    <label for="phone">Tālrunis</label>
-                    <input type="tel" id="phone"
-                        placeholder="+371 XXXXXXXX" required>
-                </div>
+    <div class="form-group">
+        <label for="phone">Tālrunis</label>
+        <input type="tel" id="phone" placeholder="+371 XXXXXXXX" required>
+    </div>
 
-                <div class="form-group">
-                    <label for="activity">Kā vēlies palīdzēt?</label>
-                    <select id="activity" required>
-                        <option value="">Izvēlies iespēju</option>
-                        <option>Dzīvnieku aprūpe</option>
-                        <option>Suņu pastaigas</option>
-                        <option>Transportēšana</option>
-                        <option>Pasākumu organizēšana</option>
-                        <option>Cita palīdzība</option>
-                    </select>
-                </div>
+    <div class="form-group">
+        <label for="activity">Kā vēlies palīdzēt?</label>
+        <select id="activity" required>
+            <option value="">Izvēlies iespēju</option>
+            <option>Dzīvnieku aprūpe</option>
+            <option>Suņu pastaigas</option>
+            <option>Transportēšana</option>
+            <option>Pasākumu organizēšana</option>
+            <option>Cita palīdzība</option>
+        </select>
+    </div>
 
-                <div class="form-group">
-                    <label for="message">Papildu informācija</label>
-                    <textarea id="message" rows="4"
-                        placeholder="Pastāsti nedaudz par sevi..."></textarea>
-                </div>
+    <div class="form-group">
+        <label for="message">Papildu informācija</label>
+        <textarea id="message" rows="4" placeholder="Pastāsti nedaudz par sevi..."></textarea>
+    </div>
 
-                <label class="privacy">
-                    <input type="checkbox" required>
-                    Piekrītu personas datu apstrādei saziņas nolūkos
-                </label>
+    <label class="privacy">
+        <input type="checkbox" required>
+        Piekrītu personas datu apstrādei saziņas nolūkos
+    </label>
 
-                <button type="submit" class="submit-button">
-                    Nosūtīt pieteikumu →
-                </button>
+    <button type="submit" class="submit-button">
+        Nosūtīt pieteikumu →
+    </button>
 
-                <p id="formMessage" class="form-message"
-                   role="status" aria-live="polite"></p>
+    <p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
 
-            </form>
+</form>
         </div>
     </section>
 
@@ -295,11 +289,49 @@
     const form = document.getElementById("volunteerForm");
     const formMessage = document.getElementById("formMessage");
 
-    form.addEventListener("submit", function(event) {
+    form.addEventListener("submit", async function(event) {
         event.preventDefault();
 
-        formMessage.textContent =
-            "Pieteikums ir aizpildīts! Nosūtīšana būs pieejama pēc servera pieslēgšanas.";
+        const formData = {
+            name: document.getElementById("name").value,
+            surname: document.getElementById("surname").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            activity: document.getElementById("activity").value,
+            message: document.getElementById("message").value
+        };
+
+        try {
+            const response = await fetch("back-end/volunteers.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const textResponse = await response.text();
+            let resData;
+            
+            try {
+                resData = JSON.parse(textResponse);
+            } catch (e) {
+                throw new Error("PHP kļūda: " + textResponse.substring(0, 150));
+            }
+
+            if (response.ok) {
+                formMessage.textContent = "Paldies! Tavs brīvprātīgā pieteikums ir veiksmīgi nosūtīts.";
+                formMessage.style.color = "green";
+                form.reset();
+            } else {
+                formMessage.textContent = resData.error || "Kļūda, nosūtot pieteikumu.";
+                formMessage.style.color = "red";
+            }
+        } catch (error) {
+            console.error(error);
+            formMessage.textContent = error.message;
+            formMessage.style.color = "red";
+        }
 
         formMessage.style.display = "block";
     });
@@ -311,12 +343,10 @@
             url: window.location.origin + "/animals.html"
         };
 
-        if (navigator.share) {
+        if (navigator.navigator && navigator.share) {
             try {
                 await navigator.share(shareData);
-            } catch (error) {
-                // Lietotājs atcēla kopīgošanu
-            }
+            } catch (error) {}
         } else {
             try {
                 await navigator.clipboard.writeText(shareData.url);
@@ -326,8 +356,7 @@
             }
         }
     });
-</script> 
-
+</script>
 
 </body>
 </html>

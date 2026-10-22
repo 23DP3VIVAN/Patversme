@@ -96,56 +96,51 @@
                 Aizpildi formu, un mēs ar Tevi sazināsimies!
             </p>
 
-                <form action="back-end/contact.php" method="POST">                    <div class="form-row">
-                    <div class="form-group">
-                        <label for="name">Vārds</label>
-                        <input type="text" id="name"
-                            placeholder="Tavs vārds" required>
-                    </div>
+                <form action="back-end/contact.php" method="POST">
+    <div class="form-row">
+        <div class="form-group">
+            <label for="name">Vārds</label>
+            <input type="text" id="name" name="name" placeholder="Tavs vārds" required>
+        </div>
 
-                    <div class="form-group">
-                        <label for="surname">Uzvārds</label>
-                        <input type="text" id="surname"
-                            placeholder="Tavs uzvārds" required>
-                    </div>
-                </div>
+        <div class="form-group">
+            <label for="surname">Uzvārds</label>
+            <input type="text" id="surname" name="surname" placeholder="Tavs uzvārds" required>
+        </div>
+    </div>
 
-                <div class="form-group">
-                    <label for="email">E-pasts</label>
-                    <input type="email" id="email"
-                        placeholder="Tavs e-pasts" required>
-                </div>
+    <div class="form-group">
+        <label for="email">E-pasts</label>
+        <input type="email" id="email" name="email" placeholder="Tavs e-pasts" required>
+    </div>
 
-                <div class="form-group">
-                    <label for="topic">Ziņas tēma</label>
-                    <select id="topic" required>
-                        <option value="">Izvēlies tēmu</option>
-                        <option>Dzīvnieku adopcija</option>
-                        <option>Brīvprātīgais darbs</option>
-                        <option>Ziedojumi</option>
-                        <option>Cits jautājums</option>
-                    </select>
-                </div>
+    <div class="form-group">
+        <label for="topic">Ziņas tēma</label>
+        <select id="topic" name="topic" required>
+            <option value="">Izvēlies tēmu</option>
+            <option>Dzīvnieku adopcija</option>
+            <option>Brīvprātīgais darbs</option>
+            <option>Ziedojumi</option>
+            <option>Cits jautājums</option>
+        </select>
+    </div>
 
-                <div class="form-group">
-                    <label for="message">Tava ziņa</label>
-                    <textarea id="message" rows="5"
-                        placeholder="Raksti savu ziņu..."
-                        required></textarea>
-                </div>
+    <div class="form-group">
+        <label for="message">Tava ziņa</label>
+        <textarea id="message" name="message" rows="5" placeholder="Raksti savu ziņu..." required></textarea>
+    </div>
 
-                <label class="privacy">
-                    <input type="checkbox" required>
-                    Piekrītu savu datu apstrādei saziņas nolūkos
-                </label>
+    <label class="privacy">
+        <input type="checkbox" required>
+        Piekrītu savu datu apstrādei saziņas nolūkos
+    </label>
 
-                <button type="submit" class="send-button">
-                    Nosūtīt ziņu →
-                </button>
+    <button type="submit" class="send-button">
+        Nosūtīt ziņu →
+    </button>
 
-                <p id="formStatus" class="form-status"
-                   role="status" aria-live="polite"></p>
-            </form>
+    <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+</form>
         </div>
 
         <!-- LOCATION -->
@@ -213,13 +208,50 @@
 </div>
 
 <script>
-    const form = document.getElementById("contactForm");
-    const status = document.getElementById("formStatus");
-    form.addEventListener("submit", function(event) {
-        event.preventDefault();
-        status.textContent = "Forma ir aizpildīta!...";
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector("form");
+        const status = document.getElementById("formStatus");
+
+        if (!form) return;
+
+        form.addEventListener("submit", async function(event) {
+            event.preventDefault(); 
+
+            const formData = {
+                name: document.getElementById("name").value,
+                surname: document.getElementById("surname").value,
+                email: document.getElementById("email").value,
+                topic: document.getElementById("topic").value,
+                message: document.getElementById("message").value
+            };
+
+            try {
+                const response = await fetch("back-end/contact.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    status.textContent = "Ziņa veiksmīgi nosūtīta! Paldies. ♡";
+                    status.style.color = "green";
+                    form.reset(); 
+                    status.textContent = result.error || "Kļūda nosūtot ziņu.";
+                    status.style.color = "red";
+                }
+            } catch (error) {
+                status.textContent = "Neizdevās izveidot savienojumu ar serveri.";
+                status.style.color = "red";
+            }
+
+            status.classList.add("visible");
+        });
     });
-</script> 
+</script>
 
 
 </body>
