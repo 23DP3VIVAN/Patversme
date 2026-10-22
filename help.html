@@ -218,12 +218,12 @@
     <div class="form-group">
         <label for="activity">Kā vēlies palīdzēt?</label>
         <select id="activity" required>
-            <option value="">Izvēlies iespēju</option>
-            <option>Dzīvnieku aprūpe</option>
-            <option>Suņu pastaigas</option>
-            <option>Transportēšana</option>
-            <option>Pasākumu organizēšana</option>
-            <option>Cita palīdzība</option>
+            <option value="" disabled selected>Izvēlies iespēju</option>
+            <option value="Dzīvnieku aprūpe">Dzīvnieku aprūpe</option>
+            <option value="Suņu pastaigas">Suņu pastaigas</option>
+            <option value="Transportēšana">Transportēšana</option>
+            <option value="Pasākumu organizēšana">Pasākumu organizēšana</option>
+            <option value="Cita palīdzība">Cita palīdzība</option>
         </select>
     </div>
 
@@ -284,83 +284,8 @@
     </footer>
 
 </div>
-<<<<<<< HEAD
 
- <script>
-    const form = document.getElementById("volunteerForm");
-    const formMessage = document.getElementById("formMessage");
-
-    form.addEventListener("submit", async function(event) {
-        event.preventDefault();
-
-        const formData = {
-            name: document.getElementById("name").value,
-            surname: document.getElementById("surname").value,
-            email: document.getElementById("email").value,
-            phone: document.getElementById("phone").value,
-            activity: document.getElementById("activity").value,
-            message: document.getElementById("message").value
-        };
-
-        try {
-            const response = await fetch("back-end/volunteers.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            });
-
-            const textResponse = await response.text();
-            let resData;
-            
-            try {
-                resData = JSON.parse(textResponse);
-            } catch (e) {
-                throw new Error("PHP kļūda: " + textResponse.substring(0, 150));
-            }
-
-            if (response.ok) {
-                formMessage.textContent = "Paldies! Tavs brīvprātīgā pieteikums ir veiksmīgi nosūtīts.";
-                formMessage.style.color = "green";
-                form.reset();
-            } else {
-                formMessage.textContent = resData.error || "Kļūda, nosūtot pieteikumu.";
-                formMessage.style.color = "red";
-            }
-        } catch (error) {
-            console.error(error);
-            formMessage.textContent = error.message;
-            formMessage.style.color = "red";
-        }
-
-        formMessage.style.display = "block";
-    });
-
-    document.getElementById("shareButton").addEventListener("click", async function() {
-        const shareData = {
-            title: "Pēdas Mājās",
-            text: "Palīdzi dzīvniekiem atrast mājas!",
-            url: window.location.origin + "/animals.html"
-        };
-
-        if (navigator.navigator && navigator.share) {
-            try {
-                await navigator.share(shareData);
-            } catch (error) {}
-        } else {
-            try {
-                await navigator.clipboard.writeText(shareData.url);
-                alert("Saite nokopēta!");
-            } catch (error) {
-                alert("Atver dzīvnieku lapu un nokopē tās adresi.");
-            }
-        }
-    });
-</script>
-
-=======
 <script src="src/js/help.js"></script> 
->>>>>>> 61aa51f879a364aa42e264bddb2b860c0c2cdff2
+
 </body>
 </html>

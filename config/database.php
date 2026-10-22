@@ -52,5 +52,25 @@ function getDatabaseConnection()
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
 
+    $db->exec('CREATE TABLE IF NOT EXISTS donations (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        donor_name VARCHAR(200) NOT NULL,
+        donor_email VARCHAR(100) NOT NULL,
+        amount DECIMAL(10,2) NOT NULL,
+        payment_method VARCHAR(50) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+
+    $db->exec('CREATE TABLE IF NOT EXISTS adoptions (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        animal_name VARCHAR(100) NOT NULL,
+        first_name VARCHAR(100) NOT NULL,
+        last_name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        phone VARCHAR(50) NOT NULL,
+        message TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+
     return $db;
 }

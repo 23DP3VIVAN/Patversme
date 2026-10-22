@@ -10,6 +10,13 @@ header('Content-Type: application/json; charset=utf-8');
 
 function readJsonBody(): array
 {
+    $input = file_get_contents('php://input');
+    if (!empty($input)) {
+        $decoded = json_decode($input, true);
+        if (is_array($decoded)) {
+            return $decoded;
+        }
+    }
     return $_POST;
 }
 
@@ -32,13 +39,14 @@ try {
     $pdo = getDatabaseConnection();
     $action = $data['action'] ?? '';
 
-if ($action === '' && isset($data['registerEmail'])) {
-    $action = 'register';
-}
+    if ($action === '' && isset($data['registerEmail'])) {
+        $action = 'register';
+    }
 
-if ($action === '' && isset($data['loginEmail'])) {
-    $action = 'login';
-}
+    if ($action === '' && isset($data['loginEmail'])) {
+        $action = 'login';
+    }
+
     // REGISTRATION
     if ($action === 'register') {
         $firstName = trim($data['firstName'] ?? '');
@@ -71,7 +79,7 @@ if ($action === '' && isset($data['loginEmail'])) {
         }
 
         $check = $pdo->prepare(
-            'SELECT user_id FROM users WHERE email = ?'
+            'SELECT id FROM users WHERE email = ?'
         );
         $check->execute([$email]);
 
@@ -88,23 +96,21 @@ if ($action === '' && isset($data['loginEmail'])) {
 
         $statement = $pdo->prepare(
             'INSERT INTO users
-            (first_name, last_name, email, password, role)
-            VALUES (?, ?, ?, ?, ?)'
+            (first_name, last_name, email, password)
+            VALUES (?, ?, ?, ?)'
         );
 
         $statement->execute([
             $firstName,
             $lastName,
             $email,
-            $passwordHash,
-            'user'
+            $passwordHash
         ]);
 
         $userId = (int) $pdo->lastInsertId();
 
         session_regenerate_id(true);
         $_SESSION['user_id'] = $userId;
-        $_SESSION['role'] = 'user';
 
         respond(201, [
             'success' => true,
@@ -128,7 +134,7 @@ if ($action === '' && isset($data['loginEmail'])) {
         }
 
         $statement = $pdo->prepare(
-            'SELECT user_id, first_name, last_name, email, password, role
+            'SELECT id, first_name, last_name, email, password
              FROM users
              WHERE email = ?'
         );
@@ -148,8 +154,7 @@ if ($action === '' && isset($data['loginEmail'])) {
 
         session_regenerate_id(true);
 
-        $_SESSION['user_id'] = (int) $user['user_id'];
-        $_SESSION['role'] = $user['role'];
+        $_SESSION['user_id'] = (int) $user['id'];
 
         unset($user['password']);
 
@@ -175,6 +180,6 @@ if ($action === '' && isset($data['loginEmail'])) {
 
     respond(500, [
         'success' => false,
-        'error' => 'Datubāzes kļūda.'
+        'error' => 'Datubāzes kļūda: ' . $exception->getMessage()
     ]);
 }
