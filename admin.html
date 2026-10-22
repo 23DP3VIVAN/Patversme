@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panelis | PĒDAS MĀJĀS</title>
+    <link rel="stylesheet" href="src/admin.css">
+    <script src="src/admin.js" defer></script>
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <a href="index.html" class="brand">
+            <img src="src/img/logo.jpg" alt="Logo">
+            <div>
+                <h2>PĒDAS MĀJĀS</h2>
+                <p>Administrācijas panelis</p>
+            </div>
+        </a>
+
+        <p class="menu-label">GALVENĀ IZVĒLNE</p>
+
+        <nav class="side-nav">
+            <button class="nav-link active" data-page="overview">
+                <span>▦</span> Pārskats
+            </button>
+            <button class="nav-link" data-page="animals">
+                <span>🐾</span> Dzīvnieki
+            </button>
+            <button class="nav-link" data-page="applications">
+                <span>▤</span> Adopcijas pieteikumi
+            </button>
+            <button class="nav-link" data-page="users">
+                <span>♙</span> Lietotāji
+            </button>
+            <button class="nav-link" data-page="messages">
+                <span>✉</span> Ziņojumi
+            </button>
+            <button class="nav-link" data-page="donations">
+                <span>♡</span> Ziedojumi
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="index.html">← Atgriezties vietnē</a>
+            <button type="button" id="logoutBtn">Izlogoties</button>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <span class="eyebrow">PĒDAS MĀJĀS / ADMIN</span>
+                <h1 id="pageTitle">Pārskats</h1>
+            </div>
+            <div class="admin-profile">
+                <span class="avatar">A</span>
+                <div>
+                    <strong>Admin</strong>
+                    <small>Administrators</small>
+                </div>
+            </div>
+        </header>
+
+        <!-- OVERVIEW -->
+        <section id="overview" class="admin-page active">
+            <div class="welcome">
+                <div>
+                    <h2>Sveika, Admin! 👋</h2>
+                    <p>Šeit vari pārvaldīt patversmes informāciju.</p>
+                </div>
+                <span>🐾</span>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-icon">🐾</span>
+                    <div>
+                        <strong id="animalCount">0</strong>
+                        <p>Dzīvnieki</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">♡</span>
+                    <div>
+                        <strong id="applicationCount">0</strong>
+                        <p>Adopcijas pieteikumi</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">♙</span>
+                    <div>
+                        <strong id="userCount">0</strong>
+                        <p>Lietotāji</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">€</span>
+                    <div>
+                        <strong id="donationTotal">0 €</strong>
+                        <p>Ziedojumi</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h2>Ātrās darbības</h2>
+                </div>
+                <div class="quick-actions">
+                    <button data-go="animals">+ Pievienot dzīvnieku</button>
+                    <button data-go="applications">Skatīt pieteikumus</button>
+                    <button data-go="messages">Skatīt ziņojumus</button>
+                    <button data-go="users">Pārvaldīt lietotājus</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h2>Pēdējie adopcijas pieteikumi</h2>
+                    <button class="text-button" data-go="applications">
+                        Skatīt visus →
+                    </button>
+                </div>
+                <div id="recentApplications"></div>
+            </div>
+        </section>
+
+        <!-- ANIMALS -->
+        <section id="animals" class="admin-page">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Dzīvnieku pārvaldība</h2>
+                        <p>Pievieno, rediģē un pārvaldi dzīvniekus.</p>
+                    </div>
+                    <button class="primary-btn" id="addAnimalBtn">
+                        + Pievienot dzīvnieku
+                    </button>
+                </div>
+
+                <div class="filters">
+                    <input id="animalSearch"
+                           type="search"
+                           placeholder="Meklēt pēc vārda...">
+                    <select id="animalFilter">
+                        <option value="all">Visi dzīvnieki</option>
+                        <option value="Suns">Suņi</option>
+                        <option value="Kaķis">Kaķi</option>
+                    </select>
+                </div>
+
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dzīvnieks</th>
+                                <th>Tips</th>
+                                <th>Vecums</th>
+                                <th>Statuss</th>
+                                <th>Darbības</th>
+                            </tr>
+                        </thead>
+                        <tbody id="animalsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- APPLICATIONS -->
+        <section id="applications" class="admin-page">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Adopcijas pieteikumi</h2>
+                        <p>Izskati saņemtos pieteikumus.</p>
+                    </div>
+                </div>
+
+                <div class="filters">
+                    <select id="applicationFilter">
+                        <option value="all">Visi statusi</option>
+                        <option value="Jauns">Jauns</option>
+                        <option value="Izskatīšanā">Izskatīšanā</option>
+                        <option value="Apstiprināts">Apstiprināts</option>
+                        <option value="Noraidīts">Noraidīts</option>
+                    </select>
+                </div>
+
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dzīvnieks</th>
+                                <th>Pieteicējs</th>
+                                <th>Datums</th>
+                                <th>Statuss</th>
+                                <th>Darbības</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- USERS -->
+        <section id="users" class="admin-page">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Reģistrētie lietotāji</h2>
+                        <p>Lietotāju informācijas pārskats.</p>
+                    </div>
+                </div>
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Vārds</th>
+                                <th>E-pasts</th>
+                                <th>Loma</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- MESSAGES -->
+        <section id="messages" class="admin-page">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Saņemtie ziņojumi</h2>
+                        <p>Jautājumi un ziņojumi no apmeklētājiem.</p>
+                    </div>
+                </div>
+                <div id="messagesList" class="message-list"></div>
+            </div>
+        </section>
+
+        <!-- DONATIONS -->
+        <section id="donations" class="admin-page">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Ziedojumu pārskats</h2>
+                        <p>Demonstrācijas ziedojumu saraksts.</p>
+                    </div>
+                </div>
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ziedotājs</th>
+                                <th>Summa</th>
+                                <th>Datums</th>
+                                <th>Statuss</th>
+                            </tr>
+                        </thead>
+                        <tbody id="donationsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <footer class="admin-footer">
+            © 2026 PĒDAS MĀJĀS — Demonstrācijas admin panelis
+        </footer>
+    </main>
+</div>
+
+<!-- ADD / EDIT ANIMAL MODAL -->
+<dialog id="animalDialog">
+    <form id="animalForm" class="modal-form">
+        <div class="modal-heading">
+            <h2 id="modalTitle">Pievienot dzīvnieku</h2>
+            <button type="button" id="closeModal" aria-label="Aizvērt">×</button>
+        </div>
+
+        <input type="hidden" id="editAnimalId">
+
+        <label for="animalName">Vārds</label>
+        <input id="animalName" type="text" required maxlength="60">
+
+        <label for="animalType">Dzīvnieka tips</label>
+        <select id="animalType">
+            <option value="Suns">Suns</option>
+            <option value="Kaķis">Kaķis</option>
+        </select>
+
+        <label for="animalAge">Vecums</label>
+        <input id="animalAge" type="text"
+               placeholder="Piemēram, 2 gadi" required maxlength="40">
+
+        <label for="animalStatus">Statuss</label>
+        <select id="animalStatus">
+            <option value="Pieejams">Pieejams</option>
+            <option value="Rezervēts">Rezervēts</option>
+            <option value="Adoptēts">Adoptēts</option>
+        </select>
+
+        <label for="animalDescription">Apraksts</label>
+        <textarea id="animalDescription" rows="3"></textarea>
+
+        <button type="submit" class="primary-btn">Saglabāt</button>
+    </form>
+</dialog>
+
+</body>
+</html>
