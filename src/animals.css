@@ -482,7 +482,7 @@ button {
 
 .modalContent {
   position: relative;
-  background: white;
+  background: #fbe5ed;
   color: var(--text);
   width: 100%;
   max-width: 500px;
