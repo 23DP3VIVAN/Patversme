@@ -3,112 +3,15 @@
 
 // DEMO DATA - данные пока не сохраняются в MySQL
 
-let animals = [
-    {
-        id: 1,
-        name: "Rokis",
-        type: "Suns",
-        age: "2 gadi",
-        status: "Pieejams",
-        description: "Draudzīgs un aktīvs suns."
-    },
-    {
-        id: 2,
-        name: "Luna",
-        type: "Kaķis",
-        age: "1 gads",
-        status: "Pieejams",
-        description: "Mīļa un mierīga kaķenīte."
-    },
-    {
-        id: 3,
-        name: "Mija",
-        type: "Suns",
-        age: "3 gadi",
-        status: "Rezervēts",
-        description: "Rotaļīga un gudra."
-    },
-    {
-        id: 4,
-        name: "Simba",
-        type: "Kaķis",
-        age: "6 mēneši",
-        status: "Pieejams",
-        description: "Ziņkārīgs kaķēns."
-    }
-];
+let animals = [];
 
-let applications = [
-    {
-        id: 1,
-        animal: "Rokis",
-        applicant: "Līga Bērziņa",
-        date: "21.10.2026",
-        status: "Jauns"
-    },
-    {
-        id: 2,
-        animal: "Mija",
-        applicant: "Jānis Kalniņš",
-        date: "20.10.2026",
-        status: "Izskatīšanā"
-    },
-    {
-        id: 3,
-        animal: "Luna",
-        applicant: "Anna Ozoliņa",
-        date: "19.10.2026",
-        status: "Apstiprināts"
-    }
-];
+let applications = [];
 
-const users = [
-    {
-        name: "Administrators",
-        email: "admin@example.com",
-        role: "Admin"
-    },
-    {
-        name: "Anna Ozoliņa",
-        email: "anna@example.com",
-        role: "Lietotājs"
-    },
-    {
-        name: "Jānis Kalniņš",
-        email: "janis@example.com",
-        role: "Lietotājs"
-    }
-];
+const users = [];
 
-const messages = [
-    {
-        name: "Laura",
-        email: "laura@example.com",
-        subject: "Brīvprātīgais darbs",
-        message: "Vēlos uzzināt, kā varu palīdzēt patversmei."
-    },
-    {
-        name: "Marta",
-        email: "marta@example.com",
-        subject: "Dzīvnieka adopcija",
-        message: "Vai ir iespējams iepazīties ar Roki?"
-    }
-];
+const messages = [];
 
-const donations = [
-    {
-        name: "Anna Ozoliņa",
-        amount: 20,
-        date: "20.10.2026",
-        status: "Saņemts"
-    },
-    {
-        name: "Jānis Kalniņš",
-        amount: 10,
-        date: "19.10.2026",
-        status: "Saņemts"
-    }
-];
+const donations = [];
 
 // HELPERS
 
