@@ -126,6 +126,10 @@ button {
   font-size: 16px;
 }
 
+.donate:hover {
+    background: white;
+}
+
 .register {
   color: white;
   border: 1.5px solid var(--pink);

@@ -121,6 +121,10 @@ button {
     border: 1px solid var(--pink);
 }
 
+.donate:hover {
+    background: white;
+}
+
 .register {
     background: var(--pink);
     color: white;

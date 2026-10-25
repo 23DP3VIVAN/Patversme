@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
 
 :root {
@@ -116,6 +115,11 @@ button {
     background: transparent;
     border: 1px solid var(--pink);
 }
+
+.donate:hover {
+    background: white;
+}
+
 
 .register {
     background: var(--pink);
