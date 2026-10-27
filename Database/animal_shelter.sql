@@ -1,9 +1,3 @@
-CREATE DATABASE IF NOT EXISTS animal_shelter
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_unicode_ci;
-
-USE animal_shelter;
-
 CREATE TABLE animals (
     animal_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
