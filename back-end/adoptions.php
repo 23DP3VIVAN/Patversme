@@ -1,7 +1,15 @@
 <?php
 declare(strict_types=1);
+session_start();
 require_once __DIR__ . '/../config/database.php';
 header('Content-Type: application/json; charset=utf-8');
+
+function respond(int $status, array $payload): void
+{
+    http_response_code($status);
+    echo json_encode($payload, JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
 function readJsonBody(): array
 {
@@ -10,7 +18,18 @@ function readJsonBody(): array
 }
 
 try {
+    $userId = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
+    if (!$userId || $userId < 1) {
+        respond(401, ['success' => false, 'error' => 'Lai turpinātu, pieslēdzieties.']);
+    }
+
     $pdo = getDatabaseConnection();
+
+    $userStatement = $pdo->prepare('SELECT user_id FROM users WHERE user_id = ?');
+    $userStatement->execute([$userId]);
+    if (!$userStatement->fetch()) {
+        respond(401, ['success' => false, 'error' => 'Lietotāja sesija vairs nav derīga.']);
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $sql = 'SELECT a.adoption_id, a.animal_id, a.user_id,
@@ -20,9 +39,11 @@ try {
                 FROM adoptions a
                 INNER JOIN users u ON u.user_id = a.user_id
                 INNER JOIN animals an ON an.animal_id = a.animal_id
+                WHERE a.user_id = :user_id
                 ORDER BY a.adoption_id DESC';
 
-        $statement = $pdo->query($sql);
+        $statement = $pdo->prepare($sql);
+        $statement->execute([':user_id' => $userId]);
 
         echo json_encode([
             'success' => true,
@@ -34,7 +55,7 @@ try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = readJsonBody();
 
-        foreach (['animal_id', 'user_id', 'adoption_date'] as $field) {
+        foreach (['animal_id', 'adoption_date'] as $field) {
             if (!isset($data[$field]) || trim((string)$data[$field]) === '') {
                 throw new InvalidArgumentException(
                     "Trūkst obligātā lauka: {$field}"
@@ -43,12 +64,11 @@ try {
         }
 
         $animalId = filter_var($data['animal_id'], FILTER_VALIDATE_INT);
-        $userId = filter_var($data['user_id'], FILTER_VALIDATE_INT);
         $adoptionDate = (string)$data['adoption_date'];
 
         $date = DateTime::createFromFormat('!Y-m-d', $adoptionDate);
 
-        if (!$animalId || !$userId ||
+        if (!$animalId ||
             !$date || $date->format('Y-m-d') !== $adoptionDate) {
             throw new InvalidArgumentException('Nepareizi ievadīti dati.');
         }
@@ -78,21 +98,6 @@ try {
             echo json_encode([
                 'success' => false,
                 'error' => 'Dzīvnieks vairs nav pieejams adopcijai.'
-            ]);
-            exit;
-        }
-
-        $statement = $pdo->prepare(
-            'SELECT user_id FROM users WHERE user_id = ?'
-        );
-        $statement->execute([$userId]);
-
-        if (!$statement->fetch()) {
-            $pdo->rollBack();
-            http_response_code(404);
-            echo json_encode([
-                'success' => false,
-                'error' => 'Lietotājs nav atrasts.'
             ]);
             exit;
         }

@@ -109,9 +109,13 @@ try {
 
         $userId = (int) $pdo->lastInsertId();
 
+        $roleStatement = $pdo->prepare('SELECT role FROM users WHERE user_id = ?');
+        $roleStatement->execute([$userId]);
+        $role = $roleStatement->fetchColumn();
+
         session_regenerate_id(true);
         $_SESSION['user_id'] = $userId;
-        $_SESSION['role'] = 'user';
+        $_SESSION['role'] = $role;
 
         respond(201, [
             'success' => true,

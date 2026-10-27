@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+session_start();
 require_once __DIR__ . '/../config/database.php';
 header('Content-Type: application/json; charset=utf-8');
 
@@ -48,6 +49,21 @@ try {
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $sessionUserId = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
+        if (!$sessionUserId || $sessionUserId < 1) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Administrator login is required.']);
+            exit;
+        }
+
+        $roleStatement = $pdo->prepare('SELECT role FROM users WHERE user_id = ?');
+        $roleStatement->execute([$sessionUserId]);
+        if ($roleStatement->fetchColumn() !== 'admin') {
+            http_response_code(403);
+            echo json_encode(['error' => 'Administrator access is required.']);
+            exit;
+        }
+
         $data = readJsonBody();
         $requiredFields = [
             'name',

@@ -4,24 +4,33 @@ session_start();
 header("Content-Type: application/json; charset=UTF-8");
 require_once __DIR__ . '/../config/database.php';
 
-if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
+function respond($status, $result) {
+    http_response_code($status);
+    echo json_encode($result, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+$sessionUserId = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
+if (!$sessionUserId || $sessionUserId < 1) {
     http_response_code(403);
     echo json_encode(["success" => false, "error" => "Piekļure liegta. Nav administratora tiesību."], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
 $pdo = getDatabaseConnection();
+$roleStatement = $pdo->prepare("SELECT role FROM users WHERE user_id = ?");
+$roleStatement->execute([$sessionUserId]);
+if ($roleStatement->fetchColumn() !== 'admin') {
+    http_response_code(403);
+    echo json_encode(["success" => false, "error" => "Piekļure liegta. Nav administratora tiesību."], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 $method = $_SERVER["REQUEST_METHOD"];
 $action = $_GET["action"] ?? "";
 
 $input = json_decode(file_get_contents("php://input"), true);
 $data = is_array($input) && !empty($input) ? $input : $_POST;
-
-function respond($status, $result) {
-    http_response_code($status);
-    echo json_encode($result, JSON_UNESCAPED_UNICODE);
-    exit;
-}
 
 try {
     if ($method === "GET" && $action === "animals") {
