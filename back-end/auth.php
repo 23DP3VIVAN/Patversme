@@ -79,7 +79,7 @@ try {
         }
 
         $check = $pdo->prepare(
-            'SELECT id FROM users WHERE email = ?'
+            'SELECT user_id FROM users WHERE email = ?'
         );
         $check->execute([$email]);
 
@@ -111,6 +111,7 @@ try {
 
         session_regenerate_id(true);
         $_SESSION['user_id'] = $userId;
+        $_SESSION['role'] = 'user';
 
         respond(201, [
             'success' => true,
@@ -134,7 +135,7 @@ try {
         }
 
         $statement = $pdo->prepare(
-            'SELECT id, first_name, last_name, email, password
+            'SELECT user_id AS id, first_name, last_name, email, password, role
              FROM users
              WHERE email = ?'
         );
@@ -155,6 +156,7 @@ try {
         session_regenerate_id(true);
 
         $_SESSION['user_id'] = (int) $user['id'];
+        $_SESSION['role'] = $user['role'];
 
         unset($user['password']);
 
