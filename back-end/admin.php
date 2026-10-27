@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-$secureSessionCookie = isset($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off';
+require_once __DIR__ . '/../config/database.php';
+$secureSessionCookie = isSecureRequest();
 ini_set('session.use_strict_mode', '1');
 ini_set('session.use_only_cookies', '1');
 session_set_cookie_params([
@@ -12,7 +13,6 @@ session_set_cookie_params([
 ]);
 session_start();
 header("Content-Type: application/json; charset=UTF-8");
-require_once __DIR__ . '/../config/database.php';
 
 function respond($status, $result) {
     http_response_code($status);
@@ -66,6 +66,10 @@ try {
     $roleStatement->execute([$sessionUserId]);
     if ($roleStatement->fetchColumn() !== 'admin') {
         respond(403, ["success" => false, "error" => "Piekļuve liegta. Nav administratora tiesību."]);
+    }
+
+    if (in_array($method, ['POST', 'PUT', 'PATCH', 'DELETE'], true) && !isSameOriginRequest()) {
+        respond(403, ["success" => false, "error" => "Pieprasījums no šī avota nav atļauts."]);
     }
 
     if ($method === "GET" && $action === "animals") {

@@ -1,5 +1,7 @@
 <?php
-$secureSessionCookie = isset($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off';
+require_once __DIR__ . '/../config/database.php';
+
+$secureSessionCookie = isSecureRequest();
 ini_set('session.use_strict_mode', '1');
 ini_set('session.use_only_cookies', '1');
 session_set_cookie_params([
@@ -19,6 +21,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode([
         'success' => false,
         'error' => 'Šī metode nav atļauta.'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+if (!isSameOriginRequest()) {
+    http_response_code(403);
+    echo json_encode([
+        'success' => false,
+        'error' => 'Pieprasījums no šī avota nav atļauts.'
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }

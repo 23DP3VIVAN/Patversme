@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-$secureSessionCookie = isset($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off';
+require_once __DIR__ . '/../config/database.php';
+
+$secureSessionCookie = isSecureRequest();
 ini_set('session.use_strict_mode', '1');
 ini_set('session.use_only_cookies', '1');
 session_set_cookie_params([
@@ -13,7 +15,6 @@ session_set_cookie_params([
     'samesite' => 'Lax',
 ]);
 session_start();
-require_once __DIR__ . '/../config/database.php';
 header('Content-Type: application/json; charset=utf-8');
 
 function readJsonBody(): array
@@ -119,6 +120,12 @@ try {
         if ($roleStatement->fetchColumn() !== 'admin') {
             http_response_code(403);
             echo json_encode(['error' => 'Administrator access is required.']);
+            exit;
+        }
+
+        if (!isSameOriginRequest()) {
+            http_response_code(403);
+            echo json_encode(['error' => 'Request origin is not allowed.']);
             exit;
         }
 

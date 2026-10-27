@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-$secureSessionCookie = isset($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off';
+require_once __DIR__ . '/../config/database.php';
+
+$secureSessionCookie = isSecureRequest();
 ini_set('session.use_strict_mode', '1');
 ini_set('session.use_only_cookies', '1');
 session_set_cookie_params([
@@ -13,8 +15,6 @@ session_set_cookie_params([
     'samesite' => 'Lax',
 ]);
 session_start();
-
-require_once __DIR__ . '/../config/database.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -63,6 +63,13 @@ try {
         respond(405, [
             'success' => false,
             'error' => 'Metode nav atļauta.'
+        ]);
+    }
+
+    if (!isSameOriginRequest()) {
+        respond(403, [
+            'success' => false,
+            'error' => 'Pieprasījums no šī avota nav atļauts.'
         ]);
     }
 
