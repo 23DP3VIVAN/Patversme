@@ -49,7 +49,7 @@ function validDate(string $value): bool {
 
 $sessionUserId = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
 if (!$sessionUserId || $sessionUserId < 1) {
-    http_response_code(403);
+    http_response_code(401);
     echo json_encode(["success" => false, "error" => "Piekļure liegta. Nav administratora tiesību."], JSON_UNESCAPED_UNICODE);
     exit;
 }
