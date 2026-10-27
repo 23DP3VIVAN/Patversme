@@ -87,7 +87,7 @@ try {
 
     http_response_code(201);
     echo json_encode([
-        'message' => 'Donation saved successfully.',
+        'message' => 'Donation record saved. No payment was processed.',
         'donation_id' => (int) $pdo->lastInsertId()
     ]);
 
