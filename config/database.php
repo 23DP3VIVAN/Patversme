@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 define('DB_HOST', 'sql101.infinityfree.com');
-define('DB_NAME', 'if0_43288354_XXX');
+define('DB_NAME', 'if0_43288354_animal_shelter');
 define('DB_USER', 'if0_43288354');
 define('DB_PASS', '200788vika');
 
