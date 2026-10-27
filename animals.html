@@ -146,18 +146,32 @@
 
           <div class="animal-grid" id="animalGrid"></div>
 
-          <div id="animalModal" class="modal">
-            <div class="modalContent">
-              <button id="closeModal" class="closeModal">&times;</button>
-              <img id="modalPhoto" src="" alt="Dzīvnieka foto" />
-              <h2 id="modalName"></h2>
-              <p id="modalSpecies"></p>
-              <p id="modalAge"></p>
-              <p id="modalGender"></p>
-              <p id="modalBreed"></p>
-              <p id="modalCharacter"></p>
-              <p id="modalSize"></p>
-              <p id="modalSpecial"></p>
+          <div id="animalModal" class="modalOverlay">
+            <div class="modalContent" role="dialog" aria-modal="true" aria-labelledby="animalName">
+              <button type="button" id="closeModal" class="closeModal" aria-label="Aizvērt logu">&times;</button>
+              <div class="modalLeft">
+                <div class="modalImageContainer">
+                  <img id="modalImage" src="" alt="Dzīvnieka attēls">
+                  <button id="animalFavorite" class="heart" aria-label="Pievienot favorītiem">♡</button>
+                </div>
+                <button type="button" id="adoptButton" class="adopt-btn">Adoptēt</button>
+                <div class="ownerInfo">
+                  <p class="star">☆</p>
+                  <p>Prasības saimniekam:</p>
+                  <div id="ownerRequirements">Nav norādītas</div>
+                </div>
+              </div>
+              <div class="modalRight">
+                <h2 id="animalName">Dzīvnieka vārds</h2>
+                <p id="animalDescription" class="animalDescription">Dzīvnieka apraksts...</p>
+                <ul class="animalDetails">
+                  <li><span>Dzimis:</span> <span id="animalBirt"></span></li>
+                  <li><span>Dzimums:</span> <span id="animalGender"></span></li>
+                  <li><span>Šķirne:</span> <span id="animalBreed"></span></li>
+                  <li><span>Veselības stāvoklis:</span> <span id="animalSpecialNeeds"></span></li>
+                  <li><span>Patversmē no:</span><span id="animalSince"></span></li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -188,6 +202,7 @@
         </div>
       </footer>
     </div>
-    <script src="src/js/animals.js"></script>
+    <script src="src/js/animals.js" defer></script>
+    <script src="src/js/animal-modal.js" defer></script>
   </body>
 </html>

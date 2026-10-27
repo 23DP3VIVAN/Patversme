@@ -442,7 +442,7 @@ button {
   transform: scale(1.1);
 }
 
-.heart.liked {
+.heart.liked, .heart.active {
   color: #d6336c;
 }
 
@@ -478,45 +478,151 @@ button {
 
 /* pop up logs */
 
-.modal {
-  display: none;
+.modalOverlay{
   position: fixed;
-  z-index: 1000;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  justify-content: center;
+  z-index: 1000;
+  display: none;
   align-items: center;
+  justify-content: center;
   padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modalOverlay.is-open {
+  display: flex;
 }
 
 .modalContent {
   position: relative;
-  background: #fbe5ed;
-  color: var(--text);
-  width: 100%;
-  max-width: 500px;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.58fr) minmax(0, 1.12fr);
+  gap: 42px;
+  width: min(100%, 1100px);
   max-height: 90vh;
   overflow-y: auto;
-  padding: 30px 25px;
-  border-radius: 15px;
-  text-align: center;
-}
-
-.modalContent img {
-  width: 100%;
-  max-height: 300px;
-  object-fit: cover;
-  border-radius: 12px;
+  padding: 24px 32px;
+  background: var(--pink-light);
+  color: var(--text);
+  box-sizing: border-box;
 }
 
 .closeModal {
   position: absolute;
-  top: 10px;
-  right: 15px;
+  top: 8px;
+  right: 12px;
+  z-index: 2;
   border: none;
-  background: var(--pink);
+  background: transparent;
   font-size: 30px;
   cursor: pointer;
+}
+
+.modalLeft{
+  min-width: 0;
+}
+
+.modalImageContainer{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 32px;
+  background: white;
+}
+
+.modalImageContainer img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adopt-btn{
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 7px;
+  background: var(--pink);
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.adopt-btn:hover{
+  background: var(--pink-dark);
+}
+
+.ownerInfo{
+  position: relative;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 16px;
+  background: white;
+  font-size: 16px;
+}
+
+.ownerInfo p {
+  margin: 0 0 3px;
+  color: var(--pink-dark);
+}
+
+.star {
+  position: absolute;
+  top: 2px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: var(--pink-dark);
+  font-size: 32px;  
+}
+
+.modalRight{
+  min-width: 0;
+  padding: 12px 20px;
+  border-radius: 15px;
+  background: white;
+}
+
+.modalRight h2 {
+  margin: 0 0 12px;
+  text-align: center;
+  font-family: "Brush Script MT", "Segoe Script", cursive;
+  font-size: 38px;
+  font-weight: normal;
+}
+
+.animalDescription {
+  margin: 0 0 24px;
+  font-size: 13px;
+  line-height: 1.35;
+  white-space: pre-line;
+}
+
+.animalDetails {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.animalDetails li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.animalDetails li::before {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  content: "";
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--pink-dark);
 }
 
 /* PAGINATION */
@@ -760,6 +866,29 @@ button {
     width: 32px;
     height: 32px;
     font-size: 23px;
+  }
+
+  .animalModal{
+    padding: 10px;
+  }
+
+  .modalContent{
+    gap: 18px;
+    padding: 38px 16px 18px;
+    grid-template-columns: 1fr;
+  }
+
+  .modalLeft{
+    width: min(100%, 320px);
+    margin: 0 auto;
+  }
+
+  .modalRight {
+    padding: 16px;
+  }
+
+  .animalDescription {
+    font-size: 14px;
   }
 }
 

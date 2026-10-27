@@ -393,7 +393,7 @@ function renderAnimals() {
       const type = animal.species === "suns" ? "Suns" : "Kaķis";
 
       return `
-        <article class="animal-card">
+        <article class="animal-card" data-id="${animal.id}">
           <div class="animal-photo">
             <img
               src="https://images.unsplash.com/${animal.photo}?auto=format&fit=crop&w=600&q=85"
@@ -423,55 +423,6 @@ function renderAnimals() {
     .join("");
 
   renderPagination(totalPages);
-
-  // pop up logs
-  const modal = document.getElementById("animalModal");
-  const closeModal = document.getElementById("closeModal");
-  grid.addEventListener("click", function (event) {
-    if (event.target.closest(".heart")) return;
-    const card = event.target.closest(".animal-card");
-    if (!card) return;
-    const animalId = Number(card.querySelector(".heart").dataset.id);
-    const animal = animals.find((a) => a.id === animalId);
-    if (!animal) return;
-    const type = animal.species === "suns" ? "Suns" : "Kaķis";
-
-    document.getElementById("modalPhoto").src =
-      `https://images.unsplash.com/${animal.photo}?auto=format&fit=crop&w=600&q=85`;
-    document.getElementById("modalPhoto").alt = animal.name;
-    document.getElementById("modalName").textContent = animal.name;
-    document.getElementById("modalSpecies").textContent = `Veids: ${type}`;
-    document.getElementById("modalAge").textContent =
-      `Vecums: ${formatAge(animal.age)}`;
-    document.getElementById("modalGender").textContent =
-      `Dzimums: ${animal.gender === "male" ? "Tēviņš" : "Mātīte"}`;
-    document.getElementById("modalBreed").textContent =
-      `Šķirne: ${animal.breed}`;
-    document.getElementById("modalCharacter").textContent =
-      `Raksturs: ${animal.character}`;
-    document.getElementById("modalSize").textContent = `Izmērs: ${animal.size}`;
-    document.getElementById("modalSpecial").textContent = animal.special
-      ? "Īpašas vajadzības: Jā"
-      : "Īpašas vajadzības: Nē";
-
-    modal.style.display = "flex";
-  });
-
-  closeModal.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
-
-  modal.addEventListener("click", (event) => {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      modal.style.display = "none";
-    }
-  });
 }
 
 function renderPagination(totalPages) {
