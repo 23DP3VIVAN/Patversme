@@ -1,345 +1,307 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="lv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pēdas Mājās | Dzīvnieku patversme</title>
-    <link rel="icon" href="src/img/logo.jpg">
-    <link rel="stylesheet" href="src/style.css">
-</head>
-<body>
-
-<div class="page">
-
-    <!-- HEADER -->
-    <header class="header">
+    <link rel="icon" href="src/img/logo.jpg" />
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <!-- HEADER -->
+      <header class="header">
         <a href="index.html" class="logo">
-            <img src="src/img/logo.jpg" alt="Pēdas Mājās logo">
-            <div class="logo-text">
-                <h2>PĒDAS MĀJĀS</h2>
-                <p>Dzīvnieku patversme</p>
-            </div>
+          <img src="src/img/logo.jpg" alt="Pēdas Mājās logo" />
+          <div class="logo-text">
+            <h2>PĒDAS MĀJĀS</h2>
+            <p>Dzīvnieku patversme</p>
+          </div>
         </a>
 
         <nav class="navigation">
-            <a href="index.html" class="active">Sākums</a>
+          <a href="index.html" class="active">Sākums</a>
+          <a href="animals.html">Dzīvnieki</a>
+          <a href="about.html">Par mums</a>
+          <a href="help.html">Kā palīdzēt?</a>
+          <a href="Kontakti.html">Kontakti</a>
+        </nav>
+
+        <div class="header-buttons">
+          <a href="donate.html" class="donate">♡ Ziedot</a>
+          <a href="register.html" class="register">Pieteikties</a>
+        </div>
+      </header>
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-left">
+          <span class="eyebrow">🐾 KATRAI ĶEPIŅAI IR SAVS STĀSTS</span>
+
+          <h1>
+            Mazas ķepas.<br />
+            <span>Liela mīlestība.</span>
+          </h1>
+
+          <p class="hero-description">
+            Katrs dzīvnieks ir pelnījis mīlošas mājas. Iepazīsties ar mūsu
+            četrkājainajiem draugiem un palīdzi viņiem atrast savu ģimeni!
+          </p>
+
+          <div class="hero-buttons">
+            <a href="animals.html" class="primary-btn">
+              Apskatīt dzīvniekus →
+            </a>
+            <a href="help.html" class="secondary-btn"> Kā palīdzēt? ♡ </a>
+          </div>
+
+          <div class="hero-note">
+            <span>♡</span>
+            Kopā mēs varam mainīt viņu dzīves!
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <img
+            src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1100&q=85"
+            alt="Laimīgi suņi"
+          />
+
+          <div class="hero-sticker">🐾 Meklēju mājas!</div>
+        </div>
+      </section>
+
+      <!-- STATISTICS -->
+      <section class="statistics">
+        <div class="stat">
+          <div class="stat-icon">🐾</div>
+          <div>
+            <h3>120+</h3>
+            <p>Dzīvnieki patversmē</p>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">⌂</div>
+          <div>
+            <h3>300+</h3>
+            <p>Adoptēti dzīvnieki</p>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">♡</div>
+          <div>
+            <h3>10+</h3>
+            <p>Brīvprātīgie</p>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">☆</div>
+          <div>
+            <h3>Daudz iespēju</h3>
+            <p>Palīdzēt arī Tev!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ANIMALS -->
+      <section class="animals-section">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">IEPAZĪSTIES AR MUMS</span>
+            <h2>Meklē savu jauno draugu ♡</h2>
+            <p>Varbūt tieši šeit Tevi gaida Tavs labākais draugs?</p>
+          </div>
+
+          <a href="animals.html" class="outline-btn"> Visi dzīvnieki → </a>
+        </div>
+
+        <div class="animal-grid">
+          <!-- LUNA -->
+          <article class="animal-card">
+            <div class="animal-image">
+              <img
+                src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=600&q=85"
+                alt="Luna"
+              />
+              <span class="animal-badge">Meklē mājas</span>
+            </div>
+
+            <div class="animal-info">
+              <h3>Luna ♡</h3>
+              <p>Suns • 2 gadi • Aktīva</p>
+              <div class="animal-tags">
+                <span>Draudzīga</span>
+                <span>Rotaļīga</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- REKS -->
+          <article class="animal-card">
+            <div class="animal-image">
+              <img
+                src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=600&q=85"
+                alt="Reks"
+              />
+              <span class="animal-badge">Meklē mājas</span>
+            </div>
+
+            <div class="animal-info">
+              <h3>Reks ♡</h3>
+              <p>Suns • 3 gadi • Rotaļīgs</p>
+              <div class="animal-tags">
+                <span>Aktīvs</span>
+                <span>Mīļš</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- MIKA -->
+          <article class="animal-card">
+            <div class="animal-image">
+              <img
+                src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=600&q=85"
+                alt="Mika"
+              />
+              <span class="animal-badge">Meklē mājas</span>
+            </div>
+
+            <div class="animal-info">
+              <h3>Mika ♡</h3>
+              <p>Kaķis • 1 gads • Draudzīgs</p>
+              <div class="animal-tags">
+                <span>Mierīgs</span>
+                <span>Mīļš</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- LILO -->
+          <article class="animal-card">
+            <div class="animal-image">
+              <img
+                src="https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=600&q=85"
+                alt="Lilo"
+              />
+              <span class="animal-badge">Meklē mājas</span>
+            </div>
+
+            <div class="animal-info">
+              <h3>Lilo ♡</h3>
+              <p>Kaķis • 6 mēneši • Rotaļīgs</p>
+              <div class="animal-tags">
+                <span>Kaķēns</span>
+                <span>Ziņkārīgs</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="animals-bottom">
+          <a href="animals.html" class="primary-btn">
+            Apskatīt visus dzīvniekus →
+          </a>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="about-preview">
+        <div class="about-image">
+          <img
+            src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=900&q=85"
+            alt="Draudzīgs suns"
+          />
+        </div>
+
+        <div class="about-content">
+          <span class="eyebrow">PAR MUMS</span>
+          <h2>Mēs ticam otrajām iespējām ♡</h2>
+          <p>
+            PĒDAS MĀJĀS ir projekts, kura mērķis ir palīdzēt dzīvniekiem atrast
+            mīlošas un drošas mājas.
+          </p>
+          <p>
+            Mēs vēlamies padarīt adopcijas procesu vienkāršāku un palīdzēt
+            cilvēkiem iepazīties ar dzīvniekiem, kuri gaida savu ģimeni.
+          </p>
+          <a href="about.html" class="primary-btn"> Uzzini vairāk → </a>
+        </div>
+      </section>
+
+      <!-- HELP -->
+      <section class="help-section">
+        <div class="section-heading centered">
+          <span class="eyebrow">KOPĀ MĒS VARAM VAIRĀK</span>
+          <h2>Katrs var palīdzēt 🐾</h2>
+          <p>Pat mazs labais darbs var mainīt kāda dzīvnieka dzīvi.</p>
+        </div>
+
+        <div class="help-grid">
+          <div class="help-card">
+            <div class="help-icon">🏡</div>
+            <h3>Adoptē</h3>
+            <p>Dāvā dzīvniekam jaunas, mīlošas mājas.</p>
+            <a href="animals.html">Apskatīt →</a>
+          </div>
+
+          <div class="help-card">
+            <div class="help-icon">🐾</div>
+            <h3>Brīvprātīgais darbs</h3>
+            <p>Palīdzi rūpēties par mūsu četrkājainajiem draugiem.</p>
+            <a href="help.html#volunteer">Pieteikties →</a>
+          </div>
+
+          <div class="help-card">
+            <div class="help-icon">🎁</div>
+            <h3>Palīdzi ar lietām</h3>
+            <p>Ziedo barību, segas, rotaļlietas un citas lietas.</p>
+            <a href="help.html#needs">Uzzināt vairāk →</a>
+          </div>
+
+          <div class="help-card">
+            <div class="help-icon">♡</div>
+            <h3>Ziedo</h3>
+            <p>Atbalsti dzīvnieku aprūpi ar finansiālu ziedojumu.</p>
+            <a href="donate.html">Ziedot →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOTTOM CTA -->
+      <section class="bottom-banner">
+        <div>
+          <span class="eyebrow">TAVA PALĪDZĪBA IR SVARĪGA</span>
+          <h2>Viņi gaida tieši Tevi! ♡</h2>
+          <p>Iepazīsties ar mūsu dzīvniekiem un palīdzi kādam atrast mājas.</p>
+        </div>
+
+        <a href="animals.html" class="primary-btn"> Atrast savu draugu → </a>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <h3>🐾 PĒDAS MĀJĀS</h3>
+            <p>Katrs dzīvnieks ir pelnījis mājas.</p>
+          </div>
+
+          <div class="footer-links">
+            <a href="index.html">Sākums</a>
             <a href="animals.html">Dzīvnieki</a>
             <a href="about.html">Par mums</a>
             <a href="help.html">Kā palīdzēt?</a>
             <a href="Kontakti.html">Kontakti</a>
-        </nav>
-
-        <div class="header-buttons">
-            <a href="donate.html" class="donate">♡ Ziedot</a>
-            <a href="register.html" class="register">Pieteikties</a>
-            
-        </div>
-    </header>
-
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-left">
-            <span class="eyebrow">🐾 KATRAI ĶEPIŅAI IR SAVS STĀSTS</span>
-
-            <h1>
-                Mazas ķepas.<br>
-                <span>Liela mīlestība.</span>
-            </h1>
-
-            <p class="hero-description">
-                Katrs dzīvnieks ir pelnījis mīlošas mājas.
-                Iepazīsties ar mūsu četrkājainajiem draugiem
-                un palīdzi viņiem atrast savu ģimeni!
-            </p>
-
-            <div class="hero-buttons">
-                <a href="animals.html" class="primary-btn">
-                    Apskatīt dzīvniekus →
-                </a>
-                <a href="help.html" class="secondary-btn">
-                    Kā palīdzēt? ♡
-                </a>
-            </div>
-
-            <div class="hero-note">
-                <span>♡</span>
-                Kopā mēs varam mainīt viņu dzīves!
-            </div>
-        </div>
-
-        <div class="hero-right">
-            <img
-                src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1100&q=85"
-                alt="Laimīgi suņi">
-
-            <div class="hero-sticker">
-                🐾 Meklēju mājas!
-            </div>
-        </div>
-    </section>
-
-    <!-- STATISTICS -->
-    <section class="statistics">
-        <div class="stat">
-            <div class="stat-icon">🐾</div>
-            <div>
-                <h3>120+</h3>
-                <p>Dzīvnieki patversmē</p>
-            </div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-icon">⌂</div>
-            <div>
-                <h3>300+</h3>
-                <p>Adoptēti dzīvnieki</p>
-            </div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-icon">♡</div>
-            <div>
-                <h3>10+</h3>
-                <p>Brīvprātīgie</p>
-            </div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-icon">☆</div>
-            <div>
-                <h3>Daudz iespēju</h3>
-                <p>Palīdzēt arī Tev!</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ANIMALS -->
-    <section class="animals-section">
-
-        <div class="section-heading">
-            <div>
-                <span class="eyebrow">IEPAZĪSTIES AR MUMS</span>
-                <h2>Meklē savu jauno draugu ♡</h2>
-                <p>
-                    Varbūt tieši šeit Tevi gaida Tavs
-                    labākais draugs?
-                </p>
-            </div>
-
-            <a href="animals.html" class="outline-btn">
-                Visi dzīvnieki →
-            </a>
-        </div>
-
-        <div class="animal-grid">
-
-            <!-- LUNA -->
-            <article class="animal-card">
-                <div class="animal-image">
-                    <img
-                        src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=600&q=85"
-                        alt="Luna">
-                    <span class="animal-badge">Meklē mājas</span>
-                </div>
-
-                <div class="animal-info">
-                    <h3>Luna ♡</h3>
-                    <p>Suns • 2 gadi • Aktīva</p>
-                    <div class="animal-tags">
-                        <span>Draudzīga</span>
-                        <span>Rotaļīga</span>
-                    </div>
-                </div>
-            </article>
-
-            <!-- REKS -->
-            <article class="animal-card">
-                <div class="animal-image">
-                    <img
-                        src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=600&q=85"
-                        alt="Reks">
-                    <span class="animal-badge">Meklē mājas</span>
-                </div>
-
-                <div class="animal-info">
-                    <h3>Reks ♡</h3>
-                    <p>Suns • 3 gadi • Rotaļīgs</p>
-                    <div class="animal-tags">
-                        <span>Aktīvs</span>
-                        <span>Mīļš</span>
-                    </div>
-                </div>
-            </article>
-
-            <!-- MIKA -->
-            <article class="animal-card">
-                <div class="animal-image">
-                    <img
-                        src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=600&q=85"
-                        alt="Mika">
-                    <span class="animal-badge">Meklē mājas</span>
-                </div>
-
-                <div class="animal-info">
-                    <h3>Mika ♡</h3>
-                    <p>Kaķis • 1 gads • Draudzīgs</p>
-                    <div class="animal-tags">
-                        <span>Mierīgs</span>
-                        <span>Mīļš</span>
-                    </div>
-                </div>
-            </article>
-
-            <!-- LILO -->
-            <article class="animal-card">
-                <div class="animal-image">
-                    <img
-                        src="https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=600&q=85"
-                        alt="Lilo">
-                    <span class="animal-badge">Meklē mājas</span>
-                </div>
-
-                <div class="animal-info">
-                    <h3>Lilo ♡</h3>
-                    <p>Kaķis • 6 mēneši • Rotaļīgs</p>
-                    <div class="animal-tags">
-                        <span>Kaķēns</span>
-                        <span>Ziņkārīgs</span>
-                    </div>
-                </div>
-            </article>
-
-        </div>
-
-        <div class="animals-bottom">
-            <a href="animals.html" class="primary-btn">
-                Apskatīt visus dzīvniekus →
-            </a>
-        </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section class="about-preview">
-        <div class="about-image">
-            <img
-                src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=900&q=85"
-                alt="Draudzīgs suns">
-        </div>
-
-        <div class="about-content">
-            <span class="eyebrow">PAR MUMS</span>
-            <h2>Mēs ticam otrajām iespējām ♡</h2>
-            <p>
-                PĒDAS MĀJĀS ir projekts, kura mērķis
-                ir palīdzēt dzīvniekiem atrast
-                mīlošas un drošas mājas.
-            </p>
-            <p>
-                Mēs vēlamies padarīt adopcijas procesu
-                vienkāršāku un palīdzēt cilvēkiem
-                iepazīties ar dzīvniekiem, kuri
-                gaida savu ģimeni.
-            </p>
-            <a href="about.html" class="primary-btn">
-                Uzzini vairāk →
-            </a>
-        </div>
-    </section>
-
-    <!-- HELP -->
-    <section class="help-section">
-        <div class="section-heading centered">
-            <span class="eyebrow">KOPĀ MĒS VARAM VAIRĀK</span>
-            <h2>Katrs var palīdzēt 🐾</h2>
-            <p>
-                Pat mazs labais darbs var mainīt
-                kāda dzīvnieka dzīvi.
-            </p>
-        </div>
-
-        <div class="help-grid">
-            <div class="help-card">
-                <div class="help-icon">🏡</div>
-                <h3>Adoptē</h3>
-                <p>
-                    Dāvā dzīvniekam jaunas,
-                    mīlošas mājas.
-                </p>
-                <a href="animals.html">Apskatīt →</a>
-            </div>
-
-            <div class="help-card">
-                <div class="help-icon">🐾</div>
-                <h3>Brīvprātīgais darbs</h3>
-                <p>
-                    Palīdzi rūpēties par
-                    mūsu četrkājainajiem draugiem.
-                </p>
-                <a href="help.html#volunteer">Pieteikties →</a>
-            </div>
-
-            <div class="help-card">
-                <div class="help-icon">🎁</div>
-                <h3>Palīdzi ar lietām</h3>
-                <p>
-                    Ziedo barību, segas,
-                    rotaļlietas un citas lietas.
-                </p>
-                <a href="help.html#needs">Uzzināt vairāk →</a>
-            </div>
-
-            <div class="help-card">
-                <div class="help-icon">♡</div>
-                <h3>Ziedo</h3>
-                <p>
-                    Atbalsti dzīvnieku aprūpi
-                    ar finansiālu ziedojumu.
-                </p>
-                <a href="donate.html">Ziedot →</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- BOTTOM CTA -->
-    <section class="bottom-banner">
-        <div>
-            <span class="eyebrow">TAVA PALĪDZĪBA IR SVARĪGA</span>
-            <h2>Viņi gaida tieši Tevi! ♡</h2>
-            <p>
-                Iepazīsties ar mūsu dzīvniekiem
-                un palīdzi kādam atrast mājas.
-            </p>
-        </div>
-
-        <a href="animals.html" class="primary-btn">
-            Atrast savu draugu →
-        </a>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="footer-top">
-            <div class="footer-brand">
-                <h3>🐾 PĒDAS MĀJĀS</h3>
-                <p>Katrs dzīvnieks ir pelnījis mājas.</p>
-            </div>
-
-            <div class="footer-links">
-                <a href="index.html">Sākums</a>
-                <a href="animals.html">Dzīvnieki</a>
-                <a href="about.html">Par mums</a>
-                <a href="help.html">Kā palīdzēt?</a>
-                <a href="Kontakti.html">Kontakti</a>
-            </div>
+          </div>
         </div>
 
         <div class="footer-bottom">
-            © 2026 PĒDAS MĀJĀS | Veidots ar mīlestību ♡
+          © 2026 PĒDAS MĀJĀS | Veidots ar mīlestību ♡
         </div>
-    </footer>
-
-</div>
-
-</body>
+      </footer>
+    </div>
+  </body>
 </html>

@@ -1,590 +1,602 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap");
 
 :root {
-    --pink: #c43e73;
-    --pink-dark: #a72f60;
-    --pink-light: #f9dce8;
-    --pink-soft: #fff0f5;
-    --text: #292332;
-    --muted: #77707c;
+  --pink: #c43e73;
+  --pink-dark: #a72f60;
+  --pink-light: #f9dce8;
+  --pink-soft: #fff0f5;
+  --text: #292332;
+  --muted: #77707c;
 }
 
 html {
-    scroll-behavior: smooth;
-    min-width: 320px;
+  scroll-behavior: smooth;
+  min-width: 320px;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background: #fff7fa;
-    font-family: 'Nunito', sans-serif;
-    color: var(--text);
-    font-size: 15px;
-    margin: 0;
+  background: #fff7fa;
+  font-family: "Nunito", sans-serif;
+  color: var(--text);
+  font-size: 15px;
+  margin: 0;
 }
 
 .page {
-    width: 94%;
-    max-width: 1500px;
-    margin: auto;
+  width: 94%;
+  max-width: 1500px;
+  margin: auto;
 }
 
-button, input, textarea, select {
-    font: inherit;
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .header {
-    background: var(--pink-light);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 15px 25px;
-    margin: 12px 0 18px;
-    border-radius: 18px;
+  background: var(--pink-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 25px;
+  margin: 12px 0 18px;
+  border-radius: 18px;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--text);
-    text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  text-decoration: none;
 }
 
 .logo img {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .logo h2 {
-    font-size: 19px;
-    font-weight: 800;
+  font-size: 19px;
+  font-weight: 800;
 }
 
 .logo p {
-    color: var(--pink);
-    font-size: 12px;
+  color: var(--pink);
+  font-size: 12px;
 }
 
 .navigation {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
 }
 
 .navigation a {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 15px;
-    white-space: nowrap;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+  white-space: nowrap;
 }
 
 .navigation a:hover {
-    color: var(--pink);
+  color: var(--pink);
 }
 
 .header-buttons {
-    display: flex;
-    gap: 12px;
+  display: flex;
+  gap: 12px;
 }
 
-.donate, .logout-button, .small-button {
-    border-radius: 11px;
-    padding: 12px 22px;
-    white-space: nowrap;
-    font-size: 14px;
-    text-decoration: none;
+.donate,
+.logout-button,
+.small-button {
+  border-radius: 11px;
+  padding: 12px 22px;
+  white-space: nowrap;
+  font-size: 14px;
+  text-decoration: none;
 }
 
 .donate {
-    color: var(--pink);
-    background: transparent;
-    border: 1px solid var(--pink);
+  color: var(--pink);
+  background: transparent;
+  border: 1px solid var(--pink);
 }
 
 .donate:hover {
-    background: white;
+  background: white;
 }
 
 .logout-button {
-    background: var(--pink);
-    color: white;
-    border: 1px solid var(--pink);
+  background: var(--pink);
+  color: white;
+  border: 1px solid var(--pink);
 }
 
 .profile-button {
-    width: 38px;
-    height: 38px;
-    padding: 0;
-    margin-left: 3px;
-    overflow: hidden;
-    border: none;
-    border-radius: 50%;
-    background: var(--pink-light);
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  margin-left: 3px;
+  overflow: hidden;
+  border: none;
+  border-radius: 50%;
+  background: var(--pink-light);
 }
 
 .profile-button img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .account-layout {
-    max-width: 1450px;
-    margin: 38px auto;
-    display: grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr);
-    gap: 28px;
-    align-items: stretch;
+  max-width: 1450px;
+  margin: 38px auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr);
+  gap: 28px;
+  align-items: stretch;
 }
 
-.profile-section, .applications-section {
-    min-width: 0;
-    padding: 22px;
-    background: var(--pink-light);
+.profile-section,
+.applications-section {
+  min-width: 0;
+  padding: 22px;
+  background: var(--pink-light);
 }
 
 .profile-card {
-    width: 100%;
-    min-width: 0;
-    padding: 22px;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-    gap: 26px;
-    background: white;
-    border-radius: 15px;
+  width: 100%;
+  min-width: 0;
+  padding: 22px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: 26px;
+  background: white;
+  border-radius: 15px;
 }
 
-.profile-left, .profile-right {
-    min-width: 0;
-    width: 100%;
+.profile-left,
+.profile-right {
+  min-width: 0;
+  width: 100%;
 }
 
 .profile-right {
-    height: 100%;
+  height: 100%;
 }
 
 .profile-right form {
-    width: 100%;
+  width: 100%;
 }
 
 .profile-right input {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .photo-container {
-    width: 100%;
-    height: 370px;
-    overflow: hidden;
-    border-radius: 8px;
-    background: white;
+  width: 100%;
+  height: 370px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: white;
 }
 
 .photo-container img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .photo-buttons {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 10px 0 22px;
-    flex: 1 1 auto;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0 22px;
+  flex: 1 1 auto;
 }
 
 .small-button {
-    min-height: 34px;
-    border: none;
-    background: var(--pink);
-    color: white;
-    flex: 1 1 auto;
+  min-height: 34px;
+  border: none;
+  background: var(--pink);
+  color: white;
+  flex: 1 1 auto;
 }
 
-.small-button:hover, .save-button:hover, .logout-button:hover {
-    background: var(--pink-dark);
+.small-button:hover,
+.save-button:hover,
+.logout-button:hover {
+  background: var(--pink-dark);
 }
 
 .description-label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 17px;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 17px;
 }
 
 #description {
-    display: block;
-    width: 100%;
-    min-height: 125px;
-    padding: 10px;
-    resize: vertical;
-    border: 1px solid var(--pink);
-    border-radius: 9px;
-    background: transparent;
-    color: var(--text);
-    font-family: inherit;
-    font-size: 12px;
-    line-height: 1.5;
+  display: block;
+  width: 100%;
+  min-height: 125px;
+  padding: 10px;
+  resize: vertical;
+  border: 1px solid var(--pink);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 #profileForm {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    min-width: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
 }
 
 .form-field {
-    display: block;
-    margin-bottom: 12px;
-    min-width: 0;
+  display: block;
+  margin-bottom: 12px;
+  min-width: 0;
 }
 
 .form-field > label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
 }
 
 .form-field > input {
-    display: block;
-    width: 100%;
-    height: 34px;
-    padding: 6px 9px;
-    border: 1px solid var(--pink);
-    border-radius: 8px;
-    background: transparent;
-    color: var(--text);
-    min-width: 0;
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 9px;
+  border: 1px solid var(--pink);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  min-width: 0;
 }
 
-.form-field input:focus, #description:focus {
-    outline: 2px solid #d9a1b1;
-    outline-offset: 1px;
+.form-field input:focus,
+#description:focus {
+  outline: 2px solid #d9a1b1;
+  outline-offset: 1px;
 }
 
 .birth-date {
-    display: flex;
-    gap: 5px;
-    width: 100%;
+  display: flex;
+  gap: 5px;
+  width: 100%;
 }
 
 .birth-date input {
-    display: block;
-    width: 0;
-    min-width: 0;
-    height: 34px;
-    padding: 5px;
-    border: 1px solid var(--pink);
-    border-radius: 7px;
-    background: transparent;
-    text-align: center;
-    font-size: 12px;
-    flex: 1 1 0;
+  display: block;
+  width: 0;
+  min-width: 0;
+  height: 34px;
+  padding: 5px;
+  border: 1px solid var(--pink);
+  border-radius: 7px;
+  background: transparent;
+  text-align: center;
+  font-size: 12px;
+  flex: 1 1 0;
 }
 
 .password-button {
-    margin-top: 8px;
-    align-self: flex-start;
+  margin-top: 8px;
+  align-self: flex-start;
 }
 
 .form-buttons {
-    display: flex;
-    width: 100%;
-    justify-content: stretch;
-    align-items: stretch;
-    gap: 10px;
-    margin-top: auto;
-    padding-top: 24px;
+  display: flex;
+  width: 100%;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 24px;
 }
 
-.cancel-button, .save-button {
-    flex: 1;
-    min-width: 0;
-    min-height: 40px;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 8px;
+.cancel-button,
+.save-button {
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
 }
 
 .cancel-button {
-    background: #d1b5bb;
-    color: white;
+  background: #d1b5bb;
+  color: white;
 }
 
 .cancel-button:hover {
-    background: #b88a92;
+  background: #b88a92;
 }
 
 .save-button {
-    background: var(--pink);
-    color: white;
+  background: var(--pink);
+  color: white;
 }
 
 .applications-section {
-    min-width: 0;
+  min-width: 0;
 }
 
 .status-heading {
-    display: block;
-    width: 100%;
-    margin: 0 0 26px;
-    padding: 14px 10px;
-    border-radius: 8px;
-    background: var(--pink);
-    color: white;
-    text-align: center;
-    font-size: 23px;
-    font-weight: 500;
+  display: block;
+  width: 100%;
+  margin: 0 0 26px;
+  padding: 14px 10px;
+  border-radius: 8px;
+  background: var(--pink);
+  color: white;
+  text-align: center;
+  font-size: 23px;
+  font-weight: 500;
 }
 
 .application-card {
-    width: 100%;
-    min-width: 0;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: stretch;
-    overflow: hidden;
-    border-radius: 14px;
-    background: #e9cbd2;
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #e9cbd2;
 }
 
 .animal-image {
-    position: relative;
-    min-width: 0;
-    background: #d9d0cb;
+  position: relative;
+  min-width: 0;
+  background: #d9d0cb;
 }
 
 .animal-image > img {
-    display: block;
-    width: 100%;
-    height: 135px;
-    object-fit: cover;
+  display: block;
+  width: 100%;
+  height: 135px;
+  object-fit: cover;
 }
 
 .animal-favorite {
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    background: white;
-    color: var(--pink);
-    font-size: 27px;
-    display: grid;
-    place-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    transition: 0.2s;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: white;
+  color: var(--pink);
+  font-size: 27px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition: 0.2s;
 }
 
 .animal-caption {
-    padding: 8px 10px;
-    background: #f8f5f1;
+  padding: 8px 10px;
+  background: #f8f5f1;
 }
 
-.animal-caption strong, .animal-caption small {
-    display: block;
+.animal-caption strong,
+.animal-caption small {
+  display: block;
 }
 
 .animal-caption strong {
-    margin-bottom: 5px;
-    font-size: 12px;
+  margin-bottom: 5px;
+  font-size: 12px;
 }
 
 .animal-caption small {
-    color: #776d6f;
-    font-size: 10px;
+  color: #776d6f;
+  font-size: 10px;
 }
 
 .application-info {
-    min-width: 0;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  min-width: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .application-info h3 {
-    margin: 0;
-    font-size: 21px;
-    line-height: 1.4;
-    font-weight: 500;
-    overflow-wrap: anywhere;
+  margin: 0;
+  font-size: 21px;
+  line-height: 1.4;
+  font-weight: 500;
+  overflow-wrap: anywhere;
 }
 
 .application-info p {
-    margin: 20px 0 0;
-    color: #b56b7e;
-    font-size: 11px;
-    line-height: 1.6;
-    text-align: right;
+  margin: 20px 0 0;
+  color: #b56b7e;
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: right;
 }
 
 .footer {
-    margin-top: 35px;
-    padding: 25px 0;
-    border-top: 1px solid #edc8d8;
-    width: 94%;
+  margin-top: 35px;
+  padding: 25px 0;
+  border-top: 1px solid #edc8d8;
+  width: 94%;
 }
 
 .footer-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px;
-    padding-bottom: 25px;
-    margin: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  padding-bottom: 25px;
+  margin: 0 10px;
 }
 
 .footer-brand h3 {
-    font-size: 19px;
-    color: var(--pink);
-    margin-bottom: 6px;
+  font-size: 19px;
+  color: var(--pink);
+  margin-bottom: 6px;
 }
 
 .footer-brand p {
-    font-size: 13px;
-    color: var(--muted);
+  font-size: 13px;
+  color: var(--muted);
 }
 
 .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .footer-links a {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 13px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
 }
 
 .footer-links a:hover {
-    color: var(--pink);
+  color: var(--pink);
 }
 
 .footer-bottom {
-    text-align: center;
-    padding-top: 20px;
-    border-top: 1px solid #edc8d8;
-    font-size: 12px;
-    color: #8d7280;
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #edc8d8;
+  font-size: 12px;
+  color: #8d7280;
 }
 
 @media (max-width: 1050px) {
-    .header {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+  .header {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-    .navigation {
-        order: 3;
-        width: 100%;
-        flex-wrap: wrap;
-        gap: 16px;
-    }
+  .navigation {
+    order: 3;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
 
-    .account-layout {
-        width: 94%;
-        gap: 18px;
-    }
+  .account-layout {
+    width: 94%;
+    gap: 18px;
+  }
 
-    .profile-section,
-    .applications-section {
-        padding: 14px;
-    }
+  .profile-section,
+  .applications-section {
+    padding: 14px;
+  }
 
-    .profile-card {
-        padding: 14px;
-        gap: 15px;
-    }
+  .profile-card {
+    padding: 14px;
+    gap: 15px;
+  }
 
-    .application-info h3 {
-        font-size: 16px;
-    }
+  .application-info h3 {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 760px) {
-    .account-layout {
-        grid-template-columns: 1fr;
-        margin-top: 25px;
-    }
+  .account-layout {
+    grid-template-columns: 1fr;
+    margin-top: 25px;
+  }
 
-    .profile-card {
-        grid-template-columns: 1fr 1fr;
-    }
+  .profile-card {
+    grid-template-columns: 1fr 1fr;
+  }
 
-    .applications-section {
-        min-height: 250px;
-    }
+  .applications-section {
+    min-height: 250px;
+  }
 
-    .application-card {
-        max-width: 500px;
-    }
+  .application-card {
+    max-width: 500px;
+  }
 }
 
 @media (max-width: 480px) {
-    .header {
-        gap: 14px;
-        padding: 12px;
-    }
+  .header {
+    gap: 14px;
+    padding: 12px;
+  }
 
-    .navigation {
-        justify-content: flex-start;
-        gap: 12px;
-    }
+  .navigation {
+    justify-content: flex-start;
+    gap: 12px;
+  }
 
-    .navigation a {
-        font-size: 11px;
-    }
+  .navigation a {
+    font-size: 11px;
+  }
 
-    .nav-actions {
-        gap: 6px;
-    }
+  .nav-actions {
+    gap: 6px;
+  }
 
-    .donate-button,
-    .logout-button {
-        padding: 0 9px;
-        font-size: 10px;
-    }
+  .donate-button,
+  .logout-button {
+    padding: 0 9px;
+    font-size: 10px;
+  }
 
-    .account-layout {
-        width: calc(100% - 20px);
-        gap: 16px;
-    }
+  .account-layout {
+    width: calc(100% - 20px);
+    gap: 16px;
+  }
 
-    .profile-card {
-        grid-template-columns: 1fr;
-    }
+  .profile-card {
+    grid-template-columns: 1fr;
+  }
 
-    .photo-container {
-        height: 260px;
-    }
+  .photo-container {
+    height: 260px;
+  }
 
-    .form-buttons {
-        margin-top: 20px;
-    }
+  .form-buttons {
+    margin-top: 20px;
+  }
 
-    .status-heading {
-        font-size: 18px;
-    }
+  .status-heading {
+    font-size: 18px;
+  }
 }

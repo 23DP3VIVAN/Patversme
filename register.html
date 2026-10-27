@@ -1,176 +1,183 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="lv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reģistrācija | Pēdas Mājās</title>
-    <link rel="stylesheet" href="src/register.css">
-</head>
-<body>
-
-<div class="page">
-
-    <header class="header">
+    <link rel="stylesheet" href="src/register.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
         <a href="index.html" class="logo">
-            <img src="src/img/logo.jpg" alt="Logo">
-            <div>
-                <h2>PĒDAS MĀJĀS</h2>
-                <p>Dzīvnieku patversme</p>
-            </div>
+          <img src="src/img/logo.jpg" alt="Logo" />
+          <div>
+            <h2>PĒDAS MĀJĀS</h2>
+            <p>Dzīvnieku patversme</p>
+          </div>
         </a>
 
         <nav class="navigation">
-            <a href="index.html">Sākums</a>
-            <a href="animals.html">Dzīvnieki</a>
-            <a href="about.html">Par mums</a>
-            <a href="help.html">Kā palīdzēt?</a>
-            <a href="kontakti.html">Kontakti</a>
+          <a href="index.html">Sākums</a>
+          <a href="animals.html">Dzīvnieki</a>
+          <a href="about.html">Par mums</a>
+          <a href="help.html">Kā palīdzēt?</a>
+          <a href="kontakti.html">Kontakti</a>
         </nav>
 
         <div class="header-buttons">
-            <a href="donate.html" class="donate">♡ Ziedot</a>
-            <a href="register.html" class="register active">Pieteikties</a>
+          <a href="donate.html" class="donate">♡ Ziedot</a>
+          <a href="register.html" class="register active">Pieteikties</a>
         </div>
-    </header>
+      </header>
 
-    <main class="auth-layout">
-
+      <main class="auth-layout">
         <section class="welcome-panel">
-            <span class="eyebrow">LAIPNI LŪGTI!</span>
-            <h1>Pievienojies mūsu<br><span>ķepu ģimenei ♡</span></h1>
-            <p>
-                Izveido savu profilu, iepazīsti mūsu
-                dzīvniekus un sper pirmo soli ceļā
-                uz jaunu draudzību!
-            </p>
+          <span class="eyebrow">LAIPNI LŪGTI!</span>
+          <h1>Pievienojies mūsu<br /><span>ķepu ģimenei ♡</span></h1>
+          <p>
+            Izveido savu profilu, iepazīsti mūsu dzīvniekus un sper pirmo soli
+            ceļā uz jaunu draudzību!
+          </p>
 
-            <img
-                src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&amp;fit=crop&amp;w=900&amp;q=85"
-                alt="Draudzīgi suņi">
+          <img
+            src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&amp;fit=crop&amp;w=900&amp;q=85"
+            alt="Draudzīgi suņi"
+          />
 
-            <div class="welcome-note">
-                🐾 Katrs dzīvnieks ir pelnījis mīlestību!
-            </div>
+          <div class="welcome-note">
+            🐾 Katrs dzīvnieks ir pelnījis mīlestību!
+          </div>
         </section>
 
         <section class="auth-panel">
-            <div class="auth-tabs">
-                <button type="button" class="tab active"
-                        id="registerTab">Reģistrēties</button>
-                <button type="button" class="tab"
-                        id="loginTab">Pieteikties</button>
-            </div>
+          <div class="auth-tabs">
+            <button type="button" class="tab active" id="registerTab">
+              Reģistrēties
+            </button>
+            <button type="button" class="tab" id="loginTab">Pieteikties</button>
+          </div>
 
-            <!-- REGISTRATION -->
-            <div id="registerSection">
-                <span class="eyebrow">JAUNS LIETOTĀJS</span>
-                <h2>Izveido kontu ♡</h2>
-                <p class="subtitle">
-                    Aizpildi informāciju, lai pievienotos mums.
-                </p>
+          <!-- REGISTRATION -->
+          <div id="registerSection">
+            <span class="eyebrow">JAUNS LIETOTĀJS</span>
+            <h2>Izveido kontu ♡</h2>
+            <p class="subtitle">Aizpildi informāciju, lai pievienotos mums.</p>
 
-                <form id="registerForm">
-                    <div class="form-row">
-                        <div class="field">
-                            <label for="firstName">Vārds</label>
-                            <input id="firstName" type="text"
-                                   placeholder="Tavs vārds" required>
-                        </div>
-                        <div class="field">
-                            <label for="lastName">Uzvārds</label>
-                            <input id="lastName" type="text"
-                                   placeholder="Tavs uzvārds" required>
-                        </div>
-                    </div>
+            <form id="registerForm">
+              <div class="form-row">
+                <div class="field">
+                  <label for="firstName">Vārds</label>
+                  <input
+                    id="firstName"
+                    type="text"
+                    placeholder="Tavs vārds"
+                    required
+                  />
+                </div>
+                <div class="field">
+                  <label for="lastName">Uzvārds</label>
+                  <input
+                    id="lastName"
+                    type="text"
+                    placeholder="Tavs uzvārds"
+                    required
+                  />
+                </div>
+              </div>
 
-                    <div class="field">
-                        <label for="registerEmail">E-pasts</label>
-                        <input id="registerEmail" type="email"
-                               placeholder="Tavs e-pasts" required>
-                    </div>
+              <div class="field">
+                <label for="registerEmail">E-pasts</label>
+                <input
+                  id="registerEmail"
+                  type="email"
+                  placeholder="Tavs e-pasts"
+                  required
+                />
+              </div>
 
-                    <div class="field">
-                        <label for="registerPassword">Parole</label>
-                        <input id="registerPassword" type="password"
-                               placeholder="Izveido paroli"
-                               minlength="8" required>
-                    </div>
+              <div class="field">
+                <label for="registerPassword">Parole</label>
+                <input
+                  id="registerPassword"
+                  type="password"
+                  placeholder="Izveido paroli"
+                  minlength="8"
+                  required
+                />
+              </div>
 
-                    <div class="field">
-                        <label for="confirmPassword">Atkārto paroli</label>
-                        <input id="confirmPassword" type="password"
-                               placeholder="Atkārto paroli"
-                               minlength="8" required>
-                    </div>
+              <div class="field">
+                <label for="confirmPassword">Atkārto paroli</label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Atkārto paroli"
+                  minlength="8"
+                  required
+                />
+              </div>
 
-                    <label class="agreement">
-                        <input type="checkbox" required>
-                        Piekrītu lietošanas noteikumiem
-                        un privātuma politikai
-                    </label>
+              <label class="agreement">
+                <input type="checkbox" required />
+                Piekrītu lietošanas noteikumiem un privātuma politikai
+              </label>
 
-                    <button type="submit" class="submit-button">
-                        Izveidot kontu →
-                    </button>
+              <button type="submit" class="submit-button">
+                Izveidot kontu →
+              </button>
 
-                    <p class="form-message" id="registerMessage"
-                       role="status"></p>
-                </form>
+              <p class="form-message" id="registerMessage" role="status"></p>
+            </form>
 
-                <p class="switch-text">
-                    Tev jau ir konts?
-                    <button type="button" id="showLogin">
-                        Pieteikties
-                    </button>
-                </p>
-            </div>
+            <p class="switch-text">
+              Tev jau ir konts?
+              <button type="button" id="showLogin">Pieteikties</button>
+            </p>
+          </div>
 
-            <!-- LOGIN -->
-            <div id="loginSection" hidden>
-                <span class="eyebrow">PRIEKS TEVI REDZĒT</span>
-                <h2>Laipni lūgts atpakaļ ♡</h2>
-                <p class="subtitle">
-                    Ievadi savu e-pastu un paroli.
-                </p>
+          <!-- LOGIN -->
+          <div id="loginSection" hidden>
+            <span class="eyebrow">PRIEKS TEVI REDZĒT</span>
+            <h2>Laipni lūgts atpakaļ ♡</h2>
+            <p class="subtitle">Ievadi savu e-pastu un paroli.</p>
 
-                <form id="loginForm">
-                    <div class="field">
-                        <label for="loginEmail">E-pasts</label>
-                        <input id="loginEmail" type="email"
-                               placeholder="Tavs e-pasts" required>
-                    </div>
+            <form id="loginForm">
+              <div class="field">
+                <label for="loginEmail">E-pasts</label>
+                <input
+                  id="loginEmail"
+                  type="email"
+                  placeholder="Tavs e-pasts"
+                  required
+                />
+              </div>
 
-                    <div class="field">
-                        <label for="loginPassword">Parole</label>
-                        <input id="loginPassword" type="password"
-                               placeholder="Tava parole" required>
-                    </div>
+              <div class="field">
+                <label for="loginPassword">Parole</label>
+                <input
+                  id="loginPassword"
+                  type="password"
+                  placeholder="Tava parole"
+                  required
+                />
+              </div>
 
-                    <button type="submit" class="submit-button">
-                        Pieteikties →
-                    </button>
+              <button type="submit" class="submit-button">Pieteikties →</button>
 
-                    <p class="form-message" id="loginMessage"
-                       role="status"></p>
-                </form>
+              <p class="form-message" id="loginMessage" role="status"></p>
+            </form>
 
-                <p class="switch-text">
-                    Vēl nav konta?
-                    <button type="button" id="showRegister">
-                        Reģistrēties
-                    </button>
-                </p>
-            </div>
+            <p class="switch-text">
+              Vēl nav konta?
+              <button type="button" id="showRegister">Reģistrēties</button>
+            </p>
+          </div>
         </section>
+      </main>
 
-    </main>
-
-    <footer>
-        © 2026 PĒDAS MĀJĀS | Veidots ar mīlestību ♡
-    </footer>
-
-</div>
-<script src="src/js/register.js"></script> 
-</body>
+      <footer>© 2026 PĒDAS MĀJĀS | Veidots ar mīlestību ♡</footer>
+    </div>
+    <script src="src/js/register.js"></script>
+  </body>
 </html>

@@ -1,170 +1,193 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="lv">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dzīvnieki | Pēdas Mājās</title>
-  <link rel="icon" href="src/img/logo.jpg">
-  <link rel="stylesheet" href="src/animals.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dzīvnieki | Pēdas Mājās</title>
+    <link rel="icon" href="src/img/logo.jpg" />
+    <link rel="stylesheet" href="src/animals.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <a href="index.html" class="logo">
+          <img src="src/img/logo.jpg" alt="Pēdas Mājās" />
+          <div>
+            <h2>PĒDAS MĀJĀS</h2>
+            <p>Dzīvnieku patversme</p>
+          </div>
+        </a>
 
-<div class="page">
+        <nav class="navigation">
+          <a href="index.html">Sākums</a>
+          <a href="animals.html" class="active">Dzīvnieki</a>
+          <a href="about.html">Par mums</a>
+          <a href="help.html">Kā palīdzēt?</a>
+          <a href="kontakti.html">Kontakti</a>
+        </nav>
 
-  <header class="header">
-    <a href="index.html" class="logo">
-      <img src="src/img/logo.jpg" alt="Pēdas Mājās">
-      <div>
-        <h2>PĒDAS MĀJĀS</h2>
-        <p>Dzīvnieku patversme</p>
-      </div>
-    </a>
-
-    <nav class="navigation">
-      <a href="index.html">Sākums</a>
-      <a href="animals.html" class="active">Dzīvnieki</a>
-      <a href="about.html">Par mums</a>
-      <a href="help.html">Kā palīdzēt?</a>
-      <a href="kontakti.html">Kontakti</a>
-    </nav>
-
-    <div class="header-buttons">
-      <button class="donate" type="button">♡ &nbsp; Ziedot</button>
-      <button class="register" type="button">Pieslēgties</button>
-    </div>
-  </header>
-
-  <section class="banner">
-    <div class="banner-content">
-      <h1>Meklē savu draugu</h1>
-      <p>Apskati mūsu patversmes dzīvniekus un atrodi sev piemērotāko draugu.</p>
-    </div>
-  </section>
-
-  <main class="catalog" id="catalog">
-
-    <aside class="sidebar">
-      <h2>Filtri</h2>
-
-      <div class="filter-section">
-        <h3>Dzīvnieka veids</h3>
-        <label><input type="radio" name="species" value="all" checked> Visi</label>
-        <label><input type="radio" name="species" value="suns"> Suņi</label>
-        <label><input type="radio" name="species" value="kakis"> Kaķi</label>
-      </div>
-
-      <div class="filter-section">
-        <h3>Vecums</h3>
-        <label><input type="checkbox" name="age" value="baby"> Līdz 1 gadam</label>
-        <label><input type="checkbox" name="age" value="young"> 1-3 gadi</label>
-        <label><input type="checkbox" name="age" value="adult"> 4-7 gadi</label>
-        <label><input type="checkbox" name="age" value="senior"> Virs 7 gadiem</label>
-      </div>
-
-      <div class="filter-section">
-        <h3>Dzimums</h3>
-        <label><input type="radio" name="gender" value="all" checked> Visi</label>
-        <label><input type="radio" name="gender" value="male"> Tēviņš</label>
-        <label><input type="radio" name="gender" value="female"> Mātīte</label>
-      </div>
-
-      <div class="filter-section">
-        <h3>Īpašas vajadzības</h3>
-        <label>
-          <input type="checkbox" id="specialFilter">
-          Jā
-        </label>
-      </div>
-
-      <button id="clearFilters" class="clear-btn" type="button">
-        Notīrīt filtrus
-      </button>
-    </aside>
-
-    <section class="catalog-content">
-
-      <div class="toolbar">
-        <div class="search-box">
-          <span>⌕</span>
-          <input
-            type="search"
-            id="searchInput"
-            placeholder="Meklēt pēc vārda, šķirnes vai apraksta..."
-            aria-label="Meklēt dzīvniekus"
-          >
+        <div class="header-buttons">
+          <button class="donate" type="button">♡ &nbsp; Ziedot</button>
+          <button class="register" type="button">Pieslēgties</button>
         </div>
+      </header>
 
-        <div class="sort-box">
-          <label for="sortSelect">Kārtot pēc:</label>
-          <select id="sortSelect">
-            <option value="default">Noklusējums</option>
-            <option value="youngest">Jaunākie</option>
-            <option value="oldest">Vecākie</option>
-            <option value="name">Vārds A-Z</option>
-          </select>
+      <section class="banner">
+        <div class="banner-content">
+          <h1>Meklē savu draugu</h1>
+          <p>
+            Apskati mūsu patversmes dzīvniekus un atrodi sev piemērotāko draugu.
+          </p>
         </div>
-      </div>
+      </section>
 
-      <div class="category-row">
-        <div class="categories">
-          <button class="category active" data-category="all">Visi</button>
-          <button class="category" data-category="suns">Suņi</button>
-          <button class="category" data-category="kakis">Kaķi</button>
-          <button class="category" data-category="kucens">Kucēni</button>
-          <button class="category" data-category="kakens">Kaķēni</button>
-          <button class="category" data-category="special">Īpašas vajadzības</button>
-        </div>
+      <main class="catalog" id="catalog">
+        <aside class="sidebar">
+          <h2>Filtri</h2>
 
-        <p id="resultsCount" aria-live="polite"></p>
-      </div>
+          <div class="filter-section">
+            <h3>Dzīvnieka veids</h3>
+            <label
+              ><input type="radio" name="species" value="all" checked />
+              Visi</label
+            >
+            <label
+              ><input type="radio" name="species" value="suns" /> Suņi</label
+            >
+            <label
+              ><input type="radio" name="species" value="kakis" /> Kaķi</label
+            >
+          </div>
 
-      <div class="animal-grid" id="animalGrid"></div>
+          <div class="filter-section">
+            <h3>Vecums</h3>
+            <label
+              ><input type="checkbox" name="age" value="baby" /> Līdz 1
+              gadam</label
+            >
+            <label
+              ><input type="checkbox" name="age" value="young" /> 1-3
+              gadi</label
+            >
+            <label
+              ><input type="checkbox" name="age" value="adult" /> 4-7
+              gadi</label
+            >
+            <label
+              ><input type="checkbox" name="age" value="senior" /> Virs 7
+              gadiem</label
+            >
+          </div>
 
-      <div id="animalModal" class="modal">
-        <div class="modalContent">
-          <button id="closeModal" class="closeModal">&times;</button>
-          <img id="modalPhoto" src="" alt="Dzīvnieka foto">
-          <h2 id="modalName"></h2>
-          <p id="modalSpecies"></p>
-          <p id="modalAge"></p>
-          <p id="modalGender"></p>
-          <p id="modalBreed"></p>
-          <p id="modalCharacter"></p>
-          <p id="modalSize"></p>
-          <p id="modalSpecial"></p>
-        </div>
-      </div>
+          <div class="filter-section">
+            <h3>Dzimums</h3>
+            <label
+              ><input type="radio" name="gender" value="all" checked />
+              Visi</label
+            >
+            <label
+              ><input type="radio" name="gender" value="male" /> Tēviņš</label
+            >
+            <label
+              ><input type="radio" name="gender" value="female" /> Mātīte</label
+            >
+          </div>
 
-      <p id="emptyMessage" class="empty-message" hidden>
-        Diemžēl neviens dzīvnieks neatbilst izvēlētajiem filtriem.
-      </p>
+          <div class="filter-section">
+            <h3>Īpašas vajadzības</h3>
+            <label>
+              <input type="checkbox" id="specialFilter" />
+              Jā
+            </label>
+          </div>
 
-      <div class="pagination" id="pagination"></div>
+          <button id="clearFilters" class="clear-btn" type="button">
+            Notīrīt filtrus
+          </button>
+        </aside>
 
-    </section>
-  </main>
-  
-  <footer class="footer">
-      <div class="footer-top">
+        <section class="catalog-content">
+          <div class="toolbar">
+            <div class="search-box">
+              <span>⌕</span>
+              <input
+                type="search"
+                id="searchInput"
+                placeholder="Meklēt pēc vārda, šķirnes vai apraksta..."
+                aria-label="Meklēt dzīvniekus"
+              />
+            </div>
+
+            <div class="sort-box">
+              <label for="sortSelect">Kārtot pēc:</label>
+              <select id="sortSelect">
+                <option value="default">Noklusējums</option>
+                <option value="youngest">Jaunākie</option>
+                <option value="oldest">Vecākie</option>
+                <option value="name">Vārds A-Z</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="category-row">
+            <div class="categories">
+              <button class="category active" data-category="all">Visi</button>
+              <button class="category" data-category="suns">Suņi</button>
+              <button class="category" data-category="kakis">Kaķi</button>
+              <button class="category" data-category="kucens">Kucēni</button>
+              <button class="category" data-category="kakens">Kaķēni</button>
+              <button class="category" data-category="special">
+                Īpašas vajadzības
+              </button>
+            </div>
+
+            <p id="resultsCount" aria-live="polite"></p>
+          </div>
+
+          <div class="animal-grid" id="animalGrid"></div>
+
+          <div id="animalModal" class="modal">
+            <div class="modalContent">
+              <button id="closeModal" class="closeModal">&times;</button>
+              <img id="modalPhoto" src="" alt="Dzīvnieka foto" />
+              <h2 id="modalName"></h2>
+              <p id="modalSpecies"></p>
+              <p id="modalAge"></p>
+              <p id="modalGender"></p>
+              <p id="modalBreed"></p>
+              <p id="modalCharacter"></p>
+              <p id="modalSize"></p>
+              <p id="modalSpecial"></p>
+            </div>
+          </div>
+
+          <p id="emptyMessage" class="empty-message" hidden>
+            Diemžēl neviens dzīvnieks neatbilst izvēlētajiem filtriem.
+          </p>
+
+          <div class="pagination" id="pagination"></div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-top">
           <div class="footer-brand">
-              <h3>🐾 PĒDAS MĀJĀS</h3>
-              <p>Katrs dzīvnieks ir pelnījis mājas.</p>
+            <h3>🐾 PĒDAS MĀJĀS</h3>
+            <p>Katrs dzīvnieks ir pelnījis mājas.</p>
           </div>
           <div class="footer-links">
-              <a href="index.html">Sākums</a>
-              <a href="animals.html">Dzīvnieki</a>
-              <a href="about.html">Par mums</a>
-              <a href="help.html">Kā palīdzēt?</a>
-              <a href="Kontakti.html">Kontakti</a>
+            <a href="index.html">Sākums</a>
+            <a href="animals.html">Dzīvnieki</a>
+            <a href="about.html">Par mums</a>
+            <a href="help.html">Kā palīdzēt?</a>
+            <a href="Kontakti.html">Kontakti</a>
           </div>
-      </div>
-      <div class="footer-bottom">
+        </div>
+        <div class="footer-bottom">
           © 2026 PĒDAS MĀJĀS | Veidots ar mīlestību ♡
-      </div>
-  </footer>
-
-</div>
-<script src="src/js/animals.js"></script> 
-</body>
+        </div>
+      </footer>
+    </div>
+    <script src="src/js/animals.js"></script>
+  </body>
 </html>

@@ -1,128 +1,186 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="lv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lietotāja konts | Pēdas mājās</title>
-    <link rel="icon" href="src/img/logo.jpg">
-    <link rel="stylesheet" href="src/profile.css">
-</head>
-<body>
+    <link rel="icon" href="src/img/logo.jpg" />
+    <link rel="stylesheet" href="src/profile.css" />
+  </head>
+  <body>
     <div class="page">
-        <header class="header">
-            <a href="index.html" class="logo">
-                <img src="src/img/logo.jpg" alt="Logo">
-                <div>
-                    <h2>PĒDAS MĀJĀS</h2>
-                    <p>Dzīvnieku patversme</p>
-                </div>
-            </a>
+      <header class="header">
+        <a href="index.html" class="logo">
+          <img src="src/img/logo.jpg" alt="Logo" />
+          <div>
+            <h2>PĒDAS MĀJĀS</h2>
+            <p>Dzīvnieku patversme</p>
+          </div>
+        </a>
 
-            <nav class="navigation">
-                <a href="index.html">Sākums</a>
-                <a href="animals.html">Dzīvnieki</a>
-                <a href="about.html">Par mums</a>
-                <a href="help.html">Kā palīdzēt?</a>
-                <a href="Kontakti.html">Kontakti</a>
-            </nav>
+        <nav class="navigation">
+          <a href="index.html">Sākums</a>
+          <a href="animals.html">Dzīvnieki</a>
+          <a href="about.html">Par mums</a>
+          <a href="help.html">Kā palīdzēt?</a>
+          <a href="Kontakti.html">Kontakti</a>
+        </nav>
 
-            <div class="header-buttons">
-                <a href="help.html" class="donate">♡ Ziedot</a>
-                <button type="button" id="logoutButton" class="logout-button">Atteikties</button>
-                <button type="button" id="profileButton" class="profile-button" aria-label="Lietotāja profils">
-                    <img id="navPhoto" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Profila attēls">
+        <div class="header-buttons">
+          <a href="help.html" class="donate">♡ Ziedot</a>
+          <button type="button" id="logoutButton" class="logout-button">
+            Atteikties
+          </button>
+          <button
+            type="button"
+            id="profileButton"
+            class="profile-button"
+            aria-label="Lietotāja profils"
+          >
+            <img
+              id="navPhoto"
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
+              alt="Profila attēls"
+            />
+          </button>
+        </div>
+      </header>
+      <main class="account-layout">
+        <section class="profile-section">
+          <div class="profile-card">
+            <div class="profile-left">
+              <div class="photo-container">
+                <img
+                  id="profilePhoto"
+                  src="https://placehold.co/500x350/fbe8ee/c13e68?text=Pievieno+bildi"
+                  alt="Lietotāja profila attēls"
+                />
+              </div>
+              <input type="file" id="photoInput" accept="image/*" hidden />
+              <div class="photo-buttons">
+                <button type="button" id="changePhoto" class="small-button">
+                  Pievienot bildi
                 </button>
+                <button
+                  type="button"
+                  id="removePhoto"
+                  class="small-button"
+                  hidden
+                >
+                  Noņemt bildi
+                </button>
+              </div>
+              <label for="description" class="description-label"
+                >Īss apraksts par sevi</label
+              >
+              <textarea id="description" rows="5" maxlength="500"></textarea>
             </div>
-        </header>
-        <main class="account-layout">
-            <section class="profile-section">
-                <div class="profile-card">
-                    <div class="profile-left">
-                        <div class="photo-container">
-                            <img id="profilePhoto" src="https://placehold.co/500x350/fbe8ee/c13e68?text=Pievieno+bildi" alt="Lietotāja profila attēls">
-                        </div>
-                        <input type="file" id="photoInput" accept="image/*" hidden>
-                        <div class="photo-buttons">
-                            <button type="button" id="changePhoto" class="small-button">Pievienot bildi</button>
-                            <button type="button" id="removePhoto" class="small-button" hidden>Noņemt bildi</button>
-                        </div>
-                        <label for="description" class="description-label">Īss apraksts par sevi</label>
-                        <textarea id="description" rows="5" maxlength="500"></textarea>
-                    </div>
-                    <div class="profile-right">
-                        <form id="profileForm">
-                            <div class="form-field">
-                                <label for="firstName">Vārds</label>
-                                <input type="text" id="firstName" required>
-                            </div>
-                            <div class="form-field">
-                                <label for="lastName">Uzvārds</label>
-                                <input type="text" id="lastName" required>
-                            </div>
-                            <div class="form-field">
-                                <label>Dzimšanas datums</label>
-                                <div class="birth-date">
-                                    <input type="number" id="birthDay" min="1" max="31" aria-label="Dzimšanas diena" required>
-                                    <input type="number" id="birthMonth" min="1" max="12" aria-label="Dzimšanas mēnesis" required>
-                                    <input type="number" id="birthYear" min="1900" max="2026" aria-label="Dzimšanas gads" required>
-                                </div>
-                            </div>
-                            <div class="form-field">
-                                <label for="email">E-pasts</label>
-                                <input type="email" id="email" required>
-                            </div>
-                            <div class="form-field">
-                                <label for="password">Parole</label>
-                                <input type="password" id="password" readonly>
-                                <button type="button" id="changePassword" class="small-button password-button">Mainīt paroli</button>
-                            </div>
-                            <div class="form-buttons">
-                                <button type="button" id="cancelButton" class="cancel-button">Atcelt</button>
-                                <button type="submit" class="save-button">Saglabāt</button>
-                            </div>
-                        </form>
-                    </div>
+            <div class="profile-right">
+              <form id="profileForm">
+                <div class="form-field">
+                  <label for="firstName">Vārds</label>
+                  <input type="text" id="firstName" required />
                 </div>
-            </section>
-            <aside class="applications-section">
-                <h2 class="status-heading">Pieteikuma statuss:</h2>
-                <article class="application-card">
-                    <div class="animal-image">
-                        <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=500&q=85" alt="Suns Maks">
-                        <span class="animal-favorite">♡</span>
-                        <div class="animal-caption">
-                            <strong>Maks</strong>
-                            <small>Suns • 3 gadi • Aktīvs</small>
-                        </div>
-                    </div>
-                    <div class="application-info">
-                        <h3>Pieteikums tiek izskatīts</h3>
-                        <p>Mēs Jūs informēsim, kad atbilde būs gatava.</p>
-                    </div>
-                </article>
-            </aside>
-        </main>
-        <footer class="footer">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <h3>🐾 PĒDAS MĀJĀS</h3>
-                    <p>Katrs dzīvnieks ir pelnījis mājas.</p>
+                <div class="form-field">
+                  <label for="lastName">Uzvārds</label>
+                  <input type="text" id="lastName" required />
                 </div>
+                <div class="form-field">
+                  <label>Dzimšanas datums</label>
+                  <div class="birth-date">
+                    <input
+                      type="number"
+                      id="birthDay"
+                      min="1"
+                      max="31"
+                      aria-label="Dzimšanas diena"
+                      required
+                    />
+                    <input
+                      type="number"
+                      id="birthMonth"
+                      min="1"
+                      max="12"
+                      aria-label="Dzimšanas mēnesis"
+                      required
+                    />
+                    <input
+                      type="number"
+                      id="birthYear"
+                      min="1900"
+                      max="2026"
+                      aria-label="Dzimšanas gads"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-field">
+                  <label for="email">E-pasts</label>
+                  <input type="email" id="email" required />
+                </div>
+                <div class="form-field">
+                  <label for="password">Parole</label>
+                  <input type="password" id="password" readonly />
+                  <button
+                    type="button"
+                    id="changePassword"
+                    class="small-button password-button"
+                  >
+                    Mainīt paroli
+                  </button>
+                </div>
+                <div class="form-buttons">
+                  <button type="button" id="cancelButton" class="cancel-button">
+                    Atcelt
+                  </button>
+                  <button type="submit" class="save-button">Saglabāt</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        <aside class="applications-section">
+          <h2 class="status-heading">Pieteikuma statuss:</h2>
+          <article class="application-card">
+            <div class="animal-image">
+              <img
+                src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=500&q=85"
+                alt="Suns Maks"
+              />
+              <span class="animal-favorite">♡</span>
+              <div class="animal-caption">
+                <strong>Maks</strong>
+                <small>Suns • 3 gadi • Aktīvs</small>
+              </div>
+            </div>
+            <div class="application-info">
+              <h3>Pieteikums tiek izskatīts</h3>
+              <p>Mēs Jūs informēsim, kad atbilde būs gatava.</p>
+            </div>
+          </article>
+        </aside>
+      </main>
+      <footer class="footer">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <h3>🐾 PĒDAS MĀJĀS</h3>
+            <p>Katrs dzīvnieks ir pelnījis mājas.</p>
+          </div>
 
-                <div class="footer-links">
-                    <a href="index.html">Sākums</a>
-                    <a href="animals.html">Dzīvnieki</a>
-                    <a href="about.html">Par mums</a>
-                    <a href="help.html">Kā palīdzēt?</a>
-                    <a href="Kontakti.html">Kontakti</a>
-                </div>
-            </div>
+          <div class="footer-links">
+            <a href="index.html">Sākums</a>
+            <a href="animals.html">Dzīvnieki</a>
+            <a href="about.html">Par mums</a>
+            <a href="help.html">Kā palīdzēt?</a>
+            <a href="Kontakti.html">Kontakti</a>
+          </div>
+        </div>
 
-            <div class="footer-bottom">
-                © 2026 PĒDAS MĀJĀS | Veidots ar mīlestību ♡
-            </div>
-        </footer>
+        <div class="footer-bottom">
+          © 2026 PĒDAS MĀJĀS | Veidots ar mīlestību ♡
+        </div>
+      </footer>
     </div>
-<script src="src/js/profile.js" defer></script>
-</body>
+    <script src="src/js/profile.js" defer></script>
+  </body>
 </html>
