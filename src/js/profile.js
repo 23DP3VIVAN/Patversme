@@ -1,190 +1,243 @@
-const profileForm = document.getElementById("profileForm");
-const description = document.getElementById("description");
-
-const photoInput = document.getElementById("photoInput");
-const profilePhoto = document.getElementById("profilePhoto");
-const navPhoto = document.getElementById("navPhoto");
-
-const changePhoto = document.getElementById("changePhoto");
-const removePhoto = document.getElementById("removePhoto");
-const cancelButton = document.getElementById("cancelButton");
-const changePassword = document.getElementById("changePassword");
-
-const logoutButton = document.getElementById("logoutButton");
-const profileButton = document.getElementById("profileButton");
-
-const defaultPhoto ="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=85";
-let selectedPhoto = null;
-
-function getProfileData() {
-    return {
-        firstName: document.getElementById("firstName").value,
-        lastName: document.getElementById("lastName").value,
-        birthDay: document.getElementById("birthDay").value,
-        birthMonth: document.getElementById("birthMonth").value,
-        birthYear: document.getElementById("birthYear").value,
-        email: document.getElementById("email").value,
-        description: description.value,
-        photo: profilePhoto.src
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("profileForm");
+    if (!form) return;
+    const fields = {
+        firstName: document.getElementById("firstName"),
+        lastName: document.getElementById("lastName"),
+        birthDay: document.getElementById("birthDay"),
+        birthMonth: document.getElementById("birthMonth"),
+        birthYear: document.getElementById("birthYear"),
+        email: document.getElementById("email"),
+        description: document.getElementById("description")
     };
-}
 
-let originalData = getProfileData();
+    const profilePhoto = document.getElementById("profilePhoto");
+    const navPhoto = document.getElementById("navPhoto");
+    const photoInput = document.getElementById("photoInput");
+    const changePhoto = document.getElementById("changePhoto");
+    const removePhoto = document.getElementById("removePhoto");
+    const cancelButton = document.getElementById("cancelButton");
+    const API_URL = "back-end/profile.php";
+    const defaultPhoto ="https://placehold.co/500x350/fbe8ee/c13e68?text=Pievieno+bildi";
+    
+    let originalData = null;
+    let selectedPhotoFile = null;
+    let photoRemoved = false;
+    let currentPhoto = null;
 
-changePhoto.addEventListener("click", () => {
-    photoInput.click();
-});
-
-photoInput.addEventListener("change", () => {
-    const file = photoInput.files[0];
-    if (!file) return;
-    if (!file.type.startsWith("image/")) {
-        alert("Lūdzu, izvēlies attēla failu.");
-        return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-        alert("Attēla izmērs nedrīkst pārsniegt 5 MB.");
-        photoInput.value = "";
-        return;
-    }
-    if (selectedPhoto) {
-        URL.revokeObjectURL(selectedPhoto);
-    }
-    selectedPhoto = URL.createObjectURL(file);
-    profilePhoto.src = selectedPhoto;
-    navPhoto.src = selectedPhoto;
-});
-
-removePhoto.addEventListener("click", () => {
-    profilePhoto.src = defaultPhoto;
-    navPhoto.src = defaultPhoto;
-    photoInput.value = "";
-    if (selectedPhoto) {
-        URL.revokeObjectURL(selectedPhoto);
-        selectedPhoto = null;
-    }
-});
-
-profileForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const firstName = document.getElementById("firstName").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const day = Number(document.getElementById("birthDay").value);
-    const month = Number(document.getElementById("birthMonth").value);
-    const year = Number(document.getElementById("birthYear").value);
-
-    if (!firstName || !lastName || !email) {
-        alert("Lūdzu, aizpildi visus obligātos laukus.");
-        return;
+    function showMessage(message, isError = false) {
+        let messageElement = document.getElementById("profileMessage");
+        if (!messageElement) {
+            messageElement = document.createElement("p");
+            messageElement.id = "profileMessage";
+            form.prepend(messageElement);
+        }
+        messageElement.textContent = message;
+        messageElement.style.color = isError ? "#c62828" : "#258044";
+        messageElement.style.display = "block";
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert("Lūdzu, ievadi derīgu e-pasta adresi.");
-        return;
+    function readForm() {
+        return {
+            firstName: fields.firstName?.value.trim() || "",
+            lastName: fields.lastName?.value.trim() || "",
+            birthDay: fields.birthDay?.value || "",
+            birthMonth: fields.birthMonth?.value || "",
+            birthYear: fields.birthYear?.value || "",
+            email: fields.email?.value.trim() || "",
+            description: fields.description?.value || ""
+        };
     }
 
-    const date = new Date(year, month - 1, day);
-    const validDate = date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
-
-    if (
-        !validDate ||
-        year < 1900 ||
-        date > new Date()
-    ) {
-        alert("Lūdzu, ievadi derīgu dzimšanas datumu.");
-        return;
-    }
-
-    const profile = {firstName, lastName, birthDay: day, birthMonth: month, birthYear: year, email, description: description.value, photo: profilePhoto.src};
-
-    try {
-        localStorage.setItem(
-            "pedaMajasProfile",
-            JSON.stringify(profile)
-        );
-        originalData = profile;
-        alert("Profila izmaiņas saglabātas!");
-    } catch {
-        alert(
-            "Neizdevās saglabāt datus pārlūkprogrammā. " +
-            "Attēls var būt pārāk liels."
-        );
-    }
-});
-
-cancelButton.addEventListener("click", () => {
-    const data = originalData;
-    document.getElementById("firstName").value = data.firstName;
-    document.getElementById("lastName").value = data.lastName;
-    document.getElementById("birthDay").value = data.birthDay;
-    document.getElementById("birthMonth").value = data.birthMonth;
-    document.getElementById("birthYear").value = data.birthYear;
-    document.getElementById("email").value = data.email;
-    description.value = data.description;
-    profilePhoto.src = data.photo || defaultPhoto;
-    navPhoto.src = data.photo || defaultPhoto;
-    photoInput.value = "";
-
-    if (selectedPhoto) {
-        URL.revokeObjectURL(selectedPhoto);
-        selectedPhoto = null;
-    }
-});
-
-function loadProfile() {
-    try {
-        const saved = localStorage.getItem("pedaMajasProfile");
-        if (!saved) return;
-        const data = JSON.parse(saved);
-        document.getElementById("firstName").value =
-            data.firstName ?? "Maksims";
-        document.getElementById("lastName").value =
-            data.lastName ?? "Ozols";
-        document.getElementById("birthDay").value =
-            data.birthDay ?? 13;
-        document.getElementById("birthMonth").value =
-            data.birthMonth ?? 8;
-        document.getElementById("birthYear").value =
-            data.birthYear ?? 2000;
-        document.getElementById("email").value =
-            data.email ?? "";
-        description.value = data.description ?? "";
-
-        if (data.photo) {
-            profilePhoto.src = data.photo;
-            navPhoto.src = data.photo;
+    function fillForm(data = {}) {
+        if (fields.firstName) {
+            fields.firstName.value = data.firstName || "";
+        }
+        if (fields.lastName) {
+            fields.lastName.value = data.lastName || "";
+        }
+        if (fields.email) {
+            fields.email.value = data.email || "";
+        }
+        if (fields.description) {
+            fields.description.value = data.description || "";
         }
 
-        originalData = getProfileData();
+        const birthDate = data.birthDate || data.birth_date || "";
 
-    } catch (error) {
-        console.error("Neizdevās ielādēt profilu:", error);
+        if (birthDate) {
+            const parts = birthDate.split("-");
+            if (parts.length === 3) {
+                if (fields.birthYear) fields.birthYear.value = parts[0];
+                if (fields.birthMonth) fields.birthMonth.value = parts[1];
+                if (fields.birthDay) fields.birthDay.value = parts[2];
+            }
+        } else {
+            if (fields.birthDay) fields.birthDay.value = "";
+            if (fields.birthMonth) fields.birthMonth.value = "";
+            if (fields.birthYear) fields.birthYear.value = "";
+        }
+        currentPhoto = data.photo || null;
+        selectedPhotoFile = null;
+        photoRemoved = false;
+        updatePhoto();
     }
-}
 
-changePassword.addEventListener("click", () => {
-    alert(
-        "Paroles maiņas funkcijai nepieciešama servera " +
-        "autentifikācija un paroles maiņas forma."
-    );
-});
+    function updatePhoto() {
+        const hasPhoto = Boolean(selectedPhotoFile || currentPhoto);
+        const photoUrl = selectedPhotoFile ? URL.createObjectURL(selectedPhotoFile) : currentPhoto || defaultPhoto;
 
-profileButton.addEventListener("click", () => {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+        if (profilePhoto) profilePhoto.src = photoUrl;
+        if (navPhoto) navPhoto.src = photoUrl;
+        if (changePhoto) {
+            changePhoto.textContent = hasPhoto ? "Mainīt bildi" : "Pievienot bildi";
+        }
+        if (removePhoto) {
+            removePhoto.hidden = !hasPhoto;
+        }
+    }
+
+    function getFormData() {
+        const data = readForm();
+        const formData = new FormData();
+
+        formData.append("firstName", data.firstName);
+        formData.append("lastName", data.lastName);
+        formData.append("email", data.email);
+        formData.append("description", data.description);
+
+        let birthDate = "";
+
+        if (data.birthYear && data.birthMonth && data.birthDay) {
+            birthDate = `${data.birthYear}-${data.birthMonth.padStart(2, "0")}-${data.birthDay.padStart(2, "0")}`;
+        }
+
+        formData.append("birthDate", birthDate);
+        formData.append("photoRemoved", photoRemoved ? "1" : "0");
+
+        if (selectedPhotoFile) {
+            formData.append("photo", selectedPhotoFile);
+        }
+
+        return formData;
+    }
+
+    async function loadProfile() {
+        try {
+            const response = await fetch(API_URL, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(
+                    result.error || "Neizdevās ielādēt profila datus."
+                );
+            }
+
+            const user = result.user || result;
+
+            fillForm(user);
+            originalData = readForm();
+
+        } catch (error) {
+            showMessage(
+                error.message || "Neizdevās savienoties ar serveri.",
+                true
+            );
+        }
+    }
+
+    if (changePhoto && photoInput) {
+        changePhoto.addEventListener("click", () => {
+            photoInput.click();
+        });
+    }
+
+    if (photoInput) {
+        photoInput.addEventListener("change", () => {
+            const file = photoInput.files[0];
+
+            if (!file) return;
+            if (!file.type.startsWith("image/")) {
+                showMessage("Lūdzu, izvēlies attēla failu.", true);
+                photoInput.value = "";
+                return;
+            }
+            if (file.size > 2 * 1024 * 1024) {
+                showMessage("Attēla izmērs nedrīkst pārsniegt 2 MB.", true);
+                photoInput.value = "";
+                return;
+            }
+
+            selectedPhotoFile = file;
+            photoRemoved = false;
+            currentPhoto = null;
+
+            updatePhoto();
+        });
+    }
+
+    if (removePhoto) {
+        removePhoto.addEventListener("click", () => {
+            selectedPhotoFile = null;
+            currentPhoto = null;
+            photoRemoved = true;
+
+            if (photoInput) photoInput.value = "";
+
+            updatePhoto();
+        });
+    }
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+
+        if (submitButton) submitButton.disabled = true;
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                credentials: "include",
+                headers: {"Accept": "application/json"},
+                body: getFormData()
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || "Neizdevās saglabāt profila datus.");
+            }
+
+            const user = result.user || {...readForm(), photo: result.photo || null};
+
+            fillForm(user);
+            originalData = readForm();
+            showMessage("Profila dati veiksmīgi saglabāti!");
+
+        } catch (error) {
+            showMessage(error.message || "Radās kļūda, saglabājot profilu.", true);
+        } finally {
+            if (submitButton) submitButton.disabled = false;
+        }
     });
-});
 
-logoutButton.addEventListener("click", () => {
-    const confirmed = confirm(
-        "Vai tiešām vēlies atteikties no konta?"
-    );
-    if (confirmed) {
-        window.location.href = "index.html";
+    if (cancelButton) {
+        cancelButton.addEventListener("click", () => {
+            if (originalData) {
+                fillForm({...originalData, photo: currentPhoto});
+            }
+
+            if (photoInput) photoInput.value = "";
+
+            const messageElement = document.getElementById("profileMessage");
+
+            if (messageElement) messageElement.style.display = "none";
+        });
     }
+    loadProfile();
 });
-
-loadProfile();

@@ -70,7 +70,6 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     }
 });
 
-// Вход (Логин)
 document.getElementById("loginForm").addEventListener("submit", async function(event) {
     event.preventDefault();
 
@@ -94,9 +93,29 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         const result = await response.json();
 
         if (response.ok) {
-            message.textContent = "Veiksmīga pieteikšanās! Laipni lūgti! ♡";
+            const user = result.user;
+            if (!user) {
+                message.textContent = "Pieteikšanās neizdevās.";
+                message.style.color = "red";
+                message.style.display = "block";
+                return;
+            }
+            const currentUser = {
+                id: user.id,
+                firstName: user.firstName ?? user.first_name ?? "",
+                lastName: user.lastName ?? user.last_name ?? "",
+                email: user.email ?? "",
+                birthDay: user.birthDay ?? "",
+                birthMonth: user.birthMonth ?? "",
+                birthYear: user.birthYear ?? "",
+                description: user.description ?? "",
+                photo: user.photo ?? null
+            };
+            localStorage.setItem("pedaMajasCurrentUser", JSON.stringify(currentUser));
+            message.textContent = "Pieteikšanās veiksmīga!";
             message.style.color = "green";
             message.style.display = "block";
+            window.location.href = "profile.html";
         } else {
             message.textContent = result.error || "Nepareizs e-pasts vai parole.";
             message.style.color = "red";

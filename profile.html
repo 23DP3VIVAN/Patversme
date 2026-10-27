@@ -39,41 +39,41 @@
                 <div class="profile-card">
                     <div class="profile-left">
                         <div class="photo-container">
-                            <img id="profilePhoto" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=85" alt="Lietotāja profila attēls">
+                            <img id="profilePhoto" src="https://placehold.co/500x350/fbe8ee/c13e68?text=Pievieno+bildi" alt="Lietotāja profila attēls">
                         </div>
                         <input type="file" id="photoInput" accept="image/*" hidden>
                         <div class="photo-buttons">
-                            <button type="button" id="changePhoto" class="small-button">Mainīt bildi</button>
-                            <button type="button" id="removePhoto" class="small-button">Noņemt bildi</button>
+                            <button type="button" id="changePhoto" class="small-button">Pievienot bildi</button>
+                            <button type="button" id="removePhoto" class="small-button" hidden>Noņemt bildi</button>
                         </div>
                         <label for="description" class="description-label">Īss apraksts par sevi</label>
-                        <textarea id="description" rows="5" maxlength="500">Dzīvoju ar diviem suņiem - angļu buldogiem. Brīvdienās patīk doties garos pārgājienos ar tiem.</textarea>
+                        <textarea id="description" rows="5" maxlength="500"></textarea>
                     </div>
                     <div class="profile-right">
                         <form id="profileForm">
                             <div class="form-field">
                                 <label for="firstName">Vārds</label>
-                                <input type="text" id="firstName" value="Maksims" required>
+                                <input type="text" id="firstName" required>
                             </div>
                             <div class="form-field">
                                 <label for="lastName">Uzvārds</label>
-                                <input type="text" id="lastName" value="Ozols" required>
+                                <input type="text" id="lastName" required>
                             </div>
                             <div class="form-field">
                                 <label>Dzimšanas datums</label>
                                 <div class="birth-date">
-                                    <input type="number" id="birthDay" min="1" max="31" value="13" aria-label="Dzimšanas diena" required>
-                                    <input type="number" id="birthMonth" min="1" max="12" value="8" aria-label="Dzimšanas mēnesis" required>
-                                    <input type="number" id="birthYear" min="1900" max="2026" value="2000" aria-label="Dzimšanas gads" required>
+                                    <input type="number" id="birthDay" min="1" max="31" aria-label="Dzimšanas diena" required>
+                                    <input type="number" id="birthMonth" min="1" max="12" aria-label="Dzimšanas mēnesis" required>
+                                    <input type="number" id="birthYear" min="1900" max="2026" aria-label="Dzimšanas gads" required>
                                 </div>
                             </div>
                             <div class="form-field">
                                 <label for="email">E-pasts</label>
-                                <input type="email" id="email" value="Ozols.cesis00@gmail.com" required>
+                                <input type="email" id="email" required>
                             </div>
                             <div class="form-field">
                                 <label for="password">Parole</label>
-                                <input type="password" id="password" value="demo1234" readonly>
+                                <input type="password" id="password" readonly>
                                 <button type="button" id="changePassword" class="small-button password-button">Mainīt paroli</button>
                             </div>
                             <div class="form-buttons">
@@ -123,6 +123,6 @@
             </div>
         </footer>
     </div>
-<script src="src/js/profile.js"></script>
+<script src="src/js/profile.js" defer></script>
 </body>
 </html>
