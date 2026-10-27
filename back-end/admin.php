@@ -191,20 +191,54 @@ try {
             throw new InvalidArgumentException("Nederīgs pieteikuma ID.");
         }
 
-        $stmtAnimal = $pdo->prepare("SELECT animal_id FROM adoptions WHERE adoption_id = ?");
-        $stmtAnimal->execute([$adoptionId]);
-        $adoption = $stmtAnimal->fetch();
-        if (!$adoption) {
+        $findAdoption = $pdo->prepare("SELECT animal_id FROM adoptions WHERE adoption_id = ?");
+        $findAdoption->execute([$adoptionId]);
+        $adoptionReference = $findAdoption->fetch();
+        if (!$adoptionReference) {
+            respond(404, ["success" => false, "message" => "Pieteikums nav atrasts."]);
+        }
+
+        $pdo->beginTransaction();
+
+        // Lock the animal first so this decision is serialized with new applications.
+        $lockAnimal = $pdo->prepare("SELECT animal_id FROM animals WHERE animal_id = ? FOR UPDATE");
+        $lockAnimal->execute([$adoptionReference['animal_id']]);
+        if (!$lockAnimal->fetch()) {
+            $pdo->rollBack();
+            respond(404, ["success" => false, "message" => "Dzīvnieks nav atrasts."]);
+        }
+
+        $lockAdoption = $pdo->prepare("SELECT adoption_id FROM adoptions WHERE adoption_id = ? FOR UPDATE");
+        $lockAdoption->execute([$adoptionId]);
+        if (!$lockAdoption->fetch()) {
+            $pdo->rollBack();
             respond(404, ["success" => false, "message" => "Pieteikums nav atrasts."]);
         }
 
         $stmt = $pdo->prepare("UPDATE adoptions SET status=? WHERE adoption_id=?");
         $stmt->execute([$newStatus, $adoptionId]);
 
-        if ($newStatus === "Noraidīts") {
-            $stmtUpdate = $pdo->prepare("UPDATE animals SET adoption_status = 'Pieejams' WHERE animal_id = ?");
-            $stmtUpdate->execute([$adoption['animal_id']]);
+        $statusCounts = $pdo->prepare(
+            "SELECT
+                SUM(status = 'Apstiprināts') AS approved_count,
+                SUM(status = 'Gaida') AS pending_count
+             FROM adoptions
+             WHERE animal_id = ?"
+        );
+        $statusCounts->execute([$adoptionReference['animal_id']]);
+        $counts = $statusCounts->fetch();
+
+        if ((int) $counts['approved_count'] > 0) {
+            $animalStatus = 'Adoptets';
+        } elseif ((int) $counts['pending_count'] > 0) {
+            $animalStatus = 'Rezervets';
+        } else {
+            $animalStatus = 'Pieejams';
         }
+
+        $updateAnimal = $pdo->prepare("UPDATE animals SET adoption_status = ? WHERE animal_id = ?");
+        $updateAnimal->execute([$animalStatus, $adoptionReference['animal_id']]);
+        $pdo->commit();
 
         respond(200, ["success" => true, "message" => "Pieteikuma statuss atjaunināts"]);
     }
@@ -214,6 +248,9 @@ try {
 } catch (InvalidArgumentException $exception) {
     respond(400, ["success" => false, "message" => $exception->getMessage()]);
 } catch (PDOException $e) {
+    if (isset($pdo) && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
     error_log($e->getMessage());
     if (($e->errorInfo[1] ?? null) === 1451) {
         respond(409, ["success" => false, "message" => "Dzīvniekam ir saistīti adopcijas pieteikumi."]);
