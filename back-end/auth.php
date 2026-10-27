@@ -2,6 +2,16 @@
 
 declare(strict_types=1);
 
+$secureSessionCookie = isset($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off';
+ini_set('session.use_strict_mode', '1');
+ini_set('session.use_only_cookies', '1');
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'secure' => $secureSessionCookie,
+    'httponly' => true,
+    'samesite' => 'Lax',
+]);
 session_start();
 
 require_once __DIR__ . '/../config/database.php';
@@ -27,6 +37,27 @@ function respond(int $status, array $result): void
     exit;
 }
 
+function textLength(string $value): int
+{
+    $length = preg_match_all('/./us', $value);
+    return $length === false ? PHP_INT_MAX : $length;
+}
+
+function requiredText(array $data, string $field, int $maxLength): string
+{
+    $value = $data[$field] ?? null;
+    if (!is_string($value)) {
+        throw new InvalidArgumentException('Aizpildiet laukus korekti.');
+    }
+
+    $value = trim($value);
+    if ($value === '' || textLength($value) > $maxLength) {
+        throw new InvalidArgumentException('Aizpildiet laukus korekti.');
+    }
+
+    return $value;
+}
+
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         respond(405, [
@@ -36,7 +67,6 @@ try {
     }
 
     $data = readJsonBody();
-    $pdo = getDatabaseConnection();
     $action = $data['action'] ?? '';
 
     if ($action === '' && isset($data['registerEmail'])) {
@@ -49,22 +79,10 @@ try {
 
     // REGISTRATION
     if ($action === 'register') {
-        $firstName = trim($data['firstName'] ?? '');
-        $lastName = trim($data['lastName'] ?? '');
-        $email = strtolower(trim($data['email'] ?? ''));
+        $firstName = requiredText($data, 'firstName', 30);
+        $lastName = requiredText($data, 'lastName', 30);
+        $email = strtolower(requiredText($data, 'email', 40));
         $password = $data['password'] ?? '';
-
-        if (
-            $firstName === '' ||
-            $lastName === '' ||
-            $email === '' ||
-            !is_string($password) ||
-            $password === ''
-        ) {
-            throw new InvalidArgumentException(
-                'Aizpildiet visus laukus.'
-            );
-        }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException(
@@ -72,21 +90,24 @@ try {
             );
         }
 
-        if (strlen($password) < 8) {
+        if (!is_string($password) || textLength($password) > 1024 ||
+            preg_match('/^(?=.*\p{Ll})(?=.*\p{Lu})(?=.*\p{N})(?=.*[^\p{L}\p{N}\s])\S{15,}$/uD', $password) !== 1) {
             throw new InvalidArgumentException(
-                'Parolei jābūt vismaz 8 simbolus garai.'
+                'Parolei jābūt vismaz 15 rakstzīmes garai un jāsatur lielie un mazie burti, cipars un speciālā rakstzīme.'
             );
         }
 
+        $pdo = getDatabaseConnection();
         $check = $pdo->prepare(
             'SELECT user_id FROM users WHERE email = ?'
         );
         $check->execute([$email]);
 
         if ($check->fetch()) {
-            throw new InvalidArgumentException(
-                'Šis e-pasts jau ir reģistrēts.'
-            );
+            respond(409, [
+                'success' => false,
+                'error' => 'Šis e-pasts jau ir reģistrēts.'
+            ]);
         }
 
         $passwordHash = password_hash(
@@ -125,19 +146,15 @@ try {
     }
 
     if ($action === 'login') {
-        $email = strtolower(trim($data['email'] ?? ''));
+        $email = strtolower(requiredText($data, 'email', 40));
         $password = $data['password'] ?? '';
 
-        if (
-            $email === '' ||
-            !is_string($password) ||
-            $password === ''
-        ) {
-            throw new InvalidArgumentException(
-                'Ievadiet e-pastu un paroli.'
-            );
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !is_string($password) ||
+            $password === '' || textLength($password) > 1024) {
+            throw new InvalidArgumentException('Ievadiet derīgu e-pastu un paroli.');
         }
 
+        $pdo = getDatabaseConnection();
         $statement = $pdo->prepare(
             'SELECT user_id AS id, first_name, last_name, email, password, role
              FROM users
@@ -184,8 +201,15 @@ try {
 } catch (PDOException $exception) {
     error_log($exception->getMessage());
 
+    if (($exception->errorInfo[1] ?? null) === 1062) {
+        respond(409, [
+            'success' => false,
+            'error' => 'Šis e-pasts jau ir reģistrēts.'
+        ]);
+    }
+
     respond(500, [
         'success' => false,
-        'error' => 'Datubāzes kļūda: ' . $exception->getMessage()
+        'error' => 'Neizdevās apstrādāt pieprasījumu.'
     ]);
 }

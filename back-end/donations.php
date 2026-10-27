@@ -3,6 +3,20 @@ declare(strict_types=1);
 require_once __DIR__ . '/../config/database.php';
 header('Content-Type: application/json; charset=utf-8');
 
+function donationField(array $data, string $field, int $maxLength): string
+{
+    $value = $data[$field] ?? null;
+    if (!is_string($value)) {
+        throw new InvalidArgumentException('Invalid donation data.');
+    }
+    $value = trim($value);
+    $length = preg_match_all('/./us', $value);
+    if ($value === '' || $length === false || $length > $maxLength) {
+        throw new InvalidArgumentException('Invalid donation data.');
+    }
+    return $value;
+}
+
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         http_response_code(405);
@@ -13,24 +27,32 @@ try {
     $input = json_decode(file_get_contents('php://input'), true);
     $data = is_array($input) && !empty($input) ? $input : $_POST;
 
-    $firstName = trim($data['firstName'] ?? '');
-    $lastName = trim($data['lastName'] ?? '');
-    $email = trim($data['email'] ?? '');
+    $firstName = donationField($data, 'firstName', 30);
+    $lastName = donationField($data, 'lastName', 30);
+    $email = donationField($data, 'email', 40);
     $amount = $data['customAmount'] ?? null;
     $paymentMethod = $data['payment_method'] ?? '';
 
-    if (
-        $firstName === '' ||
-        $lastName === '' ||
-        !filter_var($email, FILTER_VALIDATE_EMAIL) ||
-        !is_numeric($amount) ||
-        !is_finite((float) $amount) ||
-        (float) $amount <= 0 ||
-        !is_string($paymentMethod)
-    ) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Invalid donation data.']);
-        exit;
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) ||
+        !is_int($amount) && !is_float($amount) && !is_string($amount) ||
+        !is_numeric($amount) || !is_finite((float) $amount) || (float) $amount <= 0 ||
+        (float) $amount > 99999999.99) {
+        throw new InvalidArgumentException('Invalid donation data.');
+    }
+
+    $amountValue = (string) $amount;
+    if (!preg_match('/^\d{1,8}(?:\.\d{1,2})?$/D', $amountValue)) {
+        throw new InvalidArgumentException('Invalid donation data.');
+    }
+
+    $donorName = $firstName . ' ' . $lastName;
+    $donorNameLength = preg_match_all('/./us', $donorName);
+    if ($donorNameLength === false || $donorNameLength > 60) {
+        throw new InvalidArgumentException('Invalid donation data.');
+    }
+
+    if (!is_string($paymentMethod)) {
+        throw new InvalidArgumentException('Invalid payment method.');
     }
 
     $allowedMethods = [
@@ -57,9 +79,9 @@ try {
     );
 
     $statement->execute([
-        ':donor_name' => $firstName . ' ' . $lastName,
+        ':donor_name' => $donorName,
         ':donor_email' => $email,
-        ':amount' => $amount,
+        ':amount' => $amountValue,
         ':payment_method' => $paymentMethod
     ]);
 
@@ -69,6 +91,9 @@ try {
         'donation_id' => (int) $pdo->lastInsertId()
     ]);
 
+} catch (InvalidArgumentException $exception) {
+    http_response_code(400);
+    echo json_encode(['error' => $exception->getMessage()]);
 } catch (PDOException $exception) {
     error_log($exception->getMessage());
     http_response_code(500);

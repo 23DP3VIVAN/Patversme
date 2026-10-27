@@ -1,5 +1,15 @@
 <?php
 declare(strict_types=1);
+$secureSessionCookie = isset($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off';
+ini_set('session.use_strict_mode', '1');
+ini_set('session.use_only_cookies', '1');
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'secure' => $secureSessionCookie,
+    'httponly' => true,
+    'samesite' => 'Lax',
+]);
 session_start();
 require_once __DIR__ . '/../config/database.php';
 header('Content-Type: application/json; charset=utf-8');
@@ -56,7 +66,7 @@ try {
         $data = readJsonBody();
 
         foreach (['animal_id', 'adoption_date'] as $field) {
-            if (!isset($data[$field]) || trim((string)$data[$field]) === '') {
+            if (!isset($data[$field]) || !is_scalar($data[$field]) || trim((string)$data[$field]) === '') {
                 throw new InvalidArgumentException(
                     "Trūkst obligātā lauka: {$field}"
                 );
@@ -67,9 +77,11 @@ try {
         $adoptionDate = (string)$data['adoption_date'];
 
         $date = DateTime::createFromFormat('!Y-m-d', $adoptionDate);
+        $dateErrors = DateTime::getLastErrors();
 
-        if (!$animalId ||
-            !$date || $date->format('Y-m-d') !== $adoptionDate) {
+        if ($animalId === false || $animalId < 1 ||
+            !$date || $date->format('Y-m-d') !== $adoptionDate ||
+            ($dateErrors !== false && ($dateErrors['warning_count'] > 0 || $dateErrors['error_count'] > 0))) {
             throw new InvalidArgumentException('Nepareizi ievadīti dati.');
         }
 
@@ -130,6 +142,7 @@ try {
     }
 
     http_response_code(405);
+    header('Allow: GET, POST');
     echo json_encode([
         'success' => false,
         'error' => 'Šī metode nav atļauta.'

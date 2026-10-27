@@ -3,6 +3,20 @@ declare(strict_types=1);
 require_once __DIR__ . '/../config/database.php';
 header('Content-Type: application/json; charset=utf-8');
 
+function contactField(array $data, string $field, int $maxLength): string
+{
+    $value = $data[$field] ?? null;
+    if (!is_string($value)) {
+        throw new InvalidArgumentException('Lūdzu, pārbaudiet ievadītos datus.');
+    }
+    $value = trim($value);
+    $length = preg_match_all('/./us', $value);
+    if ($value === '' || $length === false || $length > $maxLength) {
+        throw new InvalidArgumentException('Lūdzu, pārbaudiet ievadītos datus.');
+    }
+    return $value;
+}
+
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         http_response_code(405);
@@ -13,37 +27,14 @@ try {
     $input = json_decode(file_get_contents('php://input'), true);
     $data = is_array($input) && !empty($input) ? $input : $_POST;
 
-    $firstName = trim($data['name'] ?? '');
-    $lastName = trim($data['surname'] ?? '');
-    $email = trim($data['email'] ?? '');
-    $topic = trim($data['topic'] ?? '');
-    $message = trim($data['message'] ?? '');
+    $firstName = contactField($data, 'name', 100);
+    $lastName = contactField($data, 'surname', 100);
+    $email = contactField($data, 'email', 100);
+    $topic = contactField($data, 'topic', 100);
+    $message = contactField($data, 'message', 16000);
 
-    // Проверяем каждое поле по отдельности, чтобы понять, где проблема
-    if ($firstName === '') {
-        http_response_code(400);
-        echo json_encode(['error' => 'Kļūda: Nav ievadīts vārds (name)!']);
-        exit;
-    }
-    if ($lastName === '') {
-        http_response_code(400);
-        echo json_encode(['error' => 'Kļūda: Nav ievadīts uzvārds (surname)!']);
-        exit;
-    }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Kļūda: Nederīgs e-pasts (email)!']);
-        exit;
-    }
-    if ($topic === '') {
-        http_response_code(400);
-        echo json_encode(['error' => 'Kļūda: Nav izvēlēta tēma (topic)!']);
-        exit;
-    }
-    if ($message === '') {
-        http_response_code(400);
-        echo json_encode(['error' => 'Kļūda: Ziņa ir tukša (message)!']);
-        exit;
+        throw new InvalidArgumentException('Lūdzu, ievadiet derīgu e-pasta adresi.');
     }
 
     $pdo = getDatabaseConnection();
@@ -68,8 +59,11 @@ try {
         'message' => 'Your message has been received.'
     ]);
 
-} catch (Exception $exception) {
+} catch (InvalidArgumentException $exception) {
+    http_response_code(400);
+    echo json_encode(['error' => $exception->getMessage()], JSON_UNESCAPED_UNICODE);
+} catch (Throwable $exception) {
     error_log($exception->getMessage());
     http_response_code(500);
-    echo json_encode(['error' => 'Neizdevās saglabāt ziņu: ' . $exception->getMessage()]);
+    echo json_encode(['error' => 'Neizdevās saglabāt ziņu.'], JSON_UNESCAPED_UNICODE);
 }
