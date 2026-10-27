@@ -27,7 +27,10 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $filters = getAnimalFilters();
-        $sql = 'SELECT * FROM animals WHERE 1=1';
+        $sql = 'SELECT animal_id, animal_id AS id, name, birth_date,
+                       species, breed, health_status, age, description,
+                       photo, arrival_date, adoption_status, owner_requirements
+                FROM animals WHERE 1=1';
         $params = [];
 
         if ($filters['species'] !== null && $filters['species'] !== '') {
@@ -44,7 +47,7 @@ try {
         $statement = $pdo->prepare($sql);
         $statement->execute($params);
 
-        echo json_encode($statement->fetchAll());
+        echo json_encode($statement->fetchAll(), JSON_UNESCAPED_UNICODE);
         exit;
     }
 
