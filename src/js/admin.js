@@ -226,6 +226,11 @@ function readImage(file) {
 animalForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const submit = animalForm.querySelector('button[type="submit"]');
+  if (!editingAnimal && !selectedPhoto) {
+    showNotice("Pievienojot dzīvnieku, pievienojiet arī tā fotogrāfiju.", true);
+    document.getElementById("animalPhoto").focus();
+    return;
+  }
   submit.disabled = true;
   try {
     const payload = {

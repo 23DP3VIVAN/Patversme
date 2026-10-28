@@ -309,6 +309,10 @@ try {
     }
 
     if ($method === 'POST' && $action === 'animals') {
+        $photo = $data['photo'] ?? null;
+        if (!is_string($photo) || !validImage($photo)) {
+            throw new InvalidArgumentException('Pievienojot dzīvnieku, augšupielādējiet derīgu JPG, PNG vai WEBP fotogrāfiju līdz 2 MB.');
+        }
         $animal = validateAnimal($data);
         $statement = $pdo->prepare(
             'INSERT INTO animals

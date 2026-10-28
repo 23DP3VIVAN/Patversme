@@ -471,10 +471,16 @@
         <label for="animalDescription">Apraksts</label>
         <textarea id="animalDescription" rows="3" required></textarea>
 
-        <label for="animalRequirements">Prasības saimniekam</label>
-        <textarea id="animalRequirements" rows="3" required></textarea>
+        <label for="animalRequirements">Īpašie nosacījumi dzīvniekam</label>
+        <textarea
+          id="animalRequirements"
+          rows="3"
+          required
+          maxlength="16000"
+          placeholder="Piemēram: vēlams aktīvs dzīvesveids un garas pastaigas."
+        ></textarea>
 
-        <label for="animalPhoto">Dzīvnieka fotogrāfija</label>
+        <label for="animalPhoto">Dzīvnieka fotogrāfija (JPG, PNG vai WEBP; līdz 2 MB)</label>
 
         <input type="file" id="animalPhoto" accept=".jpg,.jpeg,.png,.webp" />
         <button type="button" id="removeAnimalPhoto">Noņemt fotogrāfiju</button>
