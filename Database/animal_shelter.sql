@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS animals (
     gender ENUM('male', 'female') NULL,
     health_status VARCHAR(100) NOT NULL,
     special_needs BOOLEAN NOT NULL DEFAULT FALSE,
-    age INT NULL,
+    age DECIMAL(4,1) NULL,
     description TEXT NOT NULL,
     photo LONGTEXT NOT NULL,
     arrival_date DATE NOT NULL,
@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS animals (
     INDEX idx_animals_health_status (health_status),
     INDEX idx_animals_adoption_status (adoption_status)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ALTER TABLE animals MODIFY age DECIMAL(4,1) NULL;
 CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,

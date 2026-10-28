@@ -644,6 +644,8 @@ function validateAnimal(array $data): array
 {
     $name = requiredField($data, 'name', 30);
     $species = requiredField($data, 'species', 30);
+    if ($species === 'kucens') $species = 'suns';
+    if ($species === 'kakens') $species = 'kakis';
     if ($species === '') {
         throw new InvalidArgumentException('Izvēlieties derīgu dzīvnieka sugu.');
     }
@@ -672,10 +674,11 @@ function validateAnimal(array $data): array
     if ($age === '' || $age === null) {
         $age = null;
     } else {
-        $age = filter_var($age, FILTER_VALIDATE_INT);
-        if ($age === false || $age < 0 || $age > 150) {
+        if (!is_numeric($age) || (float) $age < 0 || (float) $age > 150 ||
+            round((float) $age, 1) !== (float) $age) {
             throw new InvalidArgumentException('Vecumam jābūt no 0 līdz 150 gadiem.');
         }
+        $age = (float) $age;
     }
     if ($birthDate === null && $age === null) {
         throw new InvalidArgumentException('Norādiet dzimšanas datumu vai vecumu.');
