@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const passwordMeetsRequirements =
-        [...password].length >= 15 &&
+        [...password].length >= 8 &&
         [...password].length <= 1024 &&
         /\p{Ll}/u.test(password) &&
         /\p{Lu}/u.test(password) &&
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!passwordMeetsRequirements) {
         message.textContent =
-          "Parolei jābūt vismaz 15 rakstzīmes garai un jāsatur lielie un mazie burti, cipars un speciālā rakstzīme bez atstarpēm.";
+          "Parolei jābūt vismaz 8 rakstzīmes garai un jāsatur lielie un mazie burti, cipars un speciālā rakstzīme bez atstarpēm.";
         message.style.color = "red";
         message.style.display = "block";
         return;
