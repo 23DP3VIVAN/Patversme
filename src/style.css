@@ -43,7 +43,7 @@ a {
 /* HEADER */
 
 .header {
-  background: #fbe3ec;
+  background: linear-gradient(110deg, #f9dce8, #ffedf4);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -115,6 +115,7 @@ a {
   white-space: nowrap;
   font-size: 14px;
   text-decoration: none;
+  transition: 0.2s;
 }
 
 .donate {

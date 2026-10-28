@@ -1,11 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap");
 
 :root {
-  --pink: #c64c7b;
-  --pink-dark: #aa365f;
+  --pink: #c43e73;
+  --pink-dark: #a72f60;
   --pink-light: #f9dce8;
   --pink-soft: #fff0f5;
-  --text: #292432;
+  --text: #292332;
   --muted: #77717d;
   --border: #e9cbd6;
 }
@@ -37,7 +37,8 @@ button {
 }
 
 .page {
-  width: min(1440px, 96%);
+  width: 94%;
+  max-width: 1500px;
   margin: 0 auto;
 }
 
@@ -106,23 +107,23 @@ button {
 
 .header-buttons {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .donate,
 .register {
-  border-radius: 12px;
+  border-radius: 11px;
   padding: 12px 22px;
   white-space: nowrap;
   transition: 0.2s;
+  text-decoration: none;
+  font-size: 14px;
 }
 
 .donate {
   color: var(--pink);
-  border: 1.5px solid var(--pink);
+  border: 1px solid var(--pink);
   background: transparent;
-  font-size: 16px;
 }
 
 .donate:hover {
@@ -131,7 +132,7 @@ button {
 
 .register {
   color: white;
-  border: 1.5px solid var(--pink);
+  border: 1px solid var(--pink);
   background: var(--pink);
 }
 

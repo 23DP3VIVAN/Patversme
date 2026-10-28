@@ -45,7 +45,7 @@ button {
 /* HEADER */
 
 .header {
-  background: #fbe3ec;
+  background: linear-gradient(110deg, #f9dce8, #ffedf4);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -116,6 +116,7 @@ button {
   white-space: nowrap;
   font-size: 14px;
   text-decoration: none;
+  transition: 0.2s;
 }
 
 .donate {
@@ -132,6 +133,10 @@ button {
   background: var(--pink);
   color: white;
   border: 1px solid var(--pink);
+}
+
+.register:hover {
+  background: var(--pink-dark);
 }
 
 /* HERO */
