@@ -229,8 +229,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     result.favorites.forEach((animal) => {
-      const card = addText(container, "article", "", "application-card");
-      const image = addText(card, "img", "");
+      const card = addText(container, "article", "", "favorite-card");
+      const image = addText(card, "img", "", "favorite-animal-photo");
       image.src = animal.photo || DEFAULT_PHOTO;
       image.alt = animal.name;
       image.addEventListener(
@@ -240,11 +240,13 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         { once: true },
       );
-      addText(card, "h3", animal.name);
-      addText(card, "p", `${animal.breed} · ${animal.adoption_status}`);
-      openAnimalLink(animal.animal_id, card, "Apskatīt dzīvnieku");
+      const details = addText(card, "div", "", "favorite-details");
+      addText(details, "h3", animal.name);
+      addText(details, "p", `${animal.breed} · ${animal.adoption_status}`);
+      openAnimalLink(animal.animal_id, details, "Apskatīt dzīvnieku");
+      const actions = addText(card, "div", "", "favorite-actions");
       if (animal.adoption_status === "Pieejams") {
-        const adopt = addText(card, "button", "Pieteikties adopcijai");
+        const adopt = addText(actions, "button", "Pieteikties adopcijai");
         adopt.type = "button";
         adopt.addEventListener("click", async () => {
           adopt.disabled = true;
@@ -280,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       }
-      const remove = addText(card, "button", "Noņemt no favorītiem");
+      const remove = addText(actions, "button", "Noņemt no favorītiem");
       remove.type = "button";
       remove.addEventListener("click", async () => {
         try {
@@ -428,9 +430,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentPassword = window.prompt("Ievadiet pašreizējo paroli:");
     if (currentPassword === null) return;
     const newPassword = window.prompt(
-      "Ievadiet jaunu paroli (vismaz 15 rakstzīmes, lielie/mazie burti, cipars un simbols):",
+      "Ievadiet jaunu paroli (vismaz 8 rakstzīmes, burti un cipari):",
     );
     if (newPassword === null) return;
+    const passwordMeetsRequirements =
+      [...newPassword].length >= 8 &&
+      [...newPassword].length <= 1024 &&
+      /\p{L}/u.test(newPassword) &&
+      /\p{N}/u.test(newPassword);
+    if (!passwordMeetsRequirements) {
+      showMessage(
+        "Parolei jābūt vismaz 8 rakstzīmes garai un jāsatur burti un cipari.",
+        true,
+      );
+      return;
+    }
     const confirmation = window.prompt("Atkārtojiet jauno paroli:");
     if (confirmation === null) return;
     if (newPassword !== confirmation) {

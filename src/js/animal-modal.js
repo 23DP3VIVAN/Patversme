@@ -7,6 +7,17 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!modal || !closeButton) return;
 
   let selectedAnimal = null;
+  let adoptionNoticeTimer = null;
+  function showAdoptionNotice(message, isError = false, duration = 4000) {
+    adoptionMessage.textContent = message;
+    adoptionMessage.setAttribute("role", isError ? "alert" : "status");
+    adoptionMessage.classList.toggle("is-error", isError);
+    adoptionMessage.classList.add("is-visible");
+    window.clearTimeout(adoptionNoticeTimer);
+    adoptionNoticeTimer = window.setTimeout(() => {
+      adoptionMessage.classList.remove("is-visible");
+    }, duration);
+  }
   const value = (id, text) => {
     document.getElementById(id).textContent = text || "Nav norādīts";
   };
@@ -44,6 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ? "Iesniegt adopcijas pieteikumu"
       : "Šis dzīvnieks nav pieejams";
     adoptionMessage.textContent = "";
+    adoptionMessage.classList.remove("is-visible", "is-error");
+    window.clearTimeout(adoptionNoticeTimer);
     favoriteButton.setAttribute(
       "aria-pressed",
       String(Boolean(animal.is_favorite)),
@@ -112,8 +125,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }),
       );
     } catch (error) {
-      adoptionMessage.textContent =
-        error.message || "Neizdevās atjaunināt favorītus.";
+      showAdoptionNotice(
+        error.message || "Neizdevās atjaunināt favorītus.",
+        true,
+        5000,
+      );
     }
   });
 
@@ -121,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!selectedAnimal || selectedAnimal.adoption_status !== "Pieejams")
       return;
     adoptButton.disabled = true;
-    adoptionMessage.textContent = "Nosūta pieteikumu...";
+    showAdoptionNotice("Nosūta pieteikumu...", false, 30000);
     try {
       const response = await fetch("back-end/adoptions.php", {
         method: "POST",
@@ -144,14 +160,21 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       if (!response.ok)
         throw new Error(result.error || "Neizdevās iesniegt pieteikumu.");
-      adoptionMessage.textContent = `Pieteikums #${result.adoption_id} iesniegts. Statuss: ${result.status}.`;
+      showAdoptionNotice(
+        document.documentElement.lang === "en"
+          ? "Application submitted successfully."
+          : "Adopcijas pieteikums veiksmīgi nosūtīts.",
+      );
       selectedAnimal.adoption_status = "Rezervets";
       value("animalStatus", "Rezervets");
       adoptButton.textContent = "Pieteikums iesniegts";
       document.dispatchEvent(new CustomEvent("animal:updated"));
     } catch (error) {
-      adoptionMessage.textContent =
-        error.message || "Neizdevās iesniegt pieteikumu.";
+      showAdoptionNotice(
+        error.message || "Neizdevās iesniegt pieteikumu.",
+        true,
+        5000,
+      );
       adoptButton.disabled = false;
     }
   });

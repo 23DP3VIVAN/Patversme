@@ -167,6 +167,43 @@ button {
   margin-top: 5px;
 }
 
+.admin-notice {
+  position: fixed;
+  z-index: 1000;
+  right: 24px;
+  bottom: 24px;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 14px 20px;
+  border: 1px solid #b9e3c6;
+  border-radius: 12px;
+  background: #f0fff4;
+  box-shadow: 0 12px 32px rgb(41 35 50 / 16%);
+  color: #216e39;
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.admin-notice.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.admin-notice.is-error {
+  border-color: #f2b8b5;
+  background: #fff4f2;
+  color: #b42318;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-notice {
+    transition: none;
+  }
+}
+
 .admin-profile {
   display: flex;
   align-items: center;

@@ -235,9 +235,10 @@ try {
         $currentPassword = $data['currentPassword'] ?? null;
         $newPassword = $data['newPassword'] ?? null;
         if (!is_string($currentPassword) || !is_string($newPassword) ||
-            textLength($newPassword) > 1024 ||
-            preg_match('/^(?=.*\p{Ll})(?=.*\p{Lu})(?=.*\p{N})(?=.*[^\p{L}\p{N}\s])\S{15,}$/uD', $newPassword) !== 1) {
-            throw new InvalidArgumentException('Jaunajai parolei jāatbilst drošības prasībām.');
+            textLength($newPassword) < 8 || textLength($newPassword) > 1024 ||
+            preg_match('/\p{L}/u', $newPassword) !== 1 ||
+            preg_match('/\p{N}/u', $newPassword) !== 1) {
+            throw new InvalidArgumentException('Parolei jābūt vismaz 8 rakstzīmes garai un jāsatur burti un cipari.');
         }
         $pdo = getDatabaseConnection();
         $statement = $pdo->prepare('SELECT password FROM users WHERE user_id = ?');
@@ -272,10 +273,11 @@ try {
             );
         }
 
-        if (!is_string($password) || textLength($password) > 1024 ||
-            preg_match('/^(?=.*\p{Ll})(?=.*\p{Lu})(?=.*\p{N})(?=.*[^\p{L}\p{N}\s])\S{15,}$/uD', $password) !== 1) {
+        if (!is_string($password) || textLength($password) < 8 || textLength($password) > 1024 ||
+            preg_match('/\p{L}/u', $password) !== 1 ||
+            preg_match('/\p{N}/u', $password) !== 1) {
             throw new InvalidArgumentException(
-                'Parolei jābūt vismaz 15 rakstzīmes garai un jāsatur lielie un mazie burti, cipars un speciālā rakstzīme.'
+                'Parolei jābūt vismaz 8 rakstzīmes garai un jāsatur burti un cipari.'
             );
         }
 

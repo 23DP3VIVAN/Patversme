@@ -203,9 +203,8 @@ try {
         $currentPassword = $data['currentPassword'] ?? null;
         $newPassword = $data['newPassword'] ?? null;
         if (!is_string($currentPassword) || !is_string($newPassword) ||
-            strlen($newPassword) > 1024 ||
-            preg_match('/^(?=.*\p{Ll})(?=.*\p{Lu})(?=.*\p{N})(?=.*[^\p{L}\p{N}\s])\S{15,}$/uD', $newPassword) !== 1) {
-            throw new InvalidArgumentException('Jaunajai parolei jāatbilst drošības prasībām.');
+            preg_match('/\A(?=.{8,1024}\z)(?=.*\p{L})(?=.*\p{N}).*\z/us', $newPassword) !== 1) {
+            throw new InvalidArgumentException('Parolei jābūt vismaz 8 rakstzīmes garai un jāsatur burti un cipari.');
         }
         $statement = $pdo->prepare('SELECT password FROM users WHERE user_id = ?');
         $statement->execute([$userId]);

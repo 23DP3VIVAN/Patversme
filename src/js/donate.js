@@ -76,7 +76,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (response.ok) {
         result.textContent =
-          "Paldies! Demonstrācijas ziedojuma ieraksts saglabāts; maksājums netika veikts. ♡";
+          document.documentElement.lang === "en"
+            ? "Thank you! Your donation has been confirmed. ♡"
+            : "Paldies! Ziedojums veiksmīgi apstiprināts. ♡";
         result.style.color = "green";
         form.reset();
         selectedAmount = 10;

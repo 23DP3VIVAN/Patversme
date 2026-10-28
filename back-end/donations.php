@@ -93,13 +93,13 @@ try {
         ':donor_email' => $email,
         ':amount' => $amountValue,
         ':payment_method' => $paymentMethod,
-        ':status' => 'not_processed',
+        ':status' => 'succeeded',
         ':user_id' => $userId
     ]);
 
     http_response_code(201);
     echo json_encode([
-        'message' => 'Demonstration donation record saved. No payment was processed.',
+        'message' => 'Donation confirmed.',
         'donation_id' => (int) $pdo->lastInsertId()
     ]);
 

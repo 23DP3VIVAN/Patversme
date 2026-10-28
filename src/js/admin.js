@@ -12,6 +12,7 @@ let requestTimer = null;
 let totalUsers = 0;
 let summary = {};
 let filterTimer = null;
+let noticeTimer = null;
 
 const pageTitles = {
   overview: "Pārskats",
@@ -27,13 +28,20 @@ const pageTitles = {
 function showNotice(message, isError = false) {
   let notice = document.getElementById("adminNotice");
   if (!notice) {
-    notice = document.createElement("p");
+    notice = document.createElement("div");
     notice.id = "adminNotice";
-    notice.setAttribute("role", "status");
-    document.querySelector(".topbar").appendChild(notice);
+    notice.setAttribute("aria-live", "polite");
+    document.body.appendChild(notice);
   }
   notice.textContent = message;
-  notice.style.color = isError ? "#b42318" : "#258044";
+  notice.setAttribute("role", isError ? "alert" : "status");
+  notice.className = `admin-notice${isError ? " is-error" : ""}`;
+  notice.classList.remove("is-visible");
+  window.clearTimeout(noticeTimer);
+  window.requestAnimationFrame(() => notice.classList.add("is-visible"));
+  noticeTimer = window.setTimeout(() => {
+    notice.classList.remove("is-visible");
+  }, isError ? 5000 : 3200);
 }
 
 async function api(action, options = {}) {
