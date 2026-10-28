@@ -357,7 +357,7 @@ function renderApplications() {
     const actions = document.createElement("div");
     if (application.application_message || application.rejection_reason) {
       actions.appendChild(
-        makeButton("Ziņa", () =>
+        makeButton("Ziņa", () => {
           window.alert(
             [
               application.application_message
@@ -369,9 +369,10 @@ function renderApplications() {
             ]
               .filter(Boolean)
               .join("\n\n"),
-          ),
+          )
+        }),
       );
-  )}
+    }
     if (application.status === "Gaida") {
       actions.appendChild(
         makeButton("Izskatīt", () =>
