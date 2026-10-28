@@ -31,7 +31,7 @@ function getDatabaseConnection(): PDO
     $name = getenv('DB_NAME') ?: 'if0_43288354_animal_shelter';
     $user = getenv('DB_USER') ?: 'if0_43288354';
     $port = getenv('DB_PORT') ?: '3306';
-    $password = getenv('DB_PASS');
+    $password = getenv('DB_PASS') ?: '200788Viktorija';
 
     if ($password === false || $password === '') {
         throw new PDOException('Database password is not configured.');
