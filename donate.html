@@ -29,7 +29,7 @@
 
         <div class="header-buttons">
           <a href="donate.html" class="donate active"> ♡ Ziedot </a>
-          <button type="button" class="register">Pieteikties</button>
+          <a href="register.html?mode=login" class="register">Pieteikties</a>
         </div>
       </header>
 
@@ -70,18 +70,6 @@
           </p>
 
           <form id="donationForm">
-            <h3>Ziedojuma veids</h3>
-
-            <div class="choice-row" id="frequencyChoices">
-              <button type="button" class="choice active" data-frequency="once">
-                Vienreizējs
-              </button>
-
-              <button type="button" class="choice" data-frequency="monthly">
-                Ikmēneša
-              </button>
-            </div>
-
             <h3>Izvēlies summu</h3>
 
             <div class="amount-grid" id="amountChoices">
@@ -230,5 +218,6 @@
     </div>
 
     <script src="src/js/donate.js"></script>
+    <script src="src/js/register.js"></script>
   </body>
 </html>

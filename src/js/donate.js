@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
   const amountButtons = document.querySelectorAll(".amount");
-  const frequencyButtons = document.querySelectorAll(".choice");
 
   const customAmount = document.getElementById("customAmount");
   const total = document.getElementById("total");
@@ -10,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!form) return;
 
   let selectedAmount = 10;
-  let selectedFrequency = "once";
 
   function updateTotal() {
     const formatted = selectedAmount.toLocaleString("lv-LV", {
@@ -19,10 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     total.textContent = formatted + " €";
-
-    if (selectedFrequency === "monthly") {
-      total.textContent += " / mēnesī";
-    }
   }
 
   amountButtons.forEach(function (button) {
@@ -48,19 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
     updateTotal();
   });
 
-  frequencyButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      frequencyButtons.forEach(function (item) {
-        item.classList.remove("active");
-      });
-
-      button.classList.add("active");
-      selectedFrequency = button.dataset.frequency;
-
-      updateTotal();
-    });
-  });
-
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -79,7 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
       lastName: document.getElementById("lastName").value,
       email: document.getElementById("email").value,
       customAmount: selectedAmount,
-      payment_method: "Mastercard",
     };
 
     try {
@@ -94,7 +74,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const resData = await response.json();
 
       if (response.ok) {
-        result.textContent = "Paldies par ziedojumu! Maksājums reģistrēts. ♡";
+        result.textContent =
+          "Paldies! Demonstrācijas ziedojuma ieraksts saglabāts; maksājums netika veikts. ♡";
         result.style.color = "green";
         form.reset();
         selectedAmount = 10;

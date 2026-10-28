@@ -19,34 +19,50 @@ header('Content-Type: application/json; charset=utf-8');
 
 function readJsonBody(): array
 {
-    return $_POST;
+    $data = json_decode(file_get_contents('php://input'), true);
+    return is_array($data) ? $data : $_POST;
 }
 
 function getAnimalFilters(): array
 {
-    $species = $_GET['species'] ?? null;
-    $status = $_GET['status'] ?? null;
-
-    if ($species !== null && !is_string($species)) {
-        throw new InvalidArgumentException('Nederīgs sugas filtrs.');
+    $filters = [];
+    foreach (['species' => 30, 'status' => 20, 'gender' => 10, 'breed' => 50, 'health_status' => 100, 'search' => 200] as $field => $limit) {
+        $value = $_GET[$field] ?? '';
+        if (!is_string($value) || textLength(trim($value)) > $limit) {
+            throw new InvalidArgumentException('Nederīgs dzīvnieku filtrs.');
+        }
+        $filters[$field] = trim($value);
     }
-    if ($status !== null && !is_string($status)) {
+
+    if ($filters['status'] !== '' && !in_array($filters['status'], ['Pieejams', 'Adoptets', 'Rezervets'], true)) {
         throw new InvalidArgumentException('Nederīgs statusa filtrs.');
     }
-
-    $species = $species !== null ? trim($species) : null;
-    $status = $status !== null ? trim($status) : null;
-    if ($species !== null && $species !== '' && textLength($species) > 30) {
-        throw new InvalidArgumentException('Nederīgs sugas filtrs.');
-    }
-    if ($status !== null && $status !== '' && !in_array($status, ['Pieejams', 'Adoptets', 'Rezervets'], true)) {
-        throw new InvalidArgumentException('Nederīgs statusa filtrs.');
+    if ($filters['gender'] !== '' && !in_array($filters['gender'], ['male', 'female'], true)) {
+        throw new InvalidArgumentException('Nederīgs dzimuma filtrs.');
     }
 
-    return [
-        'species' => $species,
-        'status' => $status,
-    ];
+    $ages = $_GET['age'] ?? [];
+    if (!is_array($ages)) {
+        $ages = [$ages];
+    }
+    foreach ($ages as $age) {
+        if (!is_string($age) || !in_array($age, ['baby', 'young', 'adult', 'senior'], true)) {
+            throw new InvalidArgumentException('Nederīgs vecuma filtrs.');
+        }
+    }
+    $filters['ages'] = array_values(array_unique($ages));
+    $filters['special'] = ($_GET['special'] ?? '') === '1';
+    $filters['category_age'] = $_GET['category_age'] ?? '';
+    if ($filters['category_age'] !== '' && !in_array($filters['category_age'], ['baby'], true)) {
+        throw new InvalidArgumentException('Nederīgs kategorijas filtrs.');
+    }
+    $id = $_GET['id'] ?? '';
+    if ($id !== '' && (!is_string($id) || filter_var($id, FILTER_VALIDATE_INT) === false || (int) $id < 1)) {
+        throw new InvalidArgumentException('Nederīgs dzīvnieka numurs.');
+    }
+    $filters['id'] = $id === '' ? null : (int) $id;
+
+    return $filters;
 }
 
 function textLength(string $value): int
@@ -83,20 +99,66 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $filters = getAnimalFilters();
-        $sql = 'SELECT animal_id, animal_id AS id, name, birth_date,
-                       species, breed, health_status, age, description,
-                       photo, arrival_date, adoption_status, owner_requirements
-                FROM animals WHERE 1=1';
+        $ageExpression = 'COALESCE(age, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()))';
+        $sql = "SELECT animal_id AS id, animal_id, name, birth_date,
+                       species, breed, gender, health_status, special_needs,
+                       {$ageExpression} AS age, description, photo, arrival_date,
+                       adoption_status, owner_requirements
+                FROM animals WHERE 1=1";
         $params = [];
 
-        if ($filters['species'] !== null && $filters['species'] !== '') {
-            $sql .= ' AND species = :species';
-            $params[':species'] = $filters['species'];
+        if ($filters['id'] !== null) {
+            $sql .= ' AND animal_id = :animal_id';
+            $params[':animal_id'] = $filters['id'];
         }
-
-        if ($filters['status'] !== null && $filters['status'] !== '') {
+        if ($filters['species'] !== '') {
+            if ($filters['species'] === 'cits') {
+                $sql .= " AND species NOT IN ('suns', 'kakis')";
+            } else {
+                $sql .= ' AND species = :species';
+                $params[':species'] = $filters['species'];
+            }
+        }
+        if ($filters['status'] !== '') {
             $sql .= ' AND adoption_status = :status';
             $params[':status'] = $filters['status'];
+        }
+        if ($filters['gender'] !== '') {
+            $sql .= ' AND gender = :gender';
+            $params[':gender'] = $filters['gender'];
+        }
+        if ($filters['breed'] !== '') {
+            $sql .= ' AND breed LIKE :breed';
+            $params[':breed'] = '%' . $filters['breed'] . '%';
+        }
+        if ($filters['health_status'] !== '') {
+            $sql .= ' AND health_status LIKE :health_status';
+            $params[':health_status'] = '%' . $filters['health_status'] . '%';
+        }
+        if ($filters['search'] !== '') {
+            $sql .= ' AND CONCAT_WS(CHAR(32), name, species, breed, health_status, description) LIKE :search';
+            $params[':search'] = '%' . $filters['search'] . '%';
+        }
+        if ($filters['special']) {
+            $sql .= ' AND special_needs = 1';
+        }
+        if ($filters['category_age'] === 'baby') {
+            $sql .= " AND {$ageExpression} < 1";
+        }
+        if ($filters['ages']) {
+            $ageConditions = [];
+            foreach ($filters['ages'] as $ageGroup) {
+                if ($ageGroup === 'baby') {
+                    $ageConditions[] = "{$ageExpression} < 1";
+                } elseif ($ageGroup === 'young') {
+                    $ageConditions[] = "{$ageExpression} BETWEEN 1 AND 3";
+                } elseif ($ageGroup === 'adult') {
+                    $ageConditions[] = "{$ageExpression} BETWEEN 4 AND 7";
+                } else {
+                    $ageConditions[] = "{$ageExpression} > 7";
+                }
+            }
+            $sql .= ' AND (' . implode(' OR ', $ageConditions) . ')';
         }
 
         $sql .= ' ORDER BY animal_id ASC';
@@ -134,7 +196,7 @@ try {
         $birthDate = textField($data, 'birth_date', 10, false);
         $species = textField($data, 'species', 30);
         $breed = textField($data, 'breed', 50);
-        $healthStatus = textField($data, 'health_status', 20);
+        $healthStatus = textField($data, 'health_status', 100);
         $description = textField($data, 'description', 16000);
         $photo = textField($data, 'photo', 255);
         $arrivalDate = textField($data, 'arrival_date', 10);

@@ -502,6 +502,20 @@ button {
   color: #8d7280;
 }
 
+.danger-button {
+  margin-top: 18px;
+  padding: 10px 14px;
+  border: 1px solid #b42318;
+  border-radius: 8px;
+  background: #fff;
+  color: #b42318;
+  cursor: pointer;
+}
+
+.danger-button:hover {
+  background: #fff1f0;
+}
+
 @media (max-width: 1050px) {
   .header {
     flex-wrap: wrap;

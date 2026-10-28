@@ -27,7 +27,9 @@
 
         <div class="header-buttons">
           <a href="donate.html" class="donate">♡ Ziedot</a>
-          <a href="register.html" class="register active">Pieteikties</a>
+          <a href="register.html?mode=login" class="register active"
+            >Pieteikties</a
+          >
         </div>
       </header>
 
@@ -102,9 +104,16 @@
                   id="registerPassword"
                   type="password"
                   placeholder="Izveido paroli"
-                  minlength="8"
+                  minlength="15"
+                  maxlength="1024"
+                  autocomplete="new-password"
+                  aria-describedby="passwordRequirements"
                   required
                 />
+                <small id="passwordRequirements">
+                  Vismaz 15 rakstzīmes, lielie un mazie burti, cipars un
+                  speciālā rakstzīme.
+                </small>
               </div>
 
               <div class="field">
@@ -113,7 +122,9 @@
                   id="confirmPassword"
                   type="password"
                   placeholder="Atkārto paroli"
-                  minlength="8"
+                  minlength="15"
+                  maxlength="1024"
+                  autocomplete="new-password"
                   required
                 />
               </div>
@@ -140,15 +151,20 @@
           <div id="loginSection" hidden>
             <span class="eyebrow">PRIEKS TEVI REDZĒT</span>
             <h2>Laipni lūgts atpakaļ ♡</h2>
-            <p class="subtitle">Ievadi savu e-pastu un paroli.</p>
+            <p class="subtitle">
+              Ievadi savu e-pastu vai administratora lietotājvārdu un paroli.
+            </p>
 
             <form id="loginForm">
               <div class="field">
-                <label for="loginEmail">E-pasts</label>
+                <label for="loginEmail"
+                  >E-pasts vai administratora lietotājvārds</label
+                >
                 <input
                   id="loginEmail"
-                  type="email"
-                  placeholder="Tavs e-pasts"
+                  type="text"
+                  autocomplete="username"
+                  placeholder="E-pasts vai admin"
                   required
                 />
               </div>

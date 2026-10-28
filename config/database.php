@@ -1,10 +1,14 @@
 <?php
 declare(strict_types=1);
 
-define('DB_HOST', 'sql101.infinityfree.com');
-define('DB_NAME', 'if0_43288354_animal_shelter');
-define('DB_USER', 'if0_43288354');
-define('DB_PASS', '200788vika');
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+
+$requestScript = realpath($_SERVER['SCRIPT_FILENAME'] ?? '');
+if ($requestScript !== false && $requestScript === realpath(__FILE__)) {
+    http_response_code(404);
+    exit;
+}
 
 function isSecureRequest(): bool
 {
@@ -23,20 +27,25 @@ function isSecureRequest(): bool
 
 function getDatabaseConnection(): PDO
 {
-    $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4';
+    $host = getenv('DB_HOST') ?: 'sql101.infinityfree.com';
+    $name = getenv('DB_NAME') ?: 'if0_43288354_animal_shelter';
+    $user = getenv('DB_USER') ?: 'if0_43288354';
+    $port = getenv('DB_PORT') ?: '3306';
+    $password = getenv('DB_PASS');
 
-    return new PDO($dsn, DB_USER, DB_PASS, [
+    if ($password === false || $password === '') {
+        throw new PDOException('Database password is not configured.');
+    }
+
+    $dsn = 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $name . ';charset=utf8mb4';
+
+    return new PDO($dsn, $user, $password, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
     ]);
 }
 
-/**
- * Check browser-supplied request origin for cookie-authenticated mutations.
- * Set APP_ORIGIN (scheme and host, with optional port) when the app is behind
- * a TLS-terminating proxy so the public origin can be validated correctly.
- */
 function isSameOriginRequest(): bool
 {
     $requestOrigin = $_SERVER['HTTP_ORIGIN'] ?? '';

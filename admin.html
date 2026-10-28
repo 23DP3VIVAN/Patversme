@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="src/admin.css" />
     <script src="src/js/admin.js" defer></script>
   </head>
-  <body>
+  <body data-require-role="admin">
     <div class="admin-layout">
       <!-- SIDEBAR -->
       <aside class="sidebar">
@@ -83,10 +83,24 @@
               </div>
             </div>
             <div class="stat-card">
+              <span class="stat-icon">✓</span>
+              <div>
+                <strong id="availableAnimalCount">0</strong>
+                <p>Pieejami adopcijai</p>
+              </div>
+            </div>
+            <div class="stat-card">
               <span class="stat-icon">♡</span>
               <div>
                 <strong id="applicationCount">0</strong>
                 <p>Adopcijas pieteikumi</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon">⌛</span>
+              <div>
+                <strong id="newApplicationCount">0</strong>
+                <p>Jauni pieteikumi</p>
               </div>
             </div>
             <div class="stat-card">
@@ -145,12 +159,52 @@
               <input
                 id="animalSearch"
                 type="search"
-                placeholder="Meklēt pēc vārda..."
+                placeholder="Meklēt pēc ID vai vārda..."
               />
+              <input
+                id="animalBreedFilter"
+                type="search"
+                placeholder="Šķirne..."
+              />
+              <input
+                id="animalHealthFilter"
+                type="search"
+                placeholder="Veselības stāvoklis..."
+              />
+              <input
+                id="animalAgeMin"
+                type="number"
+                min="0"
+                placeholder="Vecums no"
+              />
+              <input
+                id="animalAgeMax"
+                type="number"
+                min="0"
+                placeholder="Vecums līdz"
+              />
+              <select id="animalGenderFilter">
+                <option value="all">Visi dzimumi</option>
+                <option value="male">Tēviņš</option>
+                <option value="female">Mātīte</option>
+                <option value="unknown">Nav zināms</option>
+              </select>
+              <select id="animalStatusFilter">
+                <option value="all">Visi statusi</option>
+                <option value="Pieejams">Pieejams</option>
+                <option value="Rezervets">Rezervēts</option>
+                <option value="Adoptets">Adoptēts</option>
+              </select>
+              <select id="animalSort">
+                <option value="newest">Jaunākie vispirms</option>
+                <option value="name">Pēc vārda</option>
+                <option value="oldest">Senākie vispirms</option>
+              </select>
               <select id="animalFilter">
                 <option value="all">Visi dzīvnieki</option>
-                <option value="Suns">Suņi</option>
-                <option value="Kaķis">Kaķi</option>
+                <option value="suns">Suņi</option>
+                <option value="kakis">Kaķi</option>
+                <option value="cits">Citi</option>
               </select>
             </div>
 
@@ -182,12 +236,29 @@
             </div>
 
             <div class="filters">
+              <input
+                id="applicationSearch"
+                type="search"
+                placeholder="ID, lietotājs vai dzīvnieks..."
+              />
+              <input
+                id="applicationDateFilter"
+                type="date"
+                aria-label="Pieteikuma datums"
+              />
+              <input
+                id="applicationAnimalFilter"
+                type="search"
+                placeholder="Dzīvnieka ID vai vārds..."
+              />
               <select id="applicationFilter">
                 <option value="all">Visi statusi</option>
-                <option value="Jauns">Jauns</option>
+                <option value="Gaida">Gaida</option>
                 <option value="Izskatīšanā">Izskatīšanā</option>
-                <option value="Apstiprināts">Apstiprināts</option>
-                <option value="Noraidīts">Noraidīts</option>
+                <option value="Apstiprināta">Apstiprināta</option>
+                <option value="Noraidīta">Noraidīta</option>
+                <option value="Atcelta">Atcelta</option>
+                <option value="Pabeigta">Pabeigta</option>
               </select>
             </div>
 
@@ -217,13 +288,22 @@
                 <p>Lietotāju informācijas pārskats.</p>
               </div>
             </div>
+            <div class="filters">
+              <input
+                id="userSearch"
+                type="search"
+                placeholder="ID, vārds, uzvārds vai e-pasts..."
+              />
+            </div>
             <div class="table-scroll">
               <table>
                 <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Vārds</th>
                     <th>E-pasts</th>
                     <th>Loma</th>
+                    <th>Reģistrējās</th>
                   </tr>
                 </thead>
                 <tbody id="usersTable"></tbody>
@@ -241,6 +321,23 @@
                 <p>Jautājumi un ziņojumi no apmeklētājiem.</p>
               </div>
             </div>
+            <div class="filters">
+              <input
+                id="messageSearch"
+                type="search"
+                placeholder="Sūtītājs vai tēma..."
+              />
+              <input
+                id="messageDateFilter"
+                type="date"
+                aria-label="Ziņojuma datums"
+              />
+              <select id="messageStatusFilter">
+                <option value="all">Visi ziņojumi</option>
+                <option value="new">Neapstrādāti</option>
+                <option value="processed">Apstrādāti</option>
+              </select>
+            </div>
             <div id="messagesList" class="message-list"></div>
           </div>
         </section>
@@ -251,16 +348,57 @@
             <div class="panel-heading">
               <div>
                 <h2>Ziedojumu pārskats</h2>
-                <p>Demonstrācijas ziedojumu saraksts.</p>
+                <p>
+                  Ziedojumu ieraksti un to iesniegšanas laiks (demonstrācijas
+                  ieraksti).
+                </p>
               </div>
             </div>
+            <div class="filters">
+              <input
+                id="donationSearch"
+                type="search"
+                placeholder="ID, ziedotājs vai e-pasts..."
+              />
+              <input id="donationDateFrom" type="date" aria-label="No datuma" />
+              <input
+                id="donationDateTo"
+                type="date"
+                aria-label="Līdz datumam"
+              />
+              <input
+                id="donationMinAmount"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Min. summa"
+              />
+              <input
+                id="donationMaxAmount"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Maks. summa"
+              />
+              <select id="donationStatusFilter">
+                <option value="all">Visi statusi</option>
+                <option value="not_processed">Nav apstrādāts</option>
+                <option value="pending">Gaida</option>
+                <option value="succeeded">Apstiprināts</option>
+                <option value="failed">Nav pabeigts</option>
+              </select>
+            </div>
+            <p id="donationPeriodTotal" aria-live="polite"></p>
             <div class="table-scroll">
               <table>
                 <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Ziedotājs</th>
+                    <th>E-pasts</th>
                     <th>Summa</th>
                     <th>Datums</th>
+                    <th>Maksājuma veids</th>
                     <th>Statuss</th>
                   </tr>
                 </thead>
@@ -270,9 +408,7 @@
           </div>
         </section>
 
-        <footer class="admin-footer">
-          © 2026 PĒDAS MĀJĀS — Demonstrācijas admin panelis
-        </footer>
+        <footer class="admin-footer">© 2026 PĒDAS MĀJĀS</footer>
       </main>
     </div>
 
@@ -287,36 +423,60 @@
         <input type="hidden" id="editAnimalId" />
 
         <label for="animalName">Vārds</label>
-        <input id="animalName" type="text" required maxlength="60" />
+        <input id="animalName" type="text" required maxlength="30" />
 
         <label for="animalType">Dzīvnieka tips</label>
-        <select id="animalType">
-          <option value="Suns">Suns</option>
-          <option value="Kaķis">Kaķis</option>
+        <input id="animalType" list="animalSpecies" maxlength="30" required />
+        <datalist id="animalSpecies">
+          <option value="suns">Suns</option>
+          <option value="kakis">Kaķis</option>
+          <option value="cits">Cits dzīvnieks</option>
+        </datalist>
+
+        <label for="animalBreed">Šķirne</label>
+        <input id="animalBreed" type="text" required maxlength="50" />
+
+        <label for="animalGender">Dzimums</label>
+        <select id="animalGender">
+          <option value="">Nav zināms</option>
+          <option value="male">Tēviņš</option>
+          <option value="female">Mātīte</option>
         </select>
 
         <label for="animalAge">Vecums</label>
-        <input
-          id="animalAge"
-          type="text"
-          placeholder="Piemēram, 2 gadi"
-          required
-          maxlength="40"
-        />
+        <input id="animalAge" type="number" min="0" max="150" step="1" />
+
+        <label for="animalHealth">Veselības stāvoklis</label>
+        <input id="animalHealth" type="text" required maxlength="100" />
+
+        <label
+          ><input id="animalSpecialNeeds" type="checkbox" /> Īpašas
+          vajadzības</label
+        >
+
+        <label for="animalBirthDate">Dzimšanas datums</label>
+        <input id="animalBirthDate" type="date" />
 
         <label for="animalStatus">Statuss</label>
-        <select id="animalStatus">
+        <select id="animalStatus" required>
           <option value="Pieejams">Pieejams</option>
-          <option value="Rezervēts">Rezervēts</option>
-          <option value="Adoptēts">Adoptēts</option>
+          <option value="Rezervets">Rezervēts</option>
+          <option value="Adoptets">Adoptēts</option>
         </select>
 
+        <label for="animalArrivalDate">Ierašanās datums</label>
+        <input id="animalArrivalDate" type="date" required />
+
         <label for="animalDescription">Apraksts</label>
-        <textarea id="animalDescription" rows="3"></textarea>
+        <textarea id="animalDescription" rows="3" required></textarea>
+
+        <label for="animalRequirements">Prasības saimniekam</label>
+        <textarea id="animalRequirements" rows="3" required></textarea>
 
         <label for="animalPhoto">Dzīvnieka fotogrāfija</label>
 
-        <input type="file" id="animalPhoto" accept="image/*" />
+        <input type="file" id="animalPhoto" accept=".jpg,.jpeg,.png,.webp" />
+        <button type="button" id="removeAnimalPhoto">Noņemt fotogrāfiju</button>
 
         <img
           id="photoPreview"
@@ -333,5 +493,6 @@
         <button type="submit" class="primary-btn">Saglabāt</button>
       </form>
     </dialog>
+    <script src="src/js/register.js"></script>
   </body>
 </html>

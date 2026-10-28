@@ -1,305 +1,14 @@
-const animals = [
-  {
-    id: 1,
-    name: "Luna",
-    species: "suns",
-    age: 2,
-    gender: "female",
-    breed: "Samojeds",
-    character: "Aktīva",
-    size: "Liels",
-    special: false,
-    photo: "photo-1558788353-f76d92427f16",
-  },
-  {
-    id: 2,
-    name: "Reks",
-    species: "suns",
-    age: 4,
-    gender: "male",
-    breed: "Jauktenis",
-    character: "Rotaļīgs",
-    size: "Vidējs",
-    special: false,
-    photo: "photo-1561037404-61cd46aa615b",
-  },
-  {
-    id: 3,
-    name: "Mika",
-    species: "kakis",
-    age: 1,
-    gender: "female",
-    breed: "Mājas kaķis",
-    character: "Draudzīga",
-    size: "Mazs",
-    special: false,
-    photo: "photo-1573865526739-10659fec78a5",
-  },
-  {
-    id: 4,
-    name: "Rafs",
-    species: "suns",
-    age: 2,
-    gender: "male",
-    breed: "Retrīvers",
-    character: "Aktīvs",
-    size: "Vidējs",
-    special: false,
-    photo: "photo-1552053831-71594a27632d",
-  },
-  {
-    id: 5,
-    name: "Lilo",
-    species: "kakis",
-    age: 0.5,
-    gender: "female",
-    breed: "Mājas kaķis",
-    character: "Mierīga",
-    size: "Mazs",
-    special: false,
-    photo: "photo-1574158622682-e40e69881006",
-  },
-  {
-    id: 6,
-    name: "Maks",
-    species: "suns",
-    age: 3,
-    gender: "male",
-    breed: "Jauktenis",
-    character: "Aktīvs",
-    size: "Vidējs",
-    special: false,
-    photo: "photo-1537151608828-ea2b11777ee8",
-  },
-  {
-    id: 7,
-    name: "Pika",
-    species: "kakis",
-    age: 2,
-    gender: "female",
-    breed: "Mājas kaķis",
-    character: "Ziņkārīga",
-    size: "Mazs",
-    special: false,
-    photo: "photo-1514888286974-6c03e2ca1dba",
-  },
-  {
-    id: 8,
-    name: "Bella",
-    species: "suns",
-    age: 5,
-    gender: "female",
-    breed: "Jauktenis",
-    character: "Mierīga",
-    size: "Liels",
-    special: true,
-    photo: "photo-1543466835-00a7907e9de1",
-  },
-  {
-    id: 9,
-    name: "Oskars",
-    species: "kakis",
-    age: 3,
-    gender: "male",
-    breed: "Mājas kaķis",
-    character: "Rotaļīgs",
-    size: "Mazs",
-    special: false,
-    photo: "photo-1533738363-b7f9aef128ce",
-  },
-  {
-    id: 10,
-    name: "Džeks",
-    species: "suns",
-    age: 0.7,
-    gender: "male",
-    breed: "Jauktenis",
-    character: "Draudzīgs",
-    size: "Mazs",
-    special: false,
-    photo: "photo-1548199973-03cce0bbc87b",
-  },
-  {
-    id: 11,
-    name: "Muris",
-    species: "kakis",
-    age: 8,
-    gender: "male",
-    breed: "Mājas kaķis",
-    character: "Mierīgs",
-    size: "Mazs",
-    special: true,
-    photo: "photo-1495360010541-f48722b34f7d",
-  },
-  {
-    id: 12,
-    name: "Riko",
-    species: "suns",
-    age: 1,
-    gender: "male",
-    breed: "Jauktenis",
-    character: "Enerģisks",
-    size: "Vidējs",
-    special: false,
-    photo: "photo-1587300003388-59208cc962cb",
-  },
-  {
-    id: 13,
-    name: "Kleo",
-    species: "kakis",
-    age: 0.4,
-    gender: "female",
-    breed: "Mājas kaķis",
-    character: "Rotaļīga",
-    size: "Mazs",
-    special: false,
-    photo: "photo-1511044568932-338cba0ad803",
-  },
-  {
-    id: 14,
-    name: "Dora",
-    species: "suns",
-    age: 6,
-    gender: "female",
-    breed: "Jauktenis",
-    character: "Mierīga",
-    size: "Vidējs",
-    special: false,
-    photo: "photo-1558788353-f76d92427f16",
-  },
-  {
-    id: 15,
-    name: "Simba",
-    species: "kakis",
-    age: 4,
-    gender: "male",
-    breed: "Mājas kaķis",
-    character: "Ziņkārīgs",
-    size: "Mazs",
-    special: false,
-    photo: "photo-1573865526739-10659fec78a5",
-  },
-  {
-    id: 16,
-    name: "Bruno",
-    species: "suns",
-    age: 9,
-    gender: "male",
-    breed: "Jauktenis",
-    character: "Mierīgs",
-    size: "Liels",
-    special: true,
-    photo: "photo-1561037404-61cd46aa615b",
-  },
-  {
-    id: 17,
-    name: "Poga",
-    species: "kakis",
-    age: 0.6,
-    gender: "female",
-    breed: "Mājas kaķis",
-    character: "Draudzīga",
-    size: "Mazs",
-    special: false,
-    photo: "photo-1574158622682-e40e69881006",
-  },
-  {
-    id: 18,
-    name: "Tobis",
-    species: "suns",
-    age: 2,
-    gender: "male",
-    breed: "Jauktenis",
-    character: "Rotaļīgs",
-    size: "Vidējs",
-    special: false,
-    photo: "photo-1552053831-71594a27632d",
-  },
-  {
-    id: 19,
-    name: "Mince",
-    species: "kakis",
-    age: 5,
-    gender: "female",
-    breed: "Mājas kaķis",
-    character: "Mierīga",
-    size: "Mazs",
-    special: true,
-    photo: "photo-1514888286974-6c03e2ca1dba",
-  },
-  {
-    id: 20,
-    name: "Rūdis",
-    species: "suns",
-    age: 0.8,
-    gender: "male",
-    breed: "Jauktenis",
-    character: "Aktīvs",
-    size: "Mazs",
-    special: false,
-    photo: "photo-1537151608828-ea2b11777ee8",
-  },
-  {
-    id: 21,
-    name: "Fēlikss",
-    species: "kakis",
-    age: 7,
-    gender: "male",
-    breed: "Mājas kaķis",
-    character: "Mierīgs",
-    size: "Mazs",
-    special: false,
-    photo: "photo-1495360010541-f48722b34f7d",
-  },
-  {
-    id: 22,
-    name: "Mia",
-    species: "kakis",
-    age: 1,
-    gender: "female",
-    breed: "Mājas kaķis",
-    character: "Draudzīga",
-    size: "Mazs",
-    special: false,
-    photo: "photo-1533738363-b7f9aef128ce",
-  },
-  {
-    id: 23,
-    name: "Bobs",
-    species: "suns",
-    age: 5,
-    gender: "male",
-    breed: "Jauktenis",
-    character: "Draudzīgs",
-    size: "Liels",
-    special: false,
-    photo: "photo-1543466835-00a7907e9de1",
-  },
-  {
-    id: 24,
-    name: "Sāra",
-    species: "suns",
-    age: 3,
-    gender: "female",
-    breed: "Jauktenis",
-    character: "Aktīva",
-    size: "Vidējs",
-    special: false,
-    photo: "photo-1587300003388-59208cc962cb",
-  },
-];
+"use strict";
 
 const perPage = 8;
+const animalsApi = "back-end/animals.php";
+const authApi = "back-end/auth.php";
+let animals = [];
 let currentPage = 1;
 let currentCategory = "all";
-let favorites = [];
-
-try {
-  favorites = JSON.parse(localStorage.getItem("pedasFavorites") || "[]");
-  if (!Array.isArray(favorites)) favorites = [];
-} catch {
-  favorites = [];
-}
+let favorites = new Set();
+let activeRequest = null;
+let searchTimer = null;
 
 const grid = document.getElementById("animalGrid");
 const pagination = document.getElementById("pagination");
@@ -309,230 +18,370 @@ const searchInput = document.getElementById("searchInput");
 const sortSelect = document.getElementById("sortSelect");
 
 function formatAge(age) {
-  if (age < 1) {
-    return `${Math.round(age * 12)} mēneši`;
-  }
-  if (age === 1) return "1 gads";
-  return `${age} gadi`;
+  if (age === null || age === undefined || age === "") return "Nav norādīts";
+  const years = Number(age);
+  if (years < 1) return `${Math.max(1, Math.round(years * 12))} mēneši`;
+  return `${years} ${years === 1 ? "gads" : "gadi"}`;
 }
 
-function getFilteredAnimals() {
-  const search = searchInput.value.toLocaleLowerCase("lv").trim();
-  const species = document.querySelector('input[name="species"]:checked').value;
-  const gender = document.querySelector('input[name="gender"]:checked').value;
-  const selectedAges = [
-    ...document.querySelectorAll('input[name="age"]:checked'),
-  ].map((input) => input.value);
-  const specialOnly = document.getElementById("specialFilter").checked;
+function imageSource(photo) {
+  return typeof photo === "string" && photo.trim() ? photo : "src/img/logo.jpg";
+}
 
-  let result = animals.filter((animal) => {
-    const text =
-      `${animal.name} ${animal.breed} ${animal.character} ${animal.species}`.toLocaleLowerCase(
-        "lv",
-      );
+function getFilters() {
+  const params = new URLSearchParams();
+  const selectedSpecies = document.querySelector(
+    'input[name="species"]:checked',
+  )?.value;
+  const species = ["suns", "kakis"].includes(currentCategory)
+    ? currentCategory
+    : selectedSpecies;
+  if (species && species !== "all") params.set("species", species);
+  if (["kucens", "kakens"].includes(currentCategory)) {
+    params.set("species", currentCategory === "kucens" ? "suns" : "kakis");
+    params.set("category_age", "baby");
+  }
+  if (currentCategory === "special") params.set("special", "1");
 
-    if (!text.includes(search)) return false;
-    if (species !== "all" && animal.species !== species) return false;
-    if (gender !== "all" && animal.gender !== gender) return false;
-    if (specialOnly && !animal.special) return false;
+  const gender = document.querySelector('input[name="gender"]:checked')?.value;
+  if (gender && gender !== "all") params.set("gender", gender);
 
-    if (selectedAges.length > 0) {
-      const matchesAge = selectedAges.some((group) => {
-        if (group === "baby") return animal.age < 1;
-        if (group === "young") return animal.age >= 1 && animal.age <= 3;
-        if (group === "adult") return animal.age >= 4 && animal.age <= 7;
-        if (group === "senior") return animal.age > 7;
-        return false;
-      });
-      if (!matchesAge) return false;
-    }
-
-    if (currentCategory === "suns" && animal.species !== "suns") return false;
-    if (currentCategory === "kakis" && animal.species !== "kakis") return false;
-    if (
-      currentCategory === "kucens" &&
-      !(animal.species === "suns" && animal.age < 1)
-    )
-      return false;
-    if (
-      currentCategory === "kakens" &&
-      !(animal.species === "kakis" && animal.age < 1)
-    )
-      return false;
-    if (currentCategory === "special" && !animal.special) return false;
-
-    return true;
+  document.querySelectorAll('input[name="age"]:checked').forEach((input) => {
+    params.append("age[]", input.value);
   });
-
-  if (sortSelect.value === "youngest") {
-    result.sort((a, b) => a.age - b.age);
-  } else if (sortSelect.value === "oldest") {
-    result.sort((a, b) => b.age - a.age);
-  } else if (sortSelect.value === "name") {
-    result.sort((a, b) => a.name.localeCompare(b.name, "lv"));
+  const breed = document.getElementById("breedFilter").value.trim();
+  const health = document.getElementById("healthFilter").value.trim();
+  const search = searchInput.value.trim();
+  if (breed) params.set("breed", breed);
+  if (health) params.set("health_status", health);
+  if (search) params.set("search", search);
+  if (document.getElementById("specialFilter").checked) {
+    params.set("special", "1");
   }
-
-  return result;
+  return params;
 }
 
-function renderAnimals() {
-  const filtered = getFilteredAnimals();
-  const totalPages = Math.ceil(filtered.length / perPage);
+function createAnimalCard(animal) {
+  const card = document.createElement("article");
+  card.className = "animal-card";
+  card.dataset.id = String(animal.id);
 
-  if (currentPage > totalPages) currentPage = Math.max(1, totalPages);
+  const photoWrapper = document.createElement("div");
+  photoWrapper.className = "animal-photo";
+  const image = document.createElement("img");
+  image.src = imageSource(animal.photo);
+  image.alt = animal.name;
+  image.loading = "lazy";
+  image.addEventListener(
+    "error",
+    () => {
+      image.src = "src/img/logo.jpg";
+    },
+    { once: true },
+  );
 
-  const start = (currentPage - 1) * perPage;
-  const visible = filtered.slice(start, start + perPage);
+  const favorite = document.createElement("button");
+  favorite.type = "button";
+  favorite.className = `heart ${favorites.has(Number(animal.id)) ? "liked" : ""}`;
+  favorite.dataset.id = String(animal.id);
+  favorite.setAttribute("aria-label", "Pievienot favorītiem");
+  favorite.setAttribute(
+    "aria-pressed",
+    String(favorites.has(Number(animal.id))),
+  );
+  favorite.textContent = favorites.has(Number(animal.id)) ? "♥" : "♡";
+  photoWrapper.append(image, favorite);
 
-  resultsCount.textContent = `Atrasti: ${filtered.length} dzīvnieki`;
-  emptyMessage.hidden = filtered.length !== 0;
-
-  grid.innerHTML = visible
-    .map((animal) => {
-      const liked = favorites.includes(animal.id);
-      const type = animal.species === "suns" ? "Suns" : "Kaķis";
-
-      return `
-        <article class="animal-card" data-id="${animal.id}">
-          <div class="animal-photo">
-            <img
-              src="https://images.unsplash.com/${animal.photo}?auto=format&fit=crop&w=600&q=85"
-              alt="${animal.name}"
-              loading="lazy"
-            >
-            <button
-              class="heart ${liked ? "liked" : ""}"
-              data-id="${animal.id}"
-              aria-label="Pievienot favorītiem"
-              aria-pressed="${liked}"
-              type="button"
-            >${liked ? "♥" : "♡"}</button>
-          </div>
-          <div class="animal-info">
-            <h3>${animal.name}</h3>
-            <p>${type} • ${formatAge(animal.age)} • ${animal.character}</p>
-            <div class="animal-tags">
-              <span>${animal.character}</span>
-              <span>${animal.size}</span>
-              ${animal.special ? "<span>Īpašas vajadzības</span>" : ""}
-            </div>
-          </div>
-        </article>
-        `;
-    })
-    .join("");
-
-  renderPagination(totalPages);
+  const info = document.createElement("div");
+  info.className = "animal-info";
+  const title = document.createElement("h3");
+  title.textContent = animal.name;
+  const type =
+    animal.species === "suns"
+      ? "Suns"
+      : animal.species === "kakis"
+        ? "Kaķis"
+        : animal.species;
+  const summary = document.createElement("p");
+  summary.textContent = `${type} • ${formatAge(animal.age)} • ${animal.adoption_status}`;
+  const tags = document.createElement("div");
+  tags.className = "animal-tags";
+  [animal.breed, animal.health_status, animal.adoption_status].forEach(
+    (text) => {
+      const tag = document.createElement("span");
+      tag.textContent = text || "Nav norādīts";
+      tags.appendChild(tag);
+    },
+  );
+  info.append(title, summary, tags);
+  card.append(photoWrapper, info);
+  return card;
 }
 
 function renderPagination(totalPages) {
-  pagination.innerHTML = "";
+  pagination.replaceChildren();
   if (totalPages <= 1) return;
-
-  const previous = document.createElement("button");
-  previous.textContent = "‹";
-  previous.disabled = currentPage === 1;
-  previous.setAttribute("aria-label", "Iepriekšējā lapa");
-  previous.addEventListener("click", () => changePage(currentPage - 1));
-  pagination.appendChild(previous);
-
-  for (let page = 1; page <= totalPages; page++) {
+  const addPageButton = (label, page, disabled = false) => {
     const button = document.createElement("button");
-    button.textContent = page;
-    if (page === currentPage) button.classList.add("current");
-    button.setAttribute("aria-label", `Lapa ${page}`);
-    button.addEventListener("click", () => changePage(page));
-    pagination.appendChild(button);
-  }
-
-  const next = document.createElement("button");
-  next.textContent = ">";
-  next.disabled = currentPage === totalPages;
-  next.setAttribute("aria-label", "Nākamā lapa");
-  next.addEventListener("click", () => changePage(currentPage + 1));
-  pagination.appendChild(next);
-}
-
-function changePage(page) {
-  currentPage = page;
-  renderAnimals();
-  document.getElementById("catalog").scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-  });
-}
-
-function refreshFilters() {
-  currentPage = 1;
-  renderAnimals();
-}
-
-document.querySelectorAll(".category").forEach((button) => {
-  button.addEventListener("click", () => {
-    currentCategory = button.dataset.category;
-
-    document.querySelectorAll(".category").forEach((item) => {
-      item.classList.toggle("active", item === button);
+    button.type = "button";
+    button.textContent = label;
+    button.disabled = disabled;
+    button.setAttribute("aria-label", `Lapa ${label}`);
+    if (Number(label) === currentPage) button.classList.add("current");
+    button.addEventListener("click", () => {
+      currentPage = page;
+      renderAnimals();
+      document.getElementById("catalog").scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     });
+    pagination.appendChild(button);
+  };
+  addPageButton("‹", Math.max(1, currentPage - 1), currentPage === 1);
+  for (let page = 1; page <= totalPages; page++) {
+    addPageButton(String(page), page);
+  }
+  addPageButton(
+    "›",
+    Math.min(totalPages, currentPage + 1),
+    currentPage === totalPages,
+  );
+}
 
-    refreshFilters();
-  });
-});
-
-document.querySelectorAll(".sidebar input").forEach((input) => {
-  input.addEventListener("change", refreshFilters);
-});
-
-searchInput.addEventListener("input", refreshFilters);
-sortSelect.addEventListener("change", refreshFilters);
-
-document.getElementById("clearFilters").addEventListener("click", () => {
-  document.querySelector('input[name="species"][value="all"]').checked = true;
-  document.querySelector('input[name="gender"][value="all"]').checked = true;
-
-  document.querySelectorAll('input[name="age"]').forEach((input) => {
-    input.checked = false;
-  });
-
-  document.getElementById("specialFilter").checked = false;
-  searchInput.value = "";
-  sortSelect.value = "default";
-  currentCategory = "all";
-
-  document.querySelectorAll(".category").forEach((button) => {
-    button.classList.toggle("active", button.dataset.category === "all");
-  });
-
-  refreshFilters();
-});
-
-grid.addEventListener("click", (event) => {
-  const button = event.target.closest(".heart");
-  if (!button) return;
-
-  const id = Number(button.dataset.id);
-
-  if (favorites.includes(id)) {
-    favorites = favorites.filter((item) => item !== id);
-  } else {
-    favorites.push(id);
+function renderAnimals() {
+  const sorted = [...animals];
+  if (sortSelect.value === "youngest") {
+    sorted.sort((a, b) => Number(a.age ?? 999) - Number(b.age ?? 999));
+  } else if (sortSelect.value === "oldest") {
+    sorted.sort((a, b) => Number(b.age ?? -1) - Number(a.age ?? -1));
+  } else if (sortSelect.value === "name") {
+    sorted.sort((a, b) => a.name.localeCompare(b.name, "lv"));
   }
 
+  const totalPages = Math.ceil(sorted.length / perPage);
+  currentPage = Math.min(currentPage, Math.max(totalPages, 1));
+  const start = (currentPage - 1) * perPage;
+  grid.replaceChildren(
+    ...sorted.slice(start, start + perPage).map(createAnimalCard),
+  );
+  resultsCount.textContent = `Atrasti: ${sorted.length} dzīvnieki`;
+  emptyMessage.hidden = sorted.length !== 0;
+  renderPagination(totalPages);
+}
+
+async function loadAnimals() {
+  if (activeRequest) activeRequest.abort();
+  activeRequest = new AbortController();
+  const params = getFilters();
+  resultsCount.textContent = "Ielādē dzīvniekus...";
   try {
-    localStorage.setItem("pedasFavorites", JSON.stringify(favorites));
-  } catch {
-    // Lapa darbojas arī tad, ja pārlūks bloķē glabāšanu.
+    const response = await fetch(`${animalsApi}?${params}`, {
+      headers: { Accept: "application/json" },
+      signal: activeRequest.signal,
+    });
+    const result = await response.json();
+    if (!response.ok || !Array.isArray(result)) {
+      throw new Error(result.error || "Neizdevās ielādēt dzīvniekus.");
+    }
+    animals = result;
+    currentPage = 1;
+    renderAnimals();
+    const selectedAnimalId = new URLSearchParams(window.location.search).get(
+      "id",
+    );
+    const selectedAnimal = animals.find(
+      (animal) => String(animal.id) === selectedAnimalId,
+    );
+    if (selectedAnimal) {
+      document.dispatchEvent(
+        new CustomEvent("animal:selected", {
+          detail: {
+            ...selectedAnimal,
+            is_favorite: favorites.has(Number(selectedAnimal.id)),
+          },
+        }),
+      );
+    }
+  } catch (error) {
+    if (error.name === "AbortError") return;
+    grid.replaceChildren();
+    pagination.replaceChildren();
+    emptyMessage.hidden = true;
+    resultsCount.textContent = error.message || "Neizdevās ielādēt dzīvniekus.";
   }
+}
 
-  renderAnimals();
-});
+async function loadFavorites() {
+  try {
+    const response = await fetch(`${authApi}?action=favorites`, {
+      credentials: "same-origin",
+      headers: { Accept: "application/json" },
+    });
+    if (response.status === 401) return;
+    const result = await response.json();
+    if (!response.ok || !Array.isArray(result.favorites)) {
+      throw new Error(result.error || "Neizdevās ielādēt favorītus.");
+    }
+    favorites = new Set(result.favorites.map(Number));
+    renderAnimals();
+    document.dispatchEvent(
+      new CustomEvent("favorites:loaded", { detail: { ids: favorites } }),
+    );
+  } catch (error) {
+    console.error("Neizdevās ielādēt favorītus.", error);
+  }
+}
 
-document.querySelector(".donate").addEventListener("click", () => {
-  alert("Ziedošanas sadaļa vēl tiek izstrādāta.");
-});
+function scheduleLoad() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(loadAnimals, 250);
+}
 
-document.querySelector(".register").addEventListener("click", () => {
-  alert("Pieslēgšanās sadaļa vēl tiek izstrādāta.");
-});
+async function loadHomeFeatured() {
+  const homeGrid = document.querySelector(".animals-section .animal-grid");
+  if (!homeGrid) return;
+  try {
+    const response = await fetch(`${animalsApi}?status=Pieejams`, {
+      headers: { Accept: "application/json" },
+    });
+    const result = await response.json();
+    if (!response.ok || !Array.isArray(result)) {
+      throw new Error(result.error || "Neizdevās ielādēt dzīvniekus.");
+    }
+    const cards = result.slice(0, 4).map((animal) => {
+      const card = createAnimalCard(animal);
+      card.querySelector(".heart")?.remove();
+      card.tabIndex = 0;
+      card.setAttribute("role", "link");
+      card.addEventListener("click", () => {
+        window.location.href = `animals.html?id=${encodeURIComponent(animal.id)}`;
+      });
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          window.location.href = `animals.html?id=${encodeURIComponent(animal.id)}`;
+        }
+      });
+      return card;
+    });
+    if (!cards.length) {
+      const empty = document.createElement("p");
+      empty.textContent = "Pašlaik nav pieejamu dzīvnieku adopcijai.";
+      homeGrid.replaceChildren(empty);
+      return;
+    }
+    homeGrid.replaceChildren(...cards);
+  } catch (error) {
+    const message = document.createElement("p");
+    message.textContent = error.message || "Neizdevās ielādēt dzīvniekus.";
+    homeGrid.replaceChildren(message);
+  }
+}
 
-renderAnimals();
+if (grid) {
+  document.querySelectorAll(".category").forEach((button) => {
+    button.addEventListener("click", () => {
+      currentCategory =
+        button.dataset.category === "all" ? "all" : button.dataset.category;
+      if (currentCategory === "all") {
+        document.querySelector('input[name="species"][value="all"]').checked =
+          true;
+      }
+      if (["suns", "kakis"].includes(currentCategory)) {
+        document.querySelector(
+          `input[name="species"][value="${currentCategory}"]`,
+        ).checked = true;
+      }
+      document.querySelectorAll(".category").forEach((item) => {
+        item.classList.toggle("active", item === button);
+      });
+      scheduleLoad();
+    });
+  });
+
+  document.querySelectorAll(".sidebar input").forEach((input) => {
+    input.addEventListener("input", scheduleLoad);
+    input.addEventListener("change", scheduleLoad);
+  });
+  searchInput.addEventListener("input", scheduleLoad);
+  sortSelect.addEventListener("change", renderAnimals);
+
+  document.getElementById("clearFilters").addEventListener("click", () => {
+    document.querySelector('input[name="species"][value="all"]').checked = true;
+    document.querySelector('input[name="gender"][value="all"]').checked = true;
+    document.querySelectorAll('input[name="age"]').forEach((input) => {
+      input.checked = false;
+    });
+    document.getElementById("specialFilter").checked = false;
+    document.getElementById("breedFilter").value = "";
+    document.getElementById("healthFilter").value = "";
+    searchInput.value = "";
+    sortSelect.value = "default";
+    currentCategory = "all";
+    document.querySelectorAll(".category").forEach((button) => {
+      button.classList.toggle("active", button.dataset.category === "all");
+    });
+    scheduleLoad();
+  });
+
+  document.addEventListener("favorite:changed", (event) => {
+    const { id, favorite } = event.detail;
+    if (favorite) favorites.add(id);
+    else favorites.delete(id);
+    renderAnimals();
+  });
+  document.addEventListener("animal:updated", loadAnimals);
+
+  grid.addEventListener("click", async (event) => {
+    const favoriteButton = event.target.closest(".heart");
+    if (favoriteButton) {
+      event.stopPropagation();
+      const animalId = Number(favoriteButton.dataset.id);
+      const favorite = !favorites.has(animalId);
+      try {
+        const response = await fetch(authApi, {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            action: "favorite",
+            animal_id: animalId,
+            favorite,
+          }),
+        });
+        const result = await response.json();
+        if (response.status === 401) {
+          window.location.href = "register.html?mode=login";
+          return;
+        }
+        if (!response.ok)
+          throw new Error(result.error || "Neizdevās atjaunināt favorītus.");
+        if (favorite) favorites.add(animalId);
+        else favorites.delete(animalId);
+        renderAnimals();
+      } catch (error) {
+        window.alert(error.message || "Neizdevās atjaunināt favorītus.");
+      }
+      return;
+    }
+
+    const card = event.target.closest(".animal-card");
+    const animal = animals.find((item) => String(item.id) === card?.dataset.id);
+    if (animal) {
+      document.dispatchEvent(
+        new CustomEvent("animal:selected", {
+          detail: { ...animal, is_favorite: favorites.has(Number(animal.id)) },
+        }),
+      );
+    }
+  });
+
+  loadAnimals();
+  loadFavorites();
+} else {
+  loadHomeFeatured();
+}

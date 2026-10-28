@@ -43,10 +43,9 @@ try {
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $sql = 'SELECT a.adoption_id, a.animal_id, a.user_id,
-                       a.adoption_date, a.status,
-                       u.first_name, u.last_name, u.email,
-                       an.name AS animal_name, an.species
+        $sql = 'SELECT a.adoption_id, a.animal_id, a.adoption_date, a.status,
+                       a.application_message, an.name AS animal_name, an.species,
+                       an.breed, an.age, an.photo, an.health_status
                 FROM adoptions a
                 INNER JOIN users u ON u.user_id = a.user_id
                 INNER JOIN animals an ON an.animal_id = a.animal_id
@@ -73,23 +72,15 @@ try {
 
         $data = readJsonBody();
 
-        foreach (['animal_id', 'adoption_date'] as $field) {
-            if (!isset($data[$field]) || !is_scalar($data[$field]) || trim((string)$data[$field]) === '') {
-                throw new InvalidArgumentException(
-                    "Trūkst obligātā lauka: {$field}"
-                );
-            }
+        if (!isset($data['animal_id']) || !is_scalar($data['animal_id'])) {
+            throw new InvalidArgumentException('Izvēlieties dzīvnieku.');
         }
 
         $animalId = filter_var($data['animal_id'], FILTER_VALIDATE_INT);
-        $adoptionDate = (string)$data['adoption_date'];
-
-        $date = DateTime::createFromFormat('!Y-m-d', $adoptionDate);
-        $dateErrors = DateTime::getLastErrors();
-
-        if ($animalId === false || $animalId < 1 ||
-            !$date || $date->format('Y-m-d') !== $adoptionDate ||
-            ($dateErrors !== false && ($dateErrors['warning_count'] > 0 || $dateErrors['error_count'] > 0))) {
+        $applicationMessage = $data['application_message'] ?? '';
+        $messageLength = is_string($applicationMessage) ? preg_match_all('/./us', $applicationMessage) : false;
+        if ($animalId === false || $animalId < 1 || !is_string($applicationMessage) ||
+            $messageLength === false || $messageLength > 2000) {
             throw new InvalidArgumentException('Nepareizi ievadīti dati.');
         }
 
@@ -112,6 +103,21 @@ try {
             exit;
         }
 
+        $statement = $pdo->prepare(
+            "SELECT adoption_id FROM adoptions
+             WHERE animal_id = ? AND user_id = ?
+               AND status IN ('Gaida', 'Izskatīšanā', 'Apstiprināta')
+             LIMIT 1"
+        );
+        $statement->execute([$animalId, $userId]);
+        if ($statement->fetch()) {
+            $pdo->rollBack();
+            respond(409, [
+                'success' => false,
+                'error' => 'Tev jau ir aktīvs pieteikums par šo dzīvnieku.'
+            ]);
+        }
+
         if ($animal['adoption_status'] !== 'Pieejams') {
             $pdo->rollBack();
             http_response_code(409);
@@ -124,10 +130,10 @@ try {
 
         $statement = $pdo->prepare(
             "INSERT INTO adoptions
-             (animal_id, user_id, adoption_date, status)
-             VALUES (?, ?, ?, 'Gaida')"
+             (animal_id, user_id, adoption_date, application_message, status)
+             VALUES (?, ?, ?, ?, 'Gaida')"
         );
-        $statement->execute([$animalId, $userId, $adoptionDate]);
+        $statement->execute([$animalId, $userId, date('Y-m-d'), trim($applicationMessage)]);
 
         $statement = $pdo->prepare(
             "UPDATE animals SET adoption_status = 'Rezervets'

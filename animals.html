@@ -27,8 +27,8 @@
         </nav>
 
         <div class="header-buttons">
-          <button class="donate" type="button">♡ &nbsp; Ziedot</button>
-          <button class="register" type="button">Pieslēgties</button>
+          <a class="donate" href="donate.html">♡ &nbsp; Ziedot</a>
+          <a class="register" href="register.html?mode=login">Pieteikties</a>
         </div>
       </header>
 
@@ -56,6 +56,10 @@
             >
             <label
               ><input type="radio" name="species" value="kakis" /> Kaķi</label
+            >
+            <label
+              ><input type="radio" name="species" value="cits" /> Citi
+              dzīvnieki</label
             >
           </div>
 
@@ -91,6 +95,20 @@
             <label
               ><input type="radio" name="gender" value="female" /> Mātīte</label
             >
+          </div>
+
+          <div class="filter-section">
+            <label for="breedFilter">Šķirne</label>
+            <input id="breedFilter" type="search" placeholder="Visas šķirnes" />
+          </div>
+
+          <div class="filter-section">
+            <label for="healthFilter">Veselības stāvoklis</label>
+            <input
+              id="healthFilter"
+              type="search"
+              placeholder="Visi stāvokļi"
+            />
           </div>
 
           <div class="filter-section">
@@ -147,14 +165,40 @@
           <div class="animal-grid" id="animalGrid"></div>
 
           <div id="animalModal" class="modalOverlay">
-            <div class="modalContent" role="dialog" aria-modal="true" aria-labelledby="animalName">
-              <button type="button" id="closeModal" class="closeModal" aria-label="Aizvērt logu">&times;</button>
+            <div
+              class="modalContent"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="animalName"
+            >
+              <button
+                type="button"
+                id="closeModal"
+                class="closeModal"
+                aria-label="Aizvērt logu"
+              >
+                &times;
+              </button>
               <div class="modalLeft">
                 <div class="modalImageContainer">
-                  <img id="modalImage" src="" alt="Dzīvnieka attēls">
-                  <button id="animalFavorite" class="heart" aria-label="Pievienot favorītiem">♡</button>
+                  <img
+                    id="modalImage"
+                    src="src/img/logo.jpg"
+                    alt="Dzīvnieka attēls"
+                  />
+                  <button
+                    id="animalFavorite"
+                    class="heart"
+                    aria-label="Pievienot favorītiem"
+                    aria-pressed="false"
+                    type="button"
+                  >
+                    ♡
+                  </button>
                 </div>
-                <button type="button" id="adoptButton" class="adopt-btn">Adoptēt</button>
+                <button type="button" id="adoptButton" class="adopt-btn">
+                  Adoptēt
+                </button>
                 <div class="ownerInfo">
                   <p class="star">☆</p>
                   <p>Prasības saimniekam:</p>
@@ -163,14 +207,29 @@
               </div>
               <div class="modalRight">
                 <h2 id="animalName">Dzīvnieka vārds</h2>
-                <p id="animalDescription" class="animalDescription">Dzīvnieka apraksts...</p>
+                <p id="animalDescription" class="animalDescription">
+                  Dzīvnieka apraksts...
+                </p>
                 <ul class="animalDetails">
-                  <li><span>Dzimis:</span> <span id="animalBirt"></span></li>
+                  <li><span>Vecums:</span> <span id="animalBirt"></span></li>
                   <li><span>Dzimums:</span> <span id="animalGender"></span></li>
                   <li><span>Šķirne:</span> <span id="animalBreed"></span></li>
-                  <li><span>Veselības stāvoklis:</span> <span id="animalSpecialNeeds"></span></li>
-                  <li><span>Patversmē no:</span><span id="animalSince"></span></li>
+                  <li>
+                    <span>Veselības stāvoklis:</span>
+                    <span id="animalHealth"></span>
+                  </li>
+                  <li><span>Statuss:</span> <span id="animalStatus"></span></li>
+                  <li>
+                    <span>Patversmē no:</span><span id="animalSince"></span>
+                  </li>
                 </ul>
+                <label for="adoptionReason">Kāpēc vēlies adoptēt?</label>
+                <textarea
+                  id="adoptionReason"
+                  rows="3"
+                  maxlength="2000"
+                ></textarea>
+                <p id="adoptionMessage" role="status" aria-live="polite"></p>
               </div>
             </div>
           </div>
@@ -194,7 +253,7 @@
             <a href="animals.html">Dzīvnieki</a>
             <a href="about.html">Par mums</a>
             <a href="help.html">Kā palīdzēt?</a>
-            <a href="Kontakti.html">Kontakti</a>
+            <a href="kontakti.html">Kontakti</a>
           </div>
         </div>
         <div class="footer-bottom">
@@ -204,5 +263,6 @@
     </div>
     <script src="src/js/animals.js" defer></script>
     <script src="src/js/animal-modal.js" defer></script>
+    <script src="src/js/register.js"></script>
   </body>
 </html>
