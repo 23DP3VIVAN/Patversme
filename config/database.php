@@ -33,15 +33,12 @@ function isSecureRequest(): bool
 
 function getDatabaseConnection(): PDO
 {
-    $host = getenv('DB_HOST') ?: 'sql101.infinityfree.com';
-    $name = getenv('DB_NAME') ?: 'if0_43288354_animal_shelter';
-    $user = getenv('DB_USER') ?: 'if0_43288354';
-    $port = getenv('DB_PORT') ?: '3306';
-    $password = getenv('DB_PASS') ?: '200788Viktorija';
 
-    if ($password === false || $password === '') {
-        throw new PDOException('Database password is not configured.');
-    }
+    $host = getenv('DB_HOST') ?: '127.0.0.1';
+    $name = getenv('DB_NAME') ?: 'animal_shelter';
+    $user = getenv('DB_USER') ?: 'root';
+    $port = getenv('DB_PORT') ?: '3306';
+    $password = getenv('DB_PASS') ?: '';
 
     $dsn = 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $name . ';charset=utf8mb4';
 
