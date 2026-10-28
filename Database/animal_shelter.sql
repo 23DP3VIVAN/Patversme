@@ -72,7 +72,10 @@ CREATE TABLE IF NOT EXISTS volunteer_applications (
     activity VARCHAR(100) NOT NULL,
     message TEXT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_processed BOOLEAN NOT NULL DEFAULT FALSE
+    is_processed BOOLEAN NOT NULL DEFAULT FALSE,
+    user_id INT NULL,
+    INDEX idx_volunteer_applications_user_id (user_id),
+    CONSTRAINT fk_volunteer_applications_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS contact_messages (

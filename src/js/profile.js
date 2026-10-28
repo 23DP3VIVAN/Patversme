@@ -325,6 +325,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  async function loadVolunteerApplications() {
+    const container = byId("volunteerApplicationsList");
+    container.replaceChildren();
+    const result = await api("volunteerApplications");
+    if (!result.applications.length) {
+      addText(container, "p", "Tu vēl neesi aizpildījis brīvprātīgā pieteikumu.");
+      return;
+    }
+    result.applications.forEach((application) => {
+      const card = addText(container, "article", "", "application-card");
+      addText(card, "h3", application.activity);
+      addText(card, "p", `Iesniegts: ${application.created_at}`);
+      if (application.message) {
+        addText(card, "p", `Tava ziņa: ${application.message}`);
+      }
+      addText(
+        card,
+        "p",
+        Number(application.is_processed)
+          ? "Administrācija ir apstrādājusi pieteikumu."
+          : "Pieteikums saņemts un gaida izskatīšanu.",
+      );
+    });
+  }
+
   changePhoto.addEventListener("click", () => photoInput.click());
   photoInput.addEventListener("change", () => {
     const file = photoInput.files?.[0];
@@ -459,5 +484,6 @@ document.addEventListener("DOMContentLoaded", () => {
     loadApplications().then(() => undefined),
     loadFavorites(),
     loadDonations(),
+    loadVolunteerApplications(),
   ]).catch((error) => showMessage(error.message, true));
 });

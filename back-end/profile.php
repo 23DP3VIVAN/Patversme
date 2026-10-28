@@ -128,6 +128,17 @@ try {
             profileRespond(200, ['success' => true, 'donations' => $statement->fetchAll()]);
         }
 
+        if ($action === 'volunteerApplications') {
+            $statement = $pdo->prepare(
+                'SELECT id, activity, message, created_at, is_processed
+                 FROM volunteer_applications
+                 WHERE user_id = ?
+                 ORDER BY created_at DESC, id DESC'
+            );
+            $statement->execute([$userId]);
+            profileRespond(200, ['success' => true, 'applications' => $statement->fetchAll()]);
+        }
+
         profileRespond(400, ['success' => false, 'error' => 'Neatbalstīta darbība.']);
     }
 

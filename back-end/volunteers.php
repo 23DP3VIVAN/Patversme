@@ -1,6 +1,16 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . '/../config/database.php';
+ini_set('session.use_strict_mode', '1');
+ini_set('session.use_only_cookies', '1');
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'secure' => isSecureRequest(),
+    'httponly' => true,
+    'samesite' => 'Lax',
+]);
+session_start();
 header('Content-Type: application/json; charset=utf-8');
 
 function volunteerField(array $data, string $field, int $maxLength, bool $required = true): ?string
@@ -41,11 +51,14 @@ try {
 
     $pdo = getDatabaseConnection();
 
+    $userId = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
+    $userId = $userId && $userId > 0 ? $userId : null;
+
     $statement = $pdo->prepare(
         'INSERT INTO volunteer_applications
-        (first_name, last_name, email, phone, activity, message)
+        (first_name, last_name, email, phone, activity, message, user_id)
         VALUES
-        (:first_name, :last_name, :email, :phone, :activity, :message)'
+        (:first_name, :last_name, :email, :phone, :activity, :message, :user_id)'
     );
 
     $statement->execute([
@@ -54,7 +67,8 @@ try {
         ':email' => $email,
         ':phone' => $phone,
         ':activity' => $activity,
-        ':message' => $message
+        ':message' => $message,
+        ':user_id' => $userId
     ]);
 
     http_response_code(201);

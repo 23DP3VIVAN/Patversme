@@ -551,6 +551,12 @@
     "Tev vēl nav adopcijas pieteikumu.": "You have no adoption applications yet.",
     "Tev vēl nav saglabātu favorītu.": "You have no saved favorites yet.",
     "Nav ar tavu kontu saistītu ziedojumu.": "There are no donations linked to your account.",
+    "Mani brīvprātīgo pieteikumi:": "My volunteer applications:",
+    "Tu vēl neesi aizpildījis brīvprātīgā pieteikumu.": "You have not submitted a volunteer application yet.",
+    "Iesniegts: ": "Submitted: ",
+    "Tava ziņa: ": "Your message: ",
+    "Administrācija ir apstrādājusi pieteikumu.": "The administration has processed the application.",
+    "Pieteikums saņemts un gaida izskatīšanu.": "Your application has been received and is awaiting review.",
     "Adopcijas pieteikums atcelts.": "Adoption application cancelled.",
     "Adopcijas pieteikums iesniegts.": "Adoption application submitted.",
     "Profila dati saglabāti.": "Profile saved.",
@@ -597,6 +603,8 @@
     if (match) return `Found: ${match[1]} animals`;
     match = key.match(/^Iesniegts: (.+)$/);
     if (match) return `Submitted: ${match[1]}`;
+    match = key.match(/^Tava ziņa: (.+)$/);
+    if (match) return `Your message: ${match[1]}`;
     match = key.match(/^Dzīvnieka statuss: (.+)$/);
     if (match) return `Animal status: ${translatedValue(match[1])}`;
     match = key.match(/^Pieteikuma ziņa: (.+)$/);
