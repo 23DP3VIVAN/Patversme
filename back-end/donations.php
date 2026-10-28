@@ -45,9 +45,12 @@ try {
     $firstName = donationField($data, 'firstName', 30);
     $lastName = donationField($data, 'lastName', 30);
     $email = donationField($data, 'email', 254);
+    $paymentMethod = $data['paymentMethod'] ?? null;
     $amount = $data['customAmount'] ?? null;
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) ||
+        !is_string($paymentMethod) ||
+        !in_array($paymentMethod, ['VISA', 'Apple Pay', 'Google Pay', 'Internet Bank', 'Mastercard', 'PayPal'], true) ||
         !is_int($amount) && !is_float($amount) && !is_string($amount) ||
         !is_numeric($amount) || !is_finite((float) $amount) || (float) $amount <= 0 ||
         (float) $amount > 100000) {
@@ -89,7 +92,7 @@ try {
         ':donor_name' => $donorName,
         ':donor_email' => $email,
         ':amount' => $amountValue,
-        ':payment_method' => 'Demonstrācija',
+        ':payment_method' => $paymentMethod,
         ':status' => 'not_processed',
         ':user_id' => $userId
     ]);

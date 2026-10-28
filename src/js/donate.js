@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
       lastName: document.getElementById("lastName").value,
       email: document.getElementById("email").value,
       customAmount: selectedAmount,
+      paymentMethod: document.getElementById("paymentMethod").value,
     };
 
     try {

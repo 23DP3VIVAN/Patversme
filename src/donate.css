@@ -291,7 +291,8 @@ button {
   font-weight: 800;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
   width: 100%;
   padding: 14px 15px;
   background: #fff7fa;
@@ -300,7 +301,8 @@ button {
   outline: none;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
   border-color: var(--pink);
   box-shadow: 0 0 0 3px #f8d4e3;
 }
