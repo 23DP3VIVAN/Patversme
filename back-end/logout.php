@@ -14,6 +14,7 @@ session_set_cookie_params([
 session_start();
 
 header("Content-Type: application/json; charset=UTF-8");
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);

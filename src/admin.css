@@ -264,6 +264,88 @@ button {
   margin-top: 4px;
 }
 
+.period-stats-panel {
+  border-color: #f2dce5;
+}
+
+.period-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.period-filter label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.panel-heading .period-stats-note {
+  margin-top: 5px !important;
+  color: var(--muted);
+  font-size: 11px !important;
+}
+
+.period-filter input {
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--background);
+  color: var(--text);
+  font: inherit;
+}
+
+.period-stats-range {
+  min-height: 20px;
+  margin: 8px 0 14px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.period-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.period-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fffafd;
+}
+
+.period-stat-icon {
+  display: grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--light-pink);
+  color: var(--pink);
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.period-stat-card strong {
+  overflow-wrap: anywhere;
+  font-size: 21px;
+}
+
+.period-stat-card p {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
 /* PANELS */
 
 .panel {
@@ -414,6 +496,123 @@ tr:last-child td {
   background: var(--light-pink);
 }
 
+.applications-table {
+  min-width: 820px;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.applications-table th {
+  padding: 13px 16px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.applications-table td {
+  padding: 16px;
+  background: #fffafd;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.applications-table td:first-child {
+  border-left: 1px solid var(--border);
+  border-radius: 12px 0 0 12px;
+}
+
+.applications-table td:last-child {
+  border-right: 1px solid var(--border);
+  border-radius: 0 12px 12px 0;
+}
+
+.application-row:hover td {
+  background: var(--soft-pink);
+}
+
+.application-action-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 210px;
+}
+
+.application-action {
+  margin: 0;
+  padding: 8px 10px;
+  font-weight: 800;
+}
+
+.application-action.review-action {
+  border-color: #f1d694;
+  background: #fff6dc;
+  color: #8a5c00;
+}
+
+.application-action.approve-action {
+  border-color: #b9e2c8;
+  background: #eaf8ef;
+  color: #217348;
+}
+
+.application-action.reject-action {
+  border-color: #f0c2d0;
+  background: #fff0f4;
+  color: #a72f60;
+}
+
+.application-action.message-action {
+  background: white;
+}
+
+.volunteer-table {
+  min-width: 1050px;
+}
+
+.volunteer-table th {
+  color: var(--dark-pink);
+  white-space: nowrap;
+}
+
+.volunteer-table td {
+  vertical-align: top;
+  line-height: 1.55;
+}
+
+.volunteer-table tbody tr:nth-child(even) td {
+  background: #fffafd;
+}
+
+.volunteer-name {
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.volunteer-contacts {
+  display: grid;
+  gap: 4px;
+  min-width: 170px;
+}
+
+.volunteer-contacts a {
+  color: var(--pink-dark);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.volunteer-contacts a:hover {
+  text-decoration: underline;
+}
+
+.volunteer-message {
+  min-width: 240px;
+  max-width: 390px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .empty {
   padding: 25px;
   color: var(--muted);
@@ -518,6 +717,9 @@ dialog::backdrop {
   .quick-actions {
     grid-template-columns: repeat(2, 1fr);
   }
+  .period-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 750px) {
@@ -571,6 +773,9 @@ dialog::backdrop {
 @media (max-width: 450px) {
   .stats-grid,
   .quick-actions {
+    grid-template-columns: 1fr;
+  }
+  .period-stats-grid {
     grid-template-columns: 1fr;
   }
 

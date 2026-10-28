@@ -52,11 +52,13 @@ CREATE TABLE IF NOT EXISTS adoptions (
     animal_id INT NOT NULL,
     user_id INT NOT NULL,
     adoption_date DATE NOT NULL,
+    completed_at DATETIME NULL,
     application_message TEXT NULL,
     status ENUM('Gaida', 'Izskatīšanā', 'Apstiprināta', 'Pabeigta', 'Noraidīta', 'Atcelta') NOT NULL DEFAULT 'Gaida',
     rejection_reason TEXT NULL,
     INDEX idx_adoptions_animal_id (animal_id),
     INDEX idx_adoptions_user_id (user_id),
+    INDEX idx_adoptions_completed_at (completed_at),
     CONSTRAINT fk_adoptions_animal FOREIGN KEY (animal_id) REFERENCES animals(animal_id),
     CONSTRAINT fk_adoptions_user FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

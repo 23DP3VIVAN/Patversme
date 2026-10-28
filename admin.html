@@ -35,6 +35,12 @@
           <button class="nav-link" data-page="users">
             <span>♙</span> Lietotāji
           </button>
+          <button class="nav-link" data-page="favorites">
+            <span>♥</span> Favorīti
+          </button>
+          <button class="nav-link" data-page="volunteers">
+            <span>✍</span> Brīvprātīgie
+          </button>
           <button class="nav-link" data-page="messages">
             <span>✉</span> Ziņojumi
           </button>
@@ -115,8 +121,73 @@
               <span class="stat-icon">€</span>
               <div>
                 <strong id="donationTotal">0 €</strong>
-                <p>Ziedojumi</p>
+                <p>Saņemtie ziedojumi</p>
               </div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon">♥</span>
+              <div>
+                <strong id="favoriteCount">0</strong>
+                <p>Favorītu ieraksti</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel period-stats-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Statistika par periodu</h2>
+                <p>
+                  Reģistrācijas, adopcijas pieteikumi, pabeigtas adopcijas un
+                  saņemtie ziedojumi.
+                </p>
+                <p class="period-stats-note">
+                  Iepriekš pabeigtajām adopcijām pabeigšanas datums netika
+                  saglabāts; tās šajā statistikā neparādīsies.
+                </p>
+              </div>
+            </div>
+            <form id="periodStatsForm" class="period-filter">
+              <label for="periodFrom">No</label>
+              <input id="periodFrom" type="date" required />
+              <label for="periodTo">Līdz</label>
+              <input id="periodTo" type="date" required />
+              <button type="submit" class="primary-btn">Parādīt</button>
+            </form>
+            <p
+              id="periodStatsRange"
+              class="period-stats-range"
+              aria-live="polite"
+            ></p>
+            <div class="period-stats-grid" aria-live="polite">
+              <article class="period-stat-card">
+                <span class="period-stat-icon">♙</span>
+                <div>
+                  <strong id="periodRegistrations">0</strong>
+                  <p>Jauni lietotāji</p>
+                </div>
+              </article>
+              <article class="period-stat-card">
+                <span class="period-stat-icon">♡</span>
+                <div>
+                  <strong id="periodApplications">0</strong>
+                  <p>Jauni pieteikumi</p>
+                </div>
+              </article>
+              <article class="period-stat-card">
+                <span class="period-stat-icon">✓</span>
+                <div>
+                  <strong id="periodCompletedAdoptions">0</strong>
+                  <p>Pabeigtas adopcijas</p>
+                </div>
+              </article>
+              <article class="period-stat-card">
+                <span class="period-stat-icon">€</span>
+                <div>
+                  <strong id="periodDonations">0,00 €</strong>
+                  <p>Saņemtie ziedojumi</p>
+                </div>
+              </article>
             </div>
           </div>
 
@@ -129,6 +200,7 @@
               <button data-go="applications">Skatīt pieteikumus</button>
               <button data-go="messages">Skatīt ziņojumus</button>
               <button data-go="users">Pārvaldīt lietotājus</button>
+              <button data-go="favorites">Skatīt favorītus</button>
             </div>
           </div>
 
@@ -313,6 +385,87 @@
           </div>
         </section>
 
+        <!-- FAVORITES -->
+        <section id="favorites" class="admin-page">
+          <div class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Lietotāju favorīti</h2>
+                <p>Dzīvnieki, kurus lietotāji pievienojuši izlasei.</p>
+              </div>
+            </div>
+            <div class="filters">
+              <input
+                id="favoriteSearch"
+                type="search"
+                placeholder="Meklēt pēc lietotāja vai dzīvnieka..."
+              />
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Lietotājs</th>
+                    <th>E-pasts</th>
+                    <th>Dzīvnieks</th>
+                    <th>Suga un šķirne</th>
+                    <th>Pievienots izlasei</th>
+                  </tr>
+                </thead>
+                <tbody id="favoritesTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- VOLUNTEER APPLICATIONS -->
+        <section id="volunteers" class="admin-page">
+          <div class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Brīvprātīgo pieteikumi</h2>
+                <p>
+                  Kas pieteicies, kādu darbību izvēlējies un ko ierakstījis
+                  anketā.
+                </p>
+              </div>
+            </div>
+            <div class="filters">
+              <input
+                id="volunteerSearch"
+                type="search"
+                placeholder="Meklēt pēc vārda, e-pasta vai aktivitātes..."
+              />
+              <input
+                id="volunteerDateFilter"
+                type="date"
+                aria-label="Pieteikuma datums"
+              />
+              <select id="volunteerStatusFilter">
+                <option value="all">Visi pieteikumi</option>
+                <option value="new">Neapstrādāti</option>
+                <option value="processed">Apstrādāti</option>
+              </select>
+            </div>
+            <div class="table-scroll">
+              <table class="volunteer-table">
+                <thead>
+                  <tr>
+                    <th>Kas pieteicās</th>
+                    <th>Kontakti</th>
+                    <th>Izvēlētā aktivitāte</th>
+                    <th>Ziņa anketā</th>
+                    <th>Datums</th>
+                    <th>Statuss</th>
+                    <th>Darbība</th>
+                  </tr>
+                </thead>
+                <tbody id="volunteersTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
         <!-- MESSAGES -->
         <section id="messages" class="admin-page">
           <div class="panel">
@@ -480,7 +633,9 @@
           placeholder="Piemēram: vēlams aktīvs dzīvesveids un garas pastaigas."
         ></textarea>
 
-        <label for="animalPhoto">Dzīvnieka fotogrāfija (JPG, PNG vai WEBP; līdz 2 MB)</label>
+        <label for="animalPhoto"
+          >Dzīvnieka fotogrāfija (JPG, PNG vai WEBP; līdz 2 MB)</label
+        >
 
         <input type="file" id="animalPhoto" accept=".jpg,.jpeg,.png,.webp" />
         <button type="button" id="removeAnimalPhoto">Noņemt fotogrāfiju</button>

@@ -18,6 +18,8 @@ const pageTitles = {
   animals: "Dzīvnieki",
   applications: "Adopcijas pieteikumi",
   users: "Lietotāji",
+  favorites: "Favorīti",
+  volunteers: "Brīvprātīgo pieteikumi",
   messages: "Ziņojumi",
   donations: "Ziedojumi",
 };
@@ -114,14 +116,62 @@ document.querySelectorAll("[data-go]").forEach((button) => {
 });
 
 function updateStatistics(total) {
-  document.getElementById("animalCount").textContent = summary.animals ?? animals.length;
-  document.getElementById("availableAnimalCount").textContent = summary.available ?? 0;
-  document.getElementById("applicationCount").textContent = summary.applications ?? applications.length;
-  document.getElementById("newApplicationCount").textContent = summary.newApplications ?? 0;
-  document.getElementById("userCount").textContent = summary.users ?? totalUsers ?? users.length;
+  document.getElementById("animalCount").textContent =
+    summary.animals ?? animals.length;
+  document.getElementById("availableAnimalCount").textContent =
+    summary.available ?? 0;
+  document.getElementById("applicationCount").textContent =
+    summary.applications ?? applications.length;
+  document.getElementById("newApplicationCount").textContent =
+    summary.newApplications ?? 0;
+  document.getElementById("userCount").textContent =
+    summary.users ?? totalUsers ?? users.length;
+  document.getElementById("favoriteCount").textContent = summary.favorites ?? 0;
   document.getElementById("donationTotal").textContent =
     `${Number(total ?? summary.donations ?? 0).toFixed(2)} €`;
 }
+
+function localDateValue(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+const periodFrom = document.getElementById("periodFrom");
+const periodTo = document.getElementById("periodTo");
+const periodToday = new Date();
+periodFrom.value = localDateValue(
+  new Date(periodToday.getFullYear(), periodToday.getMonth(), 1),
+);
+periodTo.value = localDateValue(periodToday);
+
+async function loadPeriodStats() {
+  if (periodFrom.value > periodTo.value) {
+    throw new Error("Sākuma datums nevar būt vēlāk par beigu datumu.");
+  }
+  const result = await api("periodStats", {
+    params: { from: periodFrom.value, to: periodTo.value },
+  });
+  document.getElementById("periodRegistrations").textContent =
+    result.stats.registrations;
+  document.getElementById("periodApplications").textContent =
+    result.stats.applications;
+  document.getElementById("periodCompletedAdoptions").textContent =
+    result.stats.completedAdoptions;
+  document.getElementById("periodDonations").textContent = Number(
+    result.stats.donations,
+  ).toLocaleString("lv-LV", { style: "currency", currency: "EUR" });
+  document.getElementById("periodStatsRange").textContent =
+    `${periodFrom.value} — ${periodTo.value}`;
+}
+
+document
+  .getElementById("periodStatsForm")
+  .addEventListener("submit", (event) => {
+    event.preventDefault();
+    loadPeriodStats().catch((error) => showNotice(error.message, true));
+  });
 
 const animalDialog = document.getElementById("animalDialog");
 const animalForm = document.getElementById("animalForm");
@@ -277,20 +327,38 @@ function renderAnimals() {
   animals.forEach((animal) => {
     const row = document.createElement("tr");
     addCell(row, `#${animal.id} ${animal.name}`);
-    addCell(row, animal.species === "suns" ? "Suns" : animal.species === "kakis" ? "Kaķis" : animal.species);
-    addCell(row, animal.display_age == null ? "Nav norādīts" : `${animal.display_age} gadi`);
+    addCell(
+      row,
+      animal.species === "suns"
+        ? "Suns"
+        : animal.species === "kakis"
+          ? "Kaķis"
+          : animal.species,
+    );
+    addCell(
+      row,
+      animal.display_age == null
+        ? "Nav norādīts"
+        : `${animal.display_age} gadi`,
+    );
     addCell(row, statusBadge(animal.status));
     const actions = document.createElement("div");
     actions.append(
       makeButton("Rediģēt", () => openAnimalForm(animal.id)),
       makeButton("Publiskā karte", () => {
-        window.open(`animals.html?id=${encodeURIComponent(animal.id)}`, "_blank", "noopener");
+        window.open(
+          `animals.html?id=${encodeURIComponent(animal.id)}`,
+          "_blank",
+          "noopener",
+        );
       }),
       makeButton("Pieteikumu vēsture", () => {
         document.getElementById("applicationSearch").value = "";
         document.getElementById("applicationDateFilter").value = "";
         document.getElementById("applicationFilter").value = "all";
-        document.getElementById("applicationAnimalFilter").value = String(animal.id);
+        document.getElementById("applicationAnimalFilter").value = String(
+          animal.id,
+        );
         showPage("applications");
         loadApplications().catch((error) => showNotice(error.message, true));
       }),
@@ -333,36 +401,67 @@ function loadFilteredAnimals() {
       health: value("animalHealthFilter"),
       age_min: value("animalAgeMin"),
       age_max: value("animalAgeMax"),
-      gender: value("animalGenderFilter") === "all" ? "" : value("animalGenderFilter"),
-      status: value("animalStatusFilter") === "all" ? "" : value("animalStatusFilter"),
+      gender:
+        value("animalGenderFilter") === "all"
+          ? ""
+          : value("animalGenderFilter"),
+      status:
+        value("animalStatusFilter") === "all"
+          ? ""
+          : value("animalStatusFilter"),
       sort: value("animalSort"),
     }).catch((error) => showNotice(error.message, true));
   }, 250);
 }
-["animalSearch", "animalBreedFilter", "animalHealthFilter", "animalAgeMin", "animalAgeMax"].forEach((id) =>
+[
+  "animalSearch",
+  "animalBreedFilter",
+  "animalHealthFilter",
+  "animalAgeMin",
+  "animalAgeMax",
+].forEach((id) =>
   document.getElementById(id).addEventListener("input", loadFilteredAnimals),
 );
-["animalFilter", "animalGenderFilter", "animalStatusFilter", "animalSort"].forEach((id) =>
+[
+  "animalFilter",
+  "animalGenderFilter",
+  "animalStatusFilter",
+  "animalSort",
+].forEach((id) =>
   document.getElementById(id).addEventListener("change", loadFilteredAnimals),
 );
 
 function renderApplications() {
   const tbody = document.getElementById("applicationsTable");
+  tbody.closest("table").classList.add("applications-table");
   tbody.replaceChildren();
   applications.forEach((application) => {
     const row = document.createElement("tr");
-    const animalLink = createElement("a", `#${application.id} · ${application.animal}`);
+    row.className = "application-row";
+    const animalLink = createElement(
+      "a",
+      `#${application.id} · ${application.animal}`,
+    );
     animalLink.href = `animals.html?id=${encodeURIComponent(application.animal_id)}`;
     addCell(row, animalLink);
-    const applicant = createElement("a", `${application.applicant} (${application.email})`);
+    const applicant = createElement(
+      "a",
+      `${application.applicant} (${application.email})`,
+    );
     applicant.href = `mailto:${encodeURIComponent(application.email)}`;
     addCell(row, applicant);
     addCell(row, application.date);
     addCell(row, statusBadge(application.status));
     const actions = document.createElement("div");
+    actions.className = "application-action-group";
+    const actionButton = (label, style, callback) => {
+      const button = makeButton(label, callback);
+      button.classList.add("application-action", style);
+      return button;
+    };
     if (application.application_message || application.rejection_reason) {
       actions.appendChild(
-        makeButton("Ziņa", () => {
+        actionButton("Ziņa", "message-action", () => {
           window.alert(
             [
               application.application_message
@@ -374,39 +473,50 @@ function renderApplications() {
             ]
               .filter(Boolean)
               .join("\n\n"),
-          )
+          );
         }),
       );
     }
     if (application.status === "Gaida") {
       actions.appendChild(
-        makeButton("Izskatīt", () =>
+        actionButton("Izskatīšanā", "review-action", () =>
           changeApplicationStatus(application.id, "Izskatīšanā"),
         ),
       );
     }
     if (["Gaida", "Izskatīšanā"].includes(application.status)) {
-      actions.appendChild(makeButton("Apstiprināt", () => {
-        const warning = Number(application.other_active_count) > 0
-          ? `Šim dzīvniekam ir vēl ${application.other_active_count} aktīvs pieteikums. Apstiprinot šo, pārējie tiks noraidīti. Turpināt?`
-          : "Apstiprināt šo pieteikumu?";
-        if (window.confirm(warning)) changeApplicationStatus(application.id, "Apstiprināta");
-      }));
       actions.appendChild(
-        makeButton("Noraidīt", async () => {
-          const reason = window.prompt("Norādiet atteikuma iemeslu (neobligāti):");
+        actionButton("Apstiprināt", "approve-action", () => {
+          const warning =
+            Number(application.other_active_count) > 0
+              ? `Šim dzīvniekam ir vēl ${application.other_active_count} aktīvs pieteikums. Apstiprinot šo, pārējie tiks noraidīti. Turpināt?`
+              : "Apstiprināt šo pieteikumu?";
+          if (window.confirm(warning))
+            changeApplicationStatus(application.id, "Apstiprināta");
+        }),
+      );
+      actions.appendChild(
+        actionButton("Noraidīt", "reject-action", async () => {
+          const reason = window.prompt(
+            "Norādiet atteikuma iemeslu (neobligāti):",
+          );
           if (reason === null) return;
           await changeApplicationStatus(application.id, "Noraidīta", reason);
-        },
-        ),
+        }),
       );
     }
     if (application.status === "Apstiprināta") {
-      actions.appendChild(makeButton("Pabeigt adopciju", () => {
-        if (window.confirm("Apstiprināt, ka dzīvnieks nodots jaunajam saimniekam?")) {
-          changeApplicationStatus(application.id, "Pabeigta");
-        }
-      }));
+      actions.appendChild(
+        actionButton("Pabeigt adopciju", "approve-action", () => {
+          if (
+            window.confirm(
+              "Apstiprināt, ka dzīvnieks nodots jaunajam saimniekam?",
+            )
+          ) {
+            changeApplicationStatus(application.id, "Pabeigta");
+          }
+        }),
+      );
     }
     addCell(row, actions);
     tbody.appendChild(row);
@@ -443,7 +553,8 @@ async function loadApplications() {
   const result = await api("adoptions", {
     params: {
       q: value("applicationSearch"),
-      status: value("applicationFilter") === "all" ? "" : value("applicationFilter"),
+      status:
+        value("applicationFilter") === "all" ? "" : value("applicationFilter"),
       date: value("applicationDateFilter"),
       animal: value("applicationAnimalFilter"),
     },
@@ -483,14 +594,14 @@ function renderUsers() {
   const tbody = document.getElementById("usersTable");
   tbody.replaceChildren();
   users.forEach((user) => {
-      const row = document.createElement("tr");
-      addCell(row, user.user_id);
-      addCell(row, `${user.first_name} ${user.last_name}`);
-      addCell(row, user.email);
-      addCell(row, user.role);
-      addCell(row, user.created_at);
-      tbody.appendChild(row);
-    });
+    const row = document.createElement("tr");
+    addCell(row, user.user_id);
+    addCell(row, `${user.first_name} ${user.last_name}`);
+    addCell(row, user.email);
+    addCell(row, user.role);
+    addCell(row, user.created_at);
+    tbody.appendChild(row);
+  });
 }
 
 async function loadUsers() {
@@ -510,6 +621,153 @@ document.getElementById("userSearch").addEventListener("input", () => {
   );
 });
 
+function renderFavorites(favorites) {
+  const tbody = document.getElementById("favoritesTable");
+  tbody.replaceChildren();
+  favorites.forEach((favorite) => {
+    const row = document.createElement("tr");
+    addCell(
+      row,
+      `#${favorite.user_id} ${favorite.first_name} ${favorite.last_name}`,
+    );
+    addCell(row, favorite.email);
+    const animalLink = createElement(
+      "a",
+      `#${favorite.animal_id} ${favorite.animal_name}`,
+    );
+    animalLink.href = `animals.html?id=${encodeURIComponent(favorite.animal_id)}`;
+    addCell(row, animalLink);
+    addCell(row, `${favorite.species} · ${favorite.breed}`);
+    addCell(row, favorite.created_at);
+    tbody.appendChild(row);
+  });
+  if (!favorites.length) {
+    const row = document.createElement("tr");
+    addCell(row, "Favorīti nav atrasti.").colSpan = 5;
+    tbody.appendChild(row);
+  }
+}
+
+async function loadFavorites() {
+  const result = await api("favorites", {
+    params: { q: document.getElementById("favoriteSearch").value.trim() },
+  });
+  renderFavorites(result.favorites);
+}
+
+document.getElementById("favoriteSearch").addEventListener("input", () => {
+  clearTimeout(requestTimer);
+  requestTimer = setTimeout(
+    () => loadFavorites().catch((error) => showNotice(error.message, true)),
+    250,
+  );
+});
+
+function renderVolunteerApplications(applications) {
+  const tbody = document.getElementById("volunteersTable");
+  tbody.replaceChildren();
+  applications.forEach((application) => {
+    const row = document.createElement("tr");
+    const applicant = createElement(
+      "strong",
+      `${application.first_name} ${application.last_name}`,
+      "volunteer-name",
+    );
+    addCell(row, applicant);
+
+    const contacts = document.createElement("div");
+    contacts.className = "volunteer-contacts";
+    const email = createElement("a", application.email);
+    email.href = `mailto:${encodeURIComponent(application.email)}`;
+    contacts.append(email);
+    if (application.phone) {
+      const phone = createElement("a", application.phone);
+      phone.href = `tel:${encodeURIComponent(application.phone)}`;
+      contacts.append(phone);
+    }
+    addCell(row, contacts);
+    addCell(row, application.activity);
+    addCell(
+      row,
+      createElement(
+        "p",
+        application.message?.trim() || "Ziņa nav pievienota.",
+        "volunteer-message",
+      ),
+    );
+    addCell(row, application.created_at);
+
+    const processed = Number(application.is_processed) === 1;
+    const badge = statusBadge(processed ? "Apstrādāts" : "Jauns");
+    if (processed) badge.classList.add("success");
+    addCell(row, badge);
+
+    const action = makeButton(
+      processed ? "Atzīmēt kā jaunu" : "Atzīmēt kā apstrādātu",
+      async () => {
+        action.disabled = true;
+        try {
+          await api("messages", {
+            method: "PATCH",
+            body: JSON.stringify({
+              id: Number(application.id),
+              type: "volunteer",
+              is_processed: !processed,
+            }),
+          });
+          await Promise.all([loadVolunteers(), loadMessages()]);
+          showNotice("Brīvprātīgā pieteikuma statuss atjaunināts.");
+        } catch (error) {
+          showNotice(error.message, true);
+          action.disabled = false;
+        }
+      },
+    );
+    addCell(row, action);
+    tbody.appendChild(row);
+  });
+  if (!applications.length) {
+    const row = document.createElement("tr");
+    addCell(row, "Brīvprātīgo pieteikumi nav atrasti.").colSpan = 7;
+    tbody.appendChild(row);
+  }
+}
+
+async function loadVolunteers() {
+  const result = await api("volunteers", {
+    params: {
+      q: document.getElementById("volunteerSearch").value.trim(),
+      date: document.getElementById("volunteerDateFilter").value,
+      processed:
+        document.getElementById("volunteerStatusFilter").value === "all"
+          ? ""
+          : document.getElementById("volunteerStatusFilter").value ===
+              "processed"
+            ? "1"
+            : "0",
+    },
+  });
+  renderVolunteerApplications(result.applications);
+}
+
+document.getElementById("volunteerSearch").addEventListener("input", () => {
+  clearTimeout(requestTimer);
+  requestTimer = setTimeout(
+    () => loadVolunteers().catch((error) => showNotice(error.message, true)),
+    250,
+  );
+});
+document
+  .getElementById("volunteerDateFilter")
+  .addEventListener("change", () =>
+    loadVolunteers().catch((error) => showNotice(error.message, true)),
+  );
+document
+  .getElementById("volunteerStatusFilter")
+  .addEventListener("change", () =>
+    loadVolunteers().catch((error) => showNotice(error.message, true)),
+  );
+
 function renderMessages() {
   const container = document.getElementById("messagesList");
   const cards = messages.map((message) => {
@@ -518,21 +776,35 @@ function renderMessages() {
     email.href = `mailto:${encodeURIComponent(message.email)}`;
     card.append(
       createElement("h3", message.subject),
-      createElement("small", `${message.first_name} ${message.last_name} · ${message.type} · ${message.created_at} · ${Number(message.is_processed) ? "Apstrādāts" : "Neapstrādāts"}`),
+      createElement(
+        "small",
+        `${message.first_name} ${message.last_name} · ${message.type} · ${message.created_at} · ${Number(message.is_processed) ? "Apstrādāts" : "Neapstrādāts"}`,
+      ),
       email,
       createElement("p", message.message),
     );
-    card.appendChild(makeButton(Number(message.is_processed) ? "Atzīmēt kā neapstrādātu" : "Atzīmēt kā apstrādātu", async () => {
-      try {
-        await api("messages", {
-          method: "PATCH",
-          body: JSON.stringify({ id: Number(message.id), type: message.type, is_processed: !Number(message.is_processed) }),
-        });
-        await loadMessages();
-      } catch (error) {
-        showNotice(error.message, true);
-      }
-    }));
+    card.appendChild(
+      makeButton(
+        Number(message.is_processed)
+          ? "Atzīmēt kā neapstrādātu"
+          : "Atzīmēt kā apstrādātu",
+        async () => {
+          try {
+            await api("messages", {
+              method: "PATCH",
+              body: JSON.stringify({
+                id: Number(message.id),
+                type: message.type,
+                is_processed: !Number(message.is_processed),
+              }),
+            });
+            await loadMessages();
+          } catch (error) {
+            showNotice(error.message, true);
+          }
+        },
+      ),
+    );
     return card;
   });
   if (!cards.length) {
@@ -546,9 +818,12 @@ async function loadMessages() {
     params: {
       q: document.getElementById("messageSearch").value.trim(),
       date: document.getElementById("messageDateFilter").value,
-      processed: document.getElementById("messageStatusFilter").value === "all"
-        ? ""
-        : document.getElementById("messageStatusFilter").value === "processed" ? "1" : "0",
+      processed:
+        document.getElementById("messageStatusFilter").value === "all"
+          ? ""
+          : document.getElementById("messageStatusFilter").value === "processed"
+            ? "1"
+            : "0",
     },
   });
   messages = result.messages;
@@ -593,30 +868,44 @@ async function loadDonations() {
       to: value("donationDateTo"),
       min: value("donationMinAmount"),
       max: value("donationMaxAmount"),
-      status: value("donationStatusFilter") === "all" ? "" : value("donationStatusFilter"),
+      status:
+        value("donationStatusFilter") === "all"
+          ? ""
+          : value("donationStatusFilter"),
     },
   });
   donations = result.donations;
   donationTotal = result.total;
   renderDonations();
-  updateStatistics(donationTotal);
 }
 
 async function loadAll() {
   try {
-    const [animalData, applicationData, userData, messageData, donationData, summaryData] =
-      await Promise.all([
-        api("animals"),
-        api("adoptions"),
-        api("users"),
-        api("messages"),
-        api("donations"),
-        api("summary"),
-      ]);
+    const [
+      animalData,
+      applicationData,
+      userData,
+      favoriteData,
+      volunteerData,
+      messageData,
+      donationData,
+      summaryData,
+    ] = await Promise.all([
+      api("animals"),
+      api("adoptions"),
+      api("users"),
+      api("favorites"),
+      api("volunteers"),
+      api("messages"),
+      api("donations"),
+      api("summary"),
+    ]);
     animals = animalData.animals;
     applications = applicationData.adoptions;
     users = userData.users;
     totalUsers = userData.total;
+    renderFavorites(favoriteData.favorites);
+    renderVolunteerApplications(volunteerData.applications);
     messages = messageData.messages;
     donations = donationData.donations;
     donationTotal = donationData.total;
@@ -638,35 +927,58 @@ async function loadAll() {
 
 function scheduleApplicationLoad() {
   clearTimeout(filterTimer);
-  filterTimer = setTimeout(() => loadApplications().catch((error) => showNotice(error.message, true)), 250);
+  filterTimer = setTimeout(
+    () => loadApplications().catch((error) => showNotice(error.message, true)),
+    250,
+  );
 }
 ["applicationSearch", "applicationAnimalFilter"].forEach((id) =>
-  document.getElementById(id).addEventListener("input", scheduleApplicationLoad),
+  document
+    .getElementById(id)
+    .addEventListener("input", scheduleApplicationLoad),
 );
 ["applicationDateFilter", "applicationFilter"].forEach((id) =>
-  document.getElementById(id).addEventListener("change", scheduleApplicationLoad),
+  document
+    .getElementById(id)
+    .addEventListener("change", scheduleApplicationLoad),
 );
 
 ["messageSearch"].forEach((id) =>
   document.getElementById(id).addEventListener("input", () => {
     clearTimeout(filterTimer);
-    filterTimer = setTimeout(() => loadMessages().catch((error) => showNotice(error.message, true)), 250);
+    filterTimer = setTimeout(
+      () => loadMessages().catch((error) => showNotice(error.message, true)),
+      250,
+    );
   }),
 );
 ["messageDateFilter", "messageStatusFilter"].forEach((id) =>
-  document.getElementById(id).addEventListener("change", () =>
-    loadMessages().catch((error) => showNotice(error.message, true)),
-  ),
+  document
+    .getElementById(id)
+    .addEventListener("change", () =>
+      loadMessages().catch((error) => showNotice(error.message, true)),
+    ),
 );
 
 document.getElementById("donationSearch").addEventListener("input", () => {
   clearTimeout(filterTimer);
-  filterTimer = setTimeout(() => loadDonations().catch((error) => showNotice(error.message, true)), 250);
+  filterTimer = setTimeout(
+    () => loadDonations().catch((error) => showNotice(error.message, true)),
+    250,
+  );
 });
-["donationDateFrom", "donationDateTo", "donationMinAmount", "donationMaxAmount", "donationStatusFilter"].forEach((id) =>
-  document.getElementById(id).addEventListener("change", () =>
-    loadDonations().catch((error) => showNotice(error.message, true)),
-  ),
+[
+  "donationDateFrom",
+  "donationDateTo",
+  "donationMinAmount",
+  "donationMaxAmount",
+  "donationStatusFilter",
+].forEach((id) =>
+  document
+    .getElementById(id)
+    .addEventListener("change", () =>
+      loadDonations().catch((error) => showNotice(error.message, true)),
+    ),
 );
 document.getElementById("logoutBtn").addEventListener("click", async () => {
   try {
@@ -675,11 +987,15 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
       credentials: "same-origin",
       headers: { Accept: "application/json" },
     });
-    if (!response.ok) throw new Error("Neizdevās izrakstīties.");
-    window.location.href = "register.html?mode=login";
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || result.success !== true) {
+      throw new Error(result.error || "Neizdevās izrakstīties.");
+    }
+    window.location.replace("register.html?mode=login");
   } catch (error) {
     showNotice(error.message || "Neizdevās izrakstīties.", true);
   }
 });
 
 loadAll();
+loadPeriodStats().catch((error) => showNotice(error.message, true));

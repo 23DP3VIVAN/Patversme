@@ -223,6 +223,56 @@ try {
             $count = $pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
             respond(200, ['success' => true, 'users' => $users, 'total' => (int) $count]);
         }
+        if ($action === 'favorites') {
+            $search = $_GET['q'] ?? '';
+            if (!is_string($search) || strlen($search) > 100) {
+                throw new InvalidArgumentException('Nederīgs favorītu meklējums.');
+            }
+            $statement = $pdo->prepare(
+                'SELECT u.user_id, u.first_name, u.last_name, u.email,
+                        a.animal_id, a.name AS animal_name, a.species, a.breed,
+                        f.created_at
+                 FROM favorites f
+                 JOIN users u ON u.user_id = f.user_id
+                 JOIN animals a ON a.animal_id = f.animal_id
+                 WHERE (:empty = 1 OR CONCAT_WS(" ", u.first_name, u.last_name, u.email,
+                                                   a.name, a.species, a.breed) LIKE :search)
+                 ORDER BY f.created_at DESC, u.user_id DESC LIMIT 500'
+            );
+            $statement->execute([
+                ':empty' => $search === '' ? 1 : 0,
+                ':search' => '%' . $search . '%',
+            ]);
+            respond(200, ['success' => true, 'favorites' => $statement->fetchAll()]);
+        }
+        if ($action === 'volunteers') {
+            $q = $_GET['q'] ?? '';
+            $date = $_GET['date'] ?? '';
+            $processed = $_GET['processed'] ?? '';
+            if (!is_string($q) || strlen($q) > 100 || !is_string($date) ||
+                ($date !== '' && !validDateFilter($date)) ||
+                !in_array($processed, ['', '0', '1'], true)) {
+                throw new InvalidArgumentException('Nederīgi brīvprātīgo pieteikumu filtri.');
+            }
+            $statement = $pdo->prepare(
+                'SELECT id, first_name, last_name, email, phone, activity, message,
+                        created_at, is_processed
+                 FROM volunteer_applications
+                 WHERE (:q = "" OR CONCAT_WS(" ", first_name, last_name, email, phone, activity) LIKE :search)
+                   AND (:date = "" OR DATE(created_at) = :application_date)
+                   AND (:processed = "" OR is_processed = :processed_value)
+                 ORDER BY created_at DESC LIMIT 300'
+            );
+            $statement->execute([
+                ':q' => $q,
+                ':search' => '%' . $q . '%',
+                ':date' => $date,
+                ':application_date' => $date,
+                ':processed' => $processed,
+                ':processed_value' => (int) $processed,
+            ]);
+            respond(200, ['success' => true, 'applications' => $statement->fetchAll()]);
+        }
         if ($action === 'messages') {
             $q = $_GET['q'] ?? '';
             $date = $_GET['date'] ?? '';
@@ -301,9 +351,51 @@ try {
                 'applications' => (int) $pdo->query('SELECT COUNT(*) FROM adoptions')->fetchColumn(),
                 'newApplications' => (int) $pdo->query("SELECT COUNT(*) FROM adoptions WHERE status = 'Gaida'")->fetchColumn(),
                 'users' => (int) $pdo->query('SELECT COUNT(*) FROM users')->fetchColumn(),
+                'favorites' => (int) $pdo->query('SELECT COUNT(*) FROM favorites')->fetchColumn(),
                 'donations' => (float) $pdo->query("SELECT COALESCE(SUM(amount), 0) FROM donations WHERE status = 'succeeded'")->fetchColumn(),
             ];
             respond(200, ['success' => true, 'summary' => $summary]);
+        }
+        if ($action === 'periodStats') {
+            $from = $_GET['from'] ?? '';
+            $to = $_GET['to'] ?? '';
+            if (!is_string($from) || !is_string($to) ||
+                !validDateFilter($from) || !validDateFilter($to) || $from > $to) {
+                throw new InvalidArgumentException('Izvēlieties derīgu periodu.');
+            }
+            $statement = $pdo->prepare(
+                "SELECT
+                    (SELECT COUNT(*) FROM users
+                     WHERE role = 'user' AND DATE(created_at) BETWEEN :users_from AND :users_to) AS registrations,
+                    (SELECT COUNT(*) FROM adoptions
+                     WHERE adoption_date BETWEEN :applications_from AND :applications_to) AS applications,
+                    (SELECT COUNT(*) FROM adoptions
+                     WHERE status = 'Pabeigta'
+                       AND DATE(completed_at) BETWEEN :completed_from AND :completed_to) AS completed_adoptions,
+                    (SELECT COALESCE(SUM(amount), 0) FROM donations
+                     WHERE status = 'succeeded'
+                       AND DATE(created_at) BETWEEN :donations_from AND :donations_to) AS donations"
+            );
+            $statement->execute([
+                ':users_from' => $from,
+                ':users_to' => $to,
+                ':applications_from' => $from,
+                ':applications_to' => $to,
+                ':completed_from' => $from,
+                ':completed_to' => $to,
+                ':donations_from' => $from,
+                ':donations_to' => $to,
+            ]);
+            $stats = $statement->fetch();
+            respond(200, [
+                'success' => true,
+                'stats' => [
+                    'registrations' => (int) $stats['registrations'],
+                    'applications' => (int) $stats['applications'],
+                    'completedAdoptions' => (int) $stats['completed_adoptions'],
+                    'donations' => (float) $stats['donations'],
+                ],
+            ]);
         }
         respond(400, ['success' => false, 'error' => 'Neatbalstīta darbība.']);
     }
@@ -466,11 +558,15 @@ try {
             }
         }
         $statement = $pdo->prepare(
-            'UPDATE adoptions SET status = ?, rejection_reason = ? WHERE adoption_id = ?'
+            'UPDATE adoptions
+             SET status = ?, rejection_reason = ?,
+                 completed_at = CASE WHEN ? = \'Pabeigta\' THEN CURRENT_TIMESTAMP ELSE NULL END
+             WHERE adoption_id = ?'
         );
         $statement->execute([
             $newStatus,
             $newStatus === 'Noraidīta' && trim($rejectionReason) !== '' ? trim($rejectionReason) : null,
+            $newStatus,
             $adoptionId,
         ]);
 

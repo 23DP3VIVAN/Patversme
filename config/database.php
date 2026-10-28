@@ -16,6 +16,12 @@ function isSecureRequest(): bool
         return true;
     }
 
+    // Shared hosts and reverse proxies may terminate HTTPS before PHP sees the request.
+    $forwardedProto = $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '';
+    if (is_string($forwardedProto) && strtolower(trim(explode(',', $forwardedProto)[0])) === 'https') {
+        return true;
+    }
+
     $configuredOrigin = getenv('APP_ORIGIN');
     if (!is_string($configuredOrigin) || $configuredOrigin === '') {
         return false;
@@ -68,7 +74,7 @@ function isSameOriginRequest(): bool
         $expectedParts = parse_url($configuredOrigin);
     } else {
         $hostHeader = $_SERVER['HTTP_HOST'] ?? '';
-        $secureRequest = isset($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off';
+        $secureRequest = isSecureRequest();
         if (!is_string($hostHeader) || $hostHeader === '') {
             return false;
         }
