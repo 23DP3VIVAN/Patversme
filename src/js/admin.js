@@ -371,7 +371,7 @@ function renderApplications() {
               .join("\n\n"),
           ),
       );
-    }
+  )}
     if (application.status === "Gaida") {
       actions.appendChild(
         makeButton("Izskatīt", () =>
