@@ -299,8 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const donationStatuses = {
-    not_processed:
-      "Demonstrācijas ieraksts",
+    not_processed: "Demonstrācijas ieraksts",
     pending: "Gaida maksājuma apstiprinājumu",
     succeeded: "Maksājums apstiprināts",
     failed: "Maksājums nav pabeigts",

@@ -871,10 +871,16 @@
     const validity = field.validity;
     if (validity.valueMissing) {
       if (field.type === "checkbox")
-        return english ? "Please check this box." : "Atzīmējiet šo izvēles rūtiņu.";
+        return english
+          ? "Please check this box."
+          : "Atzīmējiet šo izvēles rūtiņu.";
       if (field instanceof HTMLSelectElement)
-        return english ? "Please choose an option." : "Lūdzu, izvēlieties opciju.";
-      return english ? "Please fill out this field." : "Lūdzu, aizpildiet šo lauku.";
+        return english
+          ? "Please choose an option."
+          : "Lūdzu, izvēlieties opciju.";
+      return english
+        ? "Please fill out this field."
+        : "Lūdzu, aizpildiet šo lauku.";
     }
     if (validity.typeMismatch && field.type === "email")
       return english

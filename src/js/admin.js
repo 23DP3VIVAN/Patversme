@@ -854,7 +854,10 @@ function renderDonations() {
     addCell(row, donation.payment_method);
     const statusSelect = document.createElement("select");
     statusSelect.className = "donation-status-select";
-    statusSelect.setAttribute("aria-label", `Ziedojuma #${donation.id} statuss`);
+    statusSelect.setAttribute(
+      "aria-label",
+      `Ziedojuma #${donation.id} statuss`,
+    );
     [
       ["not_processed", "Nav apstrādāts (demonstrācija)"],
       ["pending", "Gaida maksājuma apstiprinājumu"],
@@ -887,7 +890,10 @@ async function changeDonationStatus(id, status, previousStatus) {
     const donation = donations.find((item) => Number(item.id) === Number(id));
     if (donation) donation.status = previousStatus;
     renderDonations();
-    showNotice(error.message || "Neizdevās atjaunināt ziedojuma statusu.", true);
+    showNotice(
+      error.message || "Neizdevās atjaunināt ziedojuma statusu.",
+      true,
+    );
     return;
   }
 
