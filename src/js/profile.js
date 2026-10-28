@@ -21,11 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const photoInput = byId("photoInput");
   const changePhoto = byId("changePhoto");
   const removePhoto = byId("removePhoto");
+  const savedDialog = byId("profileSavedDialog");
   let originalData = null;
   let selectedPhoto = null;
   let currentPhoto = null;
   let photoRemoved = false;
   let previewUrl = null;
+
+  byId("closeSavedDialog").addEventListener("click", () => savedDialog.close());
 
   function showMessage(message, isError = false) {
     let node = byId("profileMessage");
@@ -371,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
       photoRemoved = false;
       originalData = readForm();
       updatePhoto();
-      showMessage("Profila dati saglabāti.");
+      savedDialog.showModal();
     } catch (error) {
       showMessage(error.message, true);
     } finally {

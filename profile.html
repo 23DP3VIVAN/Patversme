@@ -37,11 +37,7 @@
             class="profile-button"
             aria-label="Lietotāja profils"
           >
-            <img
-              id="navPhoto"
-              src=""
-              alt="Profila attēls"
-            />
+            <img id="navPhoto" src="" alt="Profila attēls" />
           </button>
         </div>
       </header>
@@ -177,6 +173,12 @@
         </div>
       </footer>
     </div>
+    <dialog id="profileSavedDialog" class="profile-saved-dialog" aria-labelledby="profileSavedTitle">
+      <div class="saved-dialog-icon" aria-hidden="true">✓</div>
+      <h2 id="profileSavedTitle">Profila dati saglabāti!</h2>
+      <p>Izmaiņas tavā profilā ir saglabātas.</p>
+      <button type="button" id="closeSavedDialog" class="save-button">Labi</button>
+    </dialog>
     <script src="src/js/profile.js" defer></script>
     <script src="src/js/register.js"></script>
   </body>
