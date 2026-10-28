@@ -443,7 +443,8 @@ button {
   transform: scale(1.1);
 }
 
-.heart.liked, .heart.active {
+.heart.liked,
+.heart.active {
   color: #d6336c;
 }
 
@@ -479,7 +480,7 @@ button {
 
 /* pop up logs */
 
-.modalOverlay{
+.modalOverlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -519,11 +520,11 @@ button {
   cursor: pointer;
 }
 
-.modalLeft{
+.modalLeft {
   min-width: 0;
 }
 
-.modalImageContainer{
+.modalImageContainer {
   position: relative;
   width: 100%;
   aspect-ratio: 1/1;
@@ -532,13 +533,13 @@ button {
   background: white;
 }
 
-.modalImageContainer img{
+.modalImageContainer img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.adopt-btn{
+.adopt-btn {
   width: 100%;
   margin-top: 16px;
   padding: 10px;
@@ -550,11 +551,11 @@ button {
   cursor: pointer;
 }
 
-.adopt-btn:hover{
+.adopt-btn:hover {
   background: var(--pink-dark);
 }
 
-.ownerInfo{
+.ownerInfo {
   position: relative;
   margin-top: 14px;
   padding: 12px;
@@ -575,7 +576,7 @@ button {
   border: none;
   background: transparent;
   color: var(--pink-dark);
-  font-size: 32px;  
+  font-size: 32px;
 }
 
 #adoptionMessage {
@@ -596,7 +597,9 @@ button {
   opacity: 0;
   pointer-events: none;
   transform: translateY(12px);
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 #adoptionMessage.is-visible {
@@ -616,7 +619,7 @@ button {
   }
 }
 
-.modalRight{
+.modalRight {
   min-width: 0;
   padding: 12px 20px;
   border-radius: 15px;
@@ -627,13 +630,14 @@ button {
   margin: 0 0 12px;
   text-align: center;
   font-family: "Brush Script MT", "Segoe Script", cursive;
-  font-size: 38px;
+  font-size: 48px;
   font-weight: normal;
+  color: var(--pink-dark);
 }
 
 .animalDescription {
   margin: 0 0 24px;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.35;
   white-space: pre-line;
 }
@@ -667,7 +671,7 @@ button {
 #adoptionReason {
   display: block;
   width: min(100%, 500px);
-  height: 150px;
+  height: 120px;
   margin-top: 4px;
   padding: 10px 12px;
   border: 1px solid #888;
@@ -675,7 +679,11 @@ button {
   background: #fff;
   color: var(--text);
   font: inherit;
-  resize: vertical;
+  resize: none;
+}
+
+label[for="adoptionReason"] {
+  color: var(--pink-dark);
 }
 
 /* PAGINATION */
@@ -921,17 +929,17 @@ button {
     font-size: 23px;
   }
 
-  .animalModal{
+  .animalModal {
     padding: 10px;
   }
 
-  .modalContent{
+  .modalContent {
     gap: 18px;
     padding: 38px 16px 18px;
     grid-template-columns: 1fr;
   }
 
-  .modalLeft{
+  .modalLeft {
     width: min(100%, 320px);
     margin: 0 auto;
   }
@@ -941,7 +949,7 @@ button {
   }
 
   .animalDescription {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 

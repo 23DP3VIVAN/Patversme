@@ -184,7 +184,9 @@ button {
   opacity: 0;
   pointer-events: none;
   transform: translateY(12px);
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 .admin-notice.is-visible {
@@ -533,6 +535,17 @@ tr:last-child td {
   background: var(--light-pink);
 }
 
+.donation-status-select {
+  max-width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+}
+
 .applications-table {
   min-width: 820px;
   border-collapse: separate;
@@ -689,7 +702,7 @@ tr:last-child td {
 dialog {
   border: none;
   border-radius: 18px;
-  width: min(480px, 94vw);
+  width: min(540px, 94vw);
   max-height: 90vh;
   overflow-y: auto;
   margin: auto;

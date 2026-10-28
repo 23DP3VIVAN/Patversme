@@ -77,8 +77,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (response.ok) {
         result.textContent =
           document.documentElement.lang === "en"
-            ? "Thank you! Your donation has been confirmed. ♡"
-            : "Paldies! Ziedojums veiksmīgi apstiprināts. ♡";
+            ? "Payment successful. Thank you for your donation! ♡"
+            : "Maksājums veiksmīgi apstiprināts. Paldies par ziedojumu! ♡";
         result.style.color = "green";
         form.reset();
         selectedAmount = 10;

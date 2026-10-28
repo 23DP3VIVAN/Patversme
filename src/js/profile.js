@@ -300,7 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const donationStatuses = {
     not_processed:
-      "Nav apstrādāts — demonstrācijas ieraksts, maksājums netika veikts",
+      "Demonstrācijas ieraksts",
     pending: "Gaida maksājuma apstiprinājumu",
     succeeded: "Maksājums apstiprināts",
     failed: "Maksājums nav pabeigts",
@@ -332,7 +332,11 @@ document.addEventListener("DOMContentLoaded", () => {
     container.replaceChildren();
     const result = await api("volunteerApplications");
     if (!result.applications.length) {
-      addText(container, "p", "Tu vēl neesi aizpildījis brīvprātīgā pieteikumu.");
+      addText(
+        container,
+        "p",
+        "Tu vēl neesi aizpildījis brīvprātīgā pieteikumu.",
+      );
       return;
     }
     result.applications.forEach((application) => {

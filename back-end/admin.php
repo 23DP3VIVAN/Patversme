@@ -475,6 +475,25 @@ try {
         respond(200, ['success' => true]);
     }
 
+    if ($method === 'PATCH' && $action === 'donations') {
+        $donationId = filter_var($data['id'] ?? null, FILTER_VALIDATE_INT);
+        $newStatus = $data['status'] ?? null;
+        if (!$donationId || $donationId < 1 || !is_string($newStatus) ||
+            !in_array($newStatus, ['not_processed', 'pending', 'succeeded', 'failed'], true)) {
+            throw new InvalidArgumentException('Nederīgs ziedojuma numurs vai statuss.');
+        }
+        $statement = $pdo->prepare('UPDATE donations SET status = ? WHERE donation_id = ?');
+        $statement->execute([$newStatus, $donationId]);
+        if ($statement->rowCount() === 0) {
+            $statement = $pdo->prepare('SELECT donation_id FROM donations WHERE donation_id = ?');
+            $statement->execute([$donationId]);
+            if (!$statement->fetch()) {
+                respond(404, ['success' => false, 'error' => 'Ziedojums nav atrasts.']);
+            }
+        }
+        respond(200, ['success' => true, 'message' => 'Ziedojuma statuss atjaunināts.']);
+    }
+
     if ($method === 'PATCH' && $action === 'adoptions') {
         $adoptionId = filter_var($data['adoption_id'] ?? null, FILTER_VALIDATE_INT);
         $newStatus = $data['status'] ?? null;

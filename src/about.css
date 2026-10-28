@@ -492,6 +492,7 @@ button {
   color: var(--pink);
   background: transparent;
   border: 1px solid var(--pink);
+  text-decoration: none;
 }
 
 .secondary-btn:hover {

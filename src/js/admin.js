@@ -39,9 +39,12 @@ function showNotice(message, isError = false) {
   notice.classList.remove("is-visible");
   window.clearTimeout(noticeTimer);
   window.requestAnimationFrame(() => notice.classList.add("is-visible"));
-  noticeTimer = window.setTimeout(() => {
-    notice.classList.remove("is-visible");
-  }, isError ? 5000 : 3200);
+  noticeTimer = window.setTimeout(
+    () => {
+      notice.classList.remove("is-visible");
+    },
+    isError ? 5000 : 3200,
+  );
 }
 
 async function api(action, options = {}) {
@@ -849,20 +852,57 @@ function renderDonations() {
     addCell(row, `${Number(donation.amount).toFixed(2)} €`);
     addCell(row, donation.created_at);
     addCell(row, donation.payment_method);
-    addCell(
-      row,
-      donation.status === "succeeded"
-        ? "Apstiprināts"
-        : donation.status === "pending"
-          ? "Gaida maksājuma apstiprinājumu"
-          : donation.status === "failed"
-            ? "Nav pabeigts"
-            : "Nav apstrādāts (demonstrācija)",
+    const statusSelect = document.createElement("select");
+    statusSelect.className = "donation-status-select";
+    statusSelect.setAttribute("aria-label", `Ziedojuma #${donation.id} statuss`);
+    [
+      ["not_processed", "Nav apstrādāts (demonstrācija)"],
+      ["pending", "Gaida maksājuma apstiprinājumu"],
+      ["succeeded", "Apstiprināts"],
+      ["failed", "Nav pabeigts"],
+    ].forEach(([value, label]) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+      statusSelect.appendChild(option);
+    });
+    statusSelect.value = donation.status;
+    statusSelect.addEventListener("change", () =>
+      changeDonationStatus(donation.id, statusSelect.value, donation.status),
     );
+    addCell(row, statusSelect);
     tbody.appendChild(row);
   });
   document.getElementById("donationPeriodTotal").textContent =
     `Apstiprināto ziedojumu summa izvēlētajā periodā: ${Number(donationTotal).toFixed(2)} €`;
+}
+
+async function changeDonationStatus(id, status, previousStatus) {
+  try {
+    await api("donations", {
+      method: "PATCH",
+      body: JSON.stringify({ id, status }),
+    });
+  } catch (error) {
+    const donation = donations.find((item) => Number(item.id) === Number(id));
+    if (donation) donation.status = previousStatus;
+    renderDonations();
+    showNotice(error.message || "Neizdevās atjaunināt ziedojuma statusu.", true);
+    return;
+  }
+
+  const donation = donations.find((item) => Number(item.id) === Number(id));
+  if (donation) donation.status = status;
+  try {
+    const [summaryResult] = await Promise.all([
+      api("summary"),
+      loadDonations(),
+    ]);
+    summary = summaryResult.summary;
+    updateStatistics(donationTotal);
+  } catch (error) {
+    showNotice(error.message || "Neizdevās atjaunot ziedojumu sarakstu.", true);
+  }
 }
 
 let donationTotal = 0;

@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const shareData = {
         title: "Pēdas Mājās",
         text: "Palīdzi dzīvniekiem atrast mājas!",
-        url: window.location.origin + "/animals.html",
+        url: new URL("animals.html", window.location.href).href,
       };
 
       if (navigator.share) {

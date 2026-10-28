@@ -32,14 +32,9 @@
           <button type="button" id="logoutButton" class="logout-button">
             Atteikties
           </button>
-          <button
-            type="button"
-            id="profileButton"
-            class="profile-button"
-            aria-label="Lietotāja profils"
-          >
+          <div class="profile-button">
             <img id="navPhoto" src="" alt="Profila attēls" />
-          </button>
+          </div>
         </div>
       </header>
       <main class="account-layout">
@@ -176,11 +171,17 @@
         </div>
       </footer>
     </div>
-    <dialog id="profileSavedDialog" class="profile-saved-dialog" aria-labelledby="profileSavedTitle">
+    <dialog
+      id="profileSavedDialog"
+      class="profile-saved-dialog"
+      aria-labelledby="profileSavedTitle"
+    >
       <div class="saved-dialog-icon" aria-hidden="true">✓</div>
       <h2 id="profileSavedTitle">Profila dati saglabāti!</h2>
       <p>Izmaiņas tavā profilā ir saglabātas.</p>
-      <button type="button" id="closeSavedDialog" class="save-button">Labi</button>
+      <button type="button" id="closeSavedDialog" class="save-button">
+        Labi
+      </button>
     </dialog>
     <script src="src/js/profile.js" defer></script>
     <script src="src/js/register.js"></script>
