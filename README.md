@@ -1,5 +1,7 @@
 # Dzīvnieku patversmes vietne
 
+Šajā vietnē ir iespēja skatīt dzīvniekus, tos filtrējot, pievienot tos favorītiem un pieteikties to adopcijai. Papildus tam, vietnes lietotājiem un viesiem ir iespējams pieteikties brīvprātīgam darbam vai ziedot naudu. Reģistrējušies lietotāji savā profilā var mainīt informāciju, skatīt savus adopcijas un brīvprātīgā darba pieteikumus, kā arī ziedojumus.
+
 ## Palaišana lokāli
 
 1. Instalē un atver XAMPP Control Panel.
